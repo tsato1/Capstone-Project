@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ProMatchAndroid</string>
+
+    <string name="success">Success Stories</string>
+    <string name="tweets">Tweets</string>
+    <string-array name="tabs">
+        <item>@string/success</item>
+        <item>@string/tweets</item>
+    </string-array>
+
+    <string name="action_favorites">Favorites</string>
+
+
 </resources>
