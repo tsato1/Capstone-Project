@@ -1,6 +1,7 @@
 package com.takahidesato.android.promatchandroid.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.takahidesato.android.promatchandroid.DetailActivity;
+import com.takahidesato.android.promatchandroid.MainActivity;
 import com.takahidesato.android.promatchandroid.R;
 
 import java.util.List;
@@ -20,30 +23,34 @@ import butterknife.ButterKnife;
  * Created by tsato on 4/17/16.
  */
 public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessStoriesRecyclerAdapter.SuccessStoriesViewHolder> {
-    Context mContext;
-    List<SuccessItem> mList;
-    String mUrl;
+    private Context mContext;
+    private List<SuccessItem> mSuccessList;
 
-    public SuccessStoriesRecyclerAdapter(Context context, List<SuccessItem> list, String url) {
+    public SuccessStoriesRecyclerAdapter(Context context, List<SuccessItem> list) {
         mContext = context;
-        mList = list;
-        mUrl = url;
+        mSuccessList = list;
     }
 
     @Override
     public SuccessStoriesViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_success, null);
-
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_success, null);
         SuccessStoriesViewHolder viewHolder = new SuccessStoriesViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(SuccessStoriesViewHolder viewHolder, int i) {
-        SuccessItem item = mList.get(i);
+        SuccessItem item = mSuccessList.get(i);
 
         Glide.with(mContext)
-                .load(mUrl)
+                .load(MainActivity.URL_BASE_SUCCESS)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.thumbnailImageView);
 
@@ -52,7 +59,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
 
     @Override
     public int getItemCount() {
-        return (null != mList? mList.size(): 0);
+        return (null != mSuccessList? mSuccessList.size(): 0);
     }
 
     static class SuccessStoriesViewHolder extends RecyclerView.ViewHolder {

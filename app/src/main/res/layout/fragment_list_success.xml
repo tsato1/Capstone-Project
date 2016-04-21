@@ -9,8 +9,8 @@
         android:id="@+id/rcv_success"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/recycler_view_padding"
         android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"/>
+        android:scrollbarStyle="outsideOverlay"
+        android:padding="@dimen/recycler_view_padding"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>
