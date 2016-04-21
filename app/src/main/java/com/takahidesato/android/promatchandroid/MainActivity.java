@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String URL_SUCCESS = "";
+    public static final String URL_TWEETS = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

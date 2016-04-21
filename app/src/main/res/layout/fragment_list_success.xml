@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/srl_success"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_success"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/success"/>
+        android:layout_height="match_parent"
+        android:padding="@dimen/recycler_view_padding"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"/>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
