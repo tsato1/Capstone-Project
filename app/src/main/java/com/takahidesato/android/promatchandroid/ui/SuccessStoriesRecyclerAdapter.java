@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
  * Created by tsato on 4/17/16.
  */
 public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessStoriesRecyclerAdapter.SuccessStoriesViewHolder> {
+    private final static int KEY = 0; // = SuccessDetailFragment
+
     private Context mContext;
     private List<SuccessItem> mSuccessList;
 
@@ -39,6 +41,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
                 mContext.startActivity(intent);
             }
         });

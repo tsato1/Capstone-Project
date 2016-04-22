@@ -20,6 +20,8 @@ import butterknife.ButterKnife;
  * Created by tsato on 4/21/16.
  */
 public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAdapter.TweetsViewHolder> {
+    private final static int KEY = 1;
+
     private Context mContext;
     private List<TweetItem> mTweetsList;
 
@@ -36,6 +38,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
                 mContext.startActivity(intent);
             }
         });
