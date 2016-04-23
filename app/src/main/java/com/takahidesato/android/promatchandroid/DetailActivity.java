@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         key = getIntent().getExtras().getInt(FRAGMENT_KEY);
-        
+
         Fragment fragment = null;
         Class fragmentClass = SuccessStoriesDetailFragment.class;;
         switch(key) {

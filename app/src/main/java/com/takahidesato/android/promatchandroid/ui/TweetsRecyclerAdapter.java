@@ -50,7 +50,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
         TweetItem item = mTweetsList.get(i);
 
-        viewHolder.tweetTextView.setText(item.screenName);
+        viewHolder.screenNameTextView.setText(item.screenName);
         viewHolder.tweetTextView.setText(item.tweet);
     }
 
