@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,15 @@ import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.ui.TweetItem;
 import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +46,8 @@ public class TweetsListFragment extends Fragment {
 
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
     private List<TweetItem> mTweetList = new ArrayList<>();
+
+    private static String sAuthorization;
 
     public static TweetsListFragment getInstance(int position) {
         TweetsListFragment fragment = new TweetsListFragment();
@@ -99,6 +103,12 @@ public class TweetsListFragment extends Fragment {
         mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetList);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
+        retrieveData();
+
+    }
+
+    private void retrieveData() {
+        Log.i(TAG, "retrieveData() called");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_TWITTER_URL)
@@ -113,9 +123,11 @@ public class TweetsListFragment extends Fragment {
                 int code = response.code();
                 Log.d("test", "access code = "+code);
                 TwitterAccessToken body = response.body();
+                sAuthorization = body.getTokentype().concat(" ").concat(body.getAccessToken());
                 Log.d("test", "access token = "+body.getAccessToken());
+                Log.d("test", "access type = "+body.getTokentype());
 
-                Log.d("test", "access type = "+body.getToken_type());
+                anotherMethod();
             }
 
             @Override
@@ -123,46 +135,53 @@ public class TweetsListFragment extends Fragment {
                 Log.e(TAG, "Error: " + t.toString());
             }
         });
-
-//        call.enqueue(new Callback<List<TweetItem>>() {
-//            @Override
-//            public void onResponse(Call<List<TweetItem>> call, Response<List<TweetItem>> response) {
-//                int code = response.code();
-//                //List<TweetItem> list = response.body();
-//
-//                Log.d("test", code+"");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<TweetItem>> call, Throwable t) {
-//
-//            }
-//        });
-
-        TweetItem item = new TweetItem();
-        item.id=0;
-        item.screenName="test name";
-        item.tweet="some tweet";
-        mTweetList.add(item);
-
-        mTweetsRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private void retrieveData() {
-        Log.i(TAG, "retrieveData() called");
-    }
+    private void anotherMethod() {
+        OkHttpClient defaultHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request()
+                                .newBuilder()
+                                .addHeader(Util.HEADER_AUTHORIZATION, sAuthorization)
+                                .method(chain.request().method(), chain.request().body())
+                                .build();
+                        return chain.proceed(request);
+                    }
+                }).build();
 
-    public class Question {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Util.BASE_TWITTER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(defaultHttpClient)
+                .build();
+        TwitterApi twitterApi = retrofit.create(TwitterApi.class);
+        Call<List<TweetItem>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
+        call.enqueue(new Callback<List<TweetItem>>() {
+            @Override
+            public void onResponse(Call<List<TweetItem>> call, Response<List<TweetItem>> response) {
+                int code = response.code();
+                mTweetList = response.body();
 
-        String title;
-        String link;
+                Log.d("test", "response = "+code);
+                for (int i = 0; i < 3; ++i) {
+                    Log.d("test", "create_at=" + mTweetList.get(i).created_at +
+                            ", id=" + mTweetList.get(i).id_str +
+//                            ", name=" + mTweetList.get(i).user.name +
+//                            ", screen_name=" + mTweetList.get(i).user.screen_name +
+//                            ", profile_image_url=" + mTweetList.get(i).profile_image_url +
+//                            ", media_url=" + mTweetList.get(i).media_url +
+                            ", text=" + mTweetList.get(i).text);
+                }
 
-        @Override
-        public String toString() {
-            return(title);
-        }
-    }
-    public class StackOverflowQuestions {
-        List<Question> items;
+                mTweetsRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<TweetItem>> call, Throwable t) {
+                Log.e(TAG, "Error: " + t.toString());
+            }
+        });
     }
 }

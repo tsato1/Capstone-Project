@@ -37,7 +37,7 @@ public class TwitterServiceGenerator {
 
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Accept", "application/json")
-                            .header("Authorization", token.getToken_type() + " " + token.getAccessToken())
+                            .header("Authorization", token.getTokentype() + " " + token.getAccessToken())
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
