@@ -112,7 +112,11 @@ public class SuccessStoriesListFragment extends Fragment {
         item.title = "Test";
         mSuccessList.add(item);
 
-        mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
+        //mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
+
+        SuccessItem item2 = new SuccessItem();
+        item.title = "Test2";
+        mSuccessList.add(item);
     }
 
 

@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.takahidesato.android.promatchandroid.network.JSONDeserializer;
 import com.takahidesato.android.promatchandroid.network.TwitterAccessToken;
 import com.takahidesato.android.promatchandroid.network.TwitterApi;
 import com.takahidesato.android.promatchandroid.network.Util;
@@ -104,15 +107,19 @@ public class TweetsListFragment extends Fragment {
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
         retrieveData();
-
     }
 
     private void retrieveData() {
         Log.i(TAG, "retrieveData() called");
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(TweetItem.User.class, new JSONDeserializer<TweetItem.User>())
+                .registerTypeAdapter(TweetItem.Entities.class, new JSONDeserializer<TweetItem.Entities>())
+                .registerTypeAdapter(TweetItem.Entities.Media.class, new JSONDeserializer<TweetItem.Entities.Media>())
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_TWITTER_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         TwitterApi twitterApi = retrofit.create(TwitterApi.class);
@@ -156,6 +163,7 @@ public class TweetsListFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(defaultHttpClient)
                 .build();
+
         TwitterApi twitterApi = retrofit.create(TwitterApi.class);
         Call<List<TweetItem>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
         call.enqueue(new Callback<List<TweetItem>>() {
@@ -165,17 +173,24 @@ public class TweetsListFragment extends Fragment {
                 mTweetList = response.body();
 
                 Log.d("test", "response = "+code);
-                for (int i = 0; i < 3; ++i) {
-                    Log.d("test", "create_at=" + mTweetList.get(i).created_at +
-                            ", id=" + mTweetList.get(i).id_str +
-//                            ", name=" + mTweetList.get(i).user.name +
-//                            ", screen_name=" + mTweetList.get(i).user.screen_name +
-//                            ", profile_image_url=" + mTweetList.get(i).profile_image_url +
-//                            ", media_url=" + mTweetList.get(i).media_url +
-                            ", text=" + mTweetList.get(i).text);
-                }
+                if (response.code() == 200) {
+                    for (int i = 0; i < mTweetList.size(); ++i) {
+                        String media_url = mTweetList.get(i).entities.media != null && mTweetList.get(i).entities.media.length != 0
+                                ? mTweetList.get(i).entities.media[0].media_url : "";
+                        String hashtag = mTweetList.get(i).entities.hashtags != null && mTweetList.get(i).entities.hashtags.length != 0
+                                ? mTweetList.get(i).entities.hashtags[0].text : "";
+                        Log.d("test", "create_at=" + mTweetList.get(i).created_at +
+                                ", id=" + mTweetList.get(i).id_str +
+                                ", name=" + mTweetList.get(i).user.name +
+                                ", screen_name=" + mTweetList.get(i).user.screen_name +
+                                ", profile_image_url=" + mTweetList.get(i).user.profile_image_url +
+                                ", media_url=" + media_url +
+                                ", hashtags=" + hashtag +
+                                ", text=" + mTweetList.get(i).text);
+                    }
 
-                mTweetsRecyclerAdapter.notifyDataSetChanged();
+                    mTweetsRecyclerAdapter.refresAdapter(mTweetList);//notifyDataSetChanged();
+                }
             }
 
             @Override

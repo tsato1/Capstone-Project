@@ -50,13 +50,19 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
         TweetItem item = mTweetsList.get(i);
 
-        viewHolder.screenNameTextView.setText(item.screen_name);
+        viewHolder.screenNameTextView.setText(item.id_str);
         viewHolder.tweetTextView.setText(item.text);
     }
 
     @Override
     public int getItemCount() {
         return mTweetsList!=null? mTweetsList.size(): 0;
+    }
+
+    public synchronized void refresAdapter(List<TweetItem> items) {
+        mTweetsList.clear();
+        mTweetsList.addAll(items);
+        notifyDataSetChanged();
     }
 
     static class TweetsViewHolder extends RecyclerView.ViewHolder {
