@@ -110,16 +110,15 @@ public class TweetsListFragment extends Fragment {
     }
 
     private void retrieveData() {
-        Log.i(TAG, "retrieveData() called");
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(TweetItem.User.class, new JSONDeserializer<TweetItem.User>())
-                .registerTypeAdapter(TweetItem.Entities.class, new JSONDeserializer<TweetItem.Entities>())
-                .registerTypeAdapter(TweetItem.Entities.Media.class, new JSONDeserializer<TweetItem.Entities.Media>())
-                .create();
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(TweetItem.User.class, new JSONDeserializer<TweetItem.User>())
+//                .registerTypeAdapter(TweetItem.Entities.class, new JSONDeserializer<TweetItem.Entities>())
+//                .registerTypeAdapter(TweetItem.Entities.Media.class, new JSONDeserializer<TweetItem.Entities.Media>())
+//                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_TWITTER_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         TwitterApi twitterApi = retrofit.create(TwitterApi.class);
@@ -169,11 +168,11 @@ public class TweetsListFragment extends Fragment {
         call.enqueue(new Callback<List<TweetItem>>() {
             @Override
             public void onResponse(Call<List<TweetItem>> call, Response<List<TweetItem>> response) {
-                int code = response.code();
-                mTweetList = response.body();
-
-                Log.d("test", "response = "+code);
                 if (response.code() == 200) {
+                    Log.d("test", "response = "+response.code());
+
+                    mTweetList = response.body();
+
                     for (int i = 0; i < mTweetList.size(); ++i) {
                         String media_url = mTweetList.get(i).entities.media != null && mTweetList.get(i).entities.media.length != 0
                                 ? mTweetList.get(i).entities.media[0].media_url : "";
@@ -189,7 +188,7 @@ public class TweetsListFragment extends Fragment {
                                 ", text=" + mTweetList.get(i).text);
                     }
 
-                    mTweetsRecyclerAdapter.refresAdapter(mTweetList);//notifyDataSetChanged();
+                    mTweetsRecyclerAdapter.refresAdapter(mTweetList);
                 }
             }
 

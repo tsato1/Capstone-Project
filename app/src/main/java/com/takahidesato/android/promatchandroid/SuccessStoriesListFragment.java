@@ -13,6 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.takahidesato.android.promatchandroid.network.JSONDeserializer;
+import com.takahidesato.android.promatchandroid.network.Util;
+import com.takahidesato.android.promatchandroid.network.YouTubeApi;
 import com.takahidesato.android.promatchandroid.ui.SuccessItem;
 import com.takahidesato.android.promatchandroid.ui.SuccessStoriesRecyclerAdapter;
 import com.takahidesato.android.promatchandroid.ui.TweetItem;
@@ -23,6 +28,13 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Query;
 
 /**
  * Created by tsato on 4/14/16.
@@ -76,6 +88,14 @@ public class SuccessStoriesListFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(KEY));
         ButterKnife.bind(this, view);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                retrieveData();
+            }
+        });
+
         return view;
     }
 
@@ -108,16 +128,50 @@ public class SuccessStoriesListFragment extends Fragment {
         mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessList);
         mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
 
-        SuccessItem item = new SuccessItem();
-        item.title = "Test";
-        mSuccessList.add(item);
-
-        //mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
-
-        SuccessItem item2 = new SuccessItem();
-        item.title = "Test2";
-        mSuccessList.add(item);
+        //retrieveData();
     }
 
+    private void retrieveData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Util.BASE_GOOGLE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        YouTubeApi youTubeApi = retrofit.create(YouTubeApi.class);
+
+        Call<SuccessItem> call = youTubeApi.getSuccess(
+                Util.PART,
+                Util.MAX_RESULTS,
+                Util.PLAYLIST_ID,
+                Util.KEY);
+
+        call.enqueue(new Callback<SuccessItem>() {
+            @Override
+            public void onResponse(Call<SuccessItem> call, Response<SuccessItem> response) {
+                if (response.code() == 200) {
+                    Log.d("test", "YouTube response code="+response.code());
+
+                    SuccessItem item = response.body();
+
+                    Log.d("test", "kind="+response.body().kind +
+                            ", nextPageToken="+item.nextPageToken +
+                            ", etag="+item.etag +
+                            ", length="+item.items.size());
+
+                    for (int i = 0; i < item.items.size(); i++) {
+                        Log.d("test", "id="+item.items.get(i).id +
+                        "title="+item.items.get(i).snippet.title +
+                        "description="+item.items.get(i).snippet.description +
+                        "thumbnail url="+item.items.get(i).snippet.thumbnails.defaultSize.url);
+                    }
+                    //mSuccessStoriesRecyclerAdapter.refresAdapter(item.items);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessItem> call, Throwable t) {
+                Log.e(TAG, "Error: " + t.toString());
+            }
+        });
+    }
 }

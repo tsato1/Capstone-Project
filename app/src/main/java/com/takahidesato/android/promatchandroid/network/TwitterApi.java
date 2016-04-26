@@ -21,7 +21,7 @@ public interface TwitterApi {
     @FormUrlEncoded
     @POST(Util.TWITTER_OATH2_PATH)
     @Headers({
-            "Authorization: 
+            "Authorization:
             "Content-Type: application/x-www-form-urlencoded;charset=UTF-8"
     })
     Call<TwitterAccessToken> getAccessToken(@Field(Util.FIELD_GRANT_TYPE) String grantType);

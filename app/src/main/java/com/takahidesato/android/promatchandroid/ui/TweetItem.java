@@ -22,14 +22,14 @@ public class TweetItem {
     }
 
     public class Entities {
-        public Hashtags[] hashtags;
+        public Hashtag[] hashtags;
         public Media[] media;
         /* media */
         public class Media {
             public String id_str;
             public String media_url;
         }
-        public class Hashtags {
+        public class Hashtag {
             public String text;
         }
     }
