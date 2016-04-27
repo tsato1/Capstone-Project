@@ -1,6 +1,5 @@
 package com.takahidesato.android.promatchandroid;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,30 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.takahidesato.android.promatchandroid.network.JSONDeserializer;
+import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.network.YouTubeApi;
+import com.takahidesato.android.promatchandroid.network.YouTubeResponseBody;
 import com.takahidesato.android.promatchandroid.ui.SuccessItem;
 import com.takahidesato.android.promatchandroid.ui.SuccessStoriesRecyclerAdapter;
-import com.takahidesato.android.promatchandroid.ui.TweetItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 
 /**
  * Created by tsato on 4/14/16.
@@ -128,49 +121,43 @@ public class SuccessStoriesListFragment extends Fragment {
         mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessList);
         mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
 
-        //retrieveData();
+        //TODO wifi / network check
+        retrieveData();
     }
 
     private void retrieveData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Util.BASE_GOOGLE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        YouTubeApi youTubeApi = TwitterServiceGenerator.createService(YouTubeApi.class, Util.BASE_GOOGLE_URL);
 
-        YouTubeApi youTubeApi = retrofit.create(YouTubeApi.class);
-
-        Call<SuccessItem> call = youTubeApi.getSuccess(
+        Call<YouTubeResponseBody> call = youTubeApi.getSuccess(
                 Util.PART,
                 Util.MAX_RESULTS,
                 Util.PLAYLIST_ID,
                 Util.KEY);
 
-        call.enqueue(new Callback<SuccessItem>() {
+        call.enqueue(new Callback<YouTubeResponseBody>() {
             @Override
-            public void onResponse(Call<SuccessItem> call, Response<SuccessItem> response) {
+            public void onResponse(Call<YouTubeResponseBody> call, Response<YouTubeResponseBody> response) {
                 if (response.code() == 200) {
-                    Log.d("test", "YouTube response code="+response.code());
+                    Log.d("Retrofit YouTube", "response.code()="+response.code());
 
-                    SuccessItem item = response.body();
+                    YouTubeResponseBody item = response.body();
 
-                    Log.d("test", "kind="+response.body().kind +
-                            ", nextPageToken="+item.nextPageToken +
-                            ", etag="+item.etag +
-                            ", length="+item.items.size());
-
-                    for (int i = 0; i < item.items.size(); i++) {
-                        Log.d("test", "id="+item.items.get(i).id +
-                        "title="+item.items.get(i).snippet.title +
-                        "description="+item.items.get(i).snippet.description +
-                        "thumbnail url="+item.items.get(i).snippet.thumbnails.defaultSize.url);
+                    for (int i = 0; i < 5; i++) {
+                        Log.d("Retrofit YouTube",
+                                "id="+item.items.get(i).id + ", " +
+                                "title="+item.items.get(i).snippet.title +", " +
+                                "description="+item.items.get(i).snippet.description +", " +
+                                "thumbnail default url="+item.items.get(i).snippet.thumbnails.defaultSize.url+", " +
+                                "thumbnail medium url="+item.items.get(i).snippet.thumbnails.medium.url);
                     }
+
                     //mSuccessStoriesRecyclerAdapter.refresAdapter(item.items);
                 }
             }
 
             @Override
-            public void onFailure(Call<SuccessItem> call, Throwable t) {
-                Log.e(TAG, "Error: " + t.toString());
+            public void onFailure(Call<YouTubeResponseBody> call, Throwable t) {
+                Log.e(TAG, "Retrofit YouTube Error: " + t.toString());
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.takahidesato.android.promatchandroid.network;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,41 +15,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by tsato on 4/22/16.
  */
 public class TwitterServiceGenerator {
+    private static String sAuthorization = "";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(Util.BASE_TWITTER_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null);
+    public static <S> S createService(Class<S> serviceClass, String baseUrl) {
+        return createService(serviceClass, null, baseUrl);
     }
 
-    public static <S> S createService(Class<S> serviceClass, String username, String password) {
-        return createService(serviceClass, null, null);
-    }
-
-    public static <S> S createService(Class<S> serviceClass, final TwitterAccessToken token) {
-        if (token != null) {
+    public static <S> S createService(Class<S> serviceClass, String authorization, String baseUrl) {
+        if (authorization != null) {
+            sAuthorization = authorization;
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Interceptor.Chain chain) throws IOException {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
-                            .header("Accept", "application/json")
-                            .header("Authorization", token.getTokentype() + " " + token.getAccessToken())
+                            .header("Authorization", sAuthorization)
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 }
-            });
+            }).build();
         }
 
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = builder.client(client).build();
+        Retrofit retrofit = builder
+                .baseUrl(baseUrl)
+                .client(client)
+                .build();
         return retrofit.create(serviceClass);
     }
 }

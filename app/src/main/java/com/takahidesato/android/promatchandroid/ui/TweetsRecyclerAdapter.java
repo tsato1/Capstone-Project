@@ -23,9 +23,9 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     private final static int KEY = 1;
 
     private Context mContext;
-    private List<TweetItem> mTweetsList;
+    private List<TweetsItem> mTweetsList;
 
-    public TweetsRecyclerAdapter(Context context, List<TweetItem> list) {
+    public TweetsRecyclerAdapter(Context context, List<TweetsItem> list) {
         mContext = context;
         mTweetsList = list;
     }
@@ -48,9 +48,9 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
     @Override
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
-        TweetItem item = mTweetsList.get(i);
+        TweetsItem item = mTweetsList.get(i);
 
-        viewHolder.screenNameTextView.setText(item.id_str);
+        viewHolder.screenNameTextView.setText(item.id);
         viewHolder.tweetTextView.setText(item.text);
     }
 
@@ -59,7 +59,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
         return mTweetsList!=null? mTweetsList.size(): 0;
     }
 
-    public synchronized void refresAdapter(List<TweetItem> items) {
+    public synchronized void refresAdapter(List<TweetsItem> items) {
         mTweetsList.clear();
         mTweetsList.addAll(items);
         notifyDataSetChanged();

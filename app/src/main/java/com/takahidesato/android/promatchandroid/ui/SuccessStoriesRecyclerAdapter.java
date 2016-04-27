@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.takahidesato.android.promatchandroid.DetailActivity;
-import com.takahidesato.android.promatchandroid.MainActivity;
 import com.takahidesato.android.promatchandroid.R;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         SuccessItem item = mSuccessList.get(i);
 
         Glide.with(mContext)
-                .load(MainActivity.URL_BASE_SUCCESS)
+                .load("")
                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.thumbnailImageView);
 
@@ -63,6 +62,12 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
     @Override
     public int getItemCount() {
         return (null != mSuccessList? mSuccessList.size(): 0);
+    }
+
+    public synchronized void refresAdapter(List<SuccessItem> items) {
+        mSuccessList.clear();
+        mSuccessList.addAll(items);
+        notifyDataSetChanged();
     }
 
     static class SuccessStoriesViewHolder extends RecyclerView.ViewHolder {

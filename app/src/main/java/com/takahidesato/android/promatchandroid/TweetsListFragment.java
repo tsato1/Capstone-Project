@@ -11,13 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.takahidesato.android.promatchandroid.network.JSONDeserializer;
 import com.takahidesato.android.promatchandroid.network.TwitterAccessToken;
 import com.takahidesato.android.promatchandroid.network.TwitterApi;
+import com.takahidesato.android.promatchandroid.network.TwitterResponseBody;
+import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
-import com.takahidesato.android.promatchandroid.ui.TweetItem;
+import com.takahidesato.android.promatchandroid.ui.TweetsItem;
 import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
 
 import java.io.IOException;
@@ -48,9 +47,10 @@ public class TweetsListFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
-    private List<TweetItem> mTweetList = new ArrayList<>();
+    private List<TweetsItem> mTweetList = new ArrayList<>();
 
-    private static String sAuthorization;
+    private static String sAuthorizationOAuth = "";
+    private static String sAuthorizationCall = "";
 
     public static TweetsListFragment getInstance(int position) {
         TweetsListFragment fragment = new TweetsListFragment();
@@ -58,6 +58,12 @@ public class TweetsListFragment extends Fragment {
         args.putInt(KEY, position);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("oauth", sAuthorizationOAuth);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -70,9 +76,10 @@ public class TweetsListFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveData();
+                authorize();
             }
         });
+        sAuthorizationOAuth = "Basic".concat(" ").concat(Util.getEncodedBearerTokenCredential(MainActivity.TWITTER_API_KEY, MainActivity.TWITTER_API_SECRET));
 
         return view;
     }
@@ -106,95 +113,70 @@ public class TweetsListFragment extends Fragment {
         mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetList);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
-        retrieveData();
+        /***** onRestoreState() *****/
+        if (savedInstanceState != null) {
+            sAuthorizationOAuth = savedInstanceState.getString("oauth");
+        }
+
+        //authorize();
     }
 
-    private void retrieveData() {
-//        Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(TweetItem.User.class, new JSONDeserializer<TweetItem.User>())
-//                .registerTypeAdapter(TweetItem.Entities.class, new JSONDeserializer<TweetItem.Entities>())
-//                .registerTypeAdapter(TweetItem.Entities.Media.class, new JSONDeserializer<TweetItem.Entities.Media>())
-//                .create();
+    private void authorize() {
+        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationOAuth, Util.BASE_TWITTER_URL);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Util.BASE_TWITTER_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TwitterApi twitterApi = retrofit.create(TwitterApi.class);
         Call<TwitterAccessToken> call = twitterApi.getAccessToken(Util.GRANT_TYPE);
         call.enqueue(new Callback<TwitterAccessToken>() {
             @Override
             public void onResponse(Call<TwitterAccessToken> call, Response<TwitterAccessToken> response) {
-                int code = response.code();
-                Log.d("test", "access code = "+code);
-                TwitterAccessToken body = response.body();
-                sAuthorization = body.getTokentype().concat(" ").concat(body.getAccessToken());
-                Log.d("test", "access token = "+body.getAccessToken());
-                Log.d("test", "access type = "+body.getTokentype());
-
-                anotherMethod();
-            }
-
-            @Override
-            public void onFailure(Call<TwitterAccessToken> call, Throwable t) {
-                Log.e(TAG, "Error: " + t.toString());
-            }
-        });
-    }
-
-    private void anotherMethod() {
-        OkHttpClient defaultHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public okhttp3.Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request()
-                                .newBuilder()
-                                .addHeader(Util.HEADER_AUTHORIZATION, sAuthorization)
-                                .method(chain.request().method(), chain.request().body())
-                                .build();
-                        return chain.proceed(request);
-                    }
-                }).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Util.BASE_TWITTER_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(defaultHttpClient)
-                .build();
-
-        TwitterApi twitterApi = retrofit.create(TwitterApi.class);
-        Call<List<TweetItem>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
-        call.enqueue(new Callback<List<TweetItem>>() {
-            @Override
-            public void onResponse(Call<List<TweetItem>> call, Response<List<TweetItem>> response) {
+                Log.d("Retrofit Twitter OAuth", "response.code()=" + response.code());
                 if (response.code() == 200) {
-                    Log.d("test", "response = "+response.code());
-
-                    mTweetList = response.body();
-
-                    for (int i = 0; i < mTweetList.size(); ++i) {
-                        String media_url = mTweetList.get(i).entities.media != null && mTweetList.get(i).entities.media.length != 0
-                                ? mTweetList.get(i).entities.media[0].media_url : "";
-                        String hashtag = mTweetList.get(i).entities.hashtags != null && mTweetList.get(i).entities.hashtags.length != 0
-                                ? mTweetList.get(i).entities.hashtags[0].text : "";
-                        Log.d("test", "create_at=" + mTweetList.get(i).created_at +
-                                ", id=" + mTweetList.get(i).id_str +
-                                ", name=" + mTweetList.get(i).user.name +
-                                ", screen_name=" + mTweetList.get(i).user.screen_name +
-                                ", profile_image_url=" + mTweetList.get(i).user.profile_image_url +
-                                ", media_url=" + media_url +
-                                ", hashtags=" + hashtag +
-                                ", text=" + mTweetList.get(i).text);
-                    }
-
-                    mTweetsRecyclerAdapter.refresAdapter(mTweetList);
+                    TwitterAccessToken body = response.body();
+                    sAuthorizationCall = body.getTokentype().concat(" ").concat(body.getAccessToken());
+                    Log.d("Retrofit Twitter OAuth", "access type  = " + body.getTokentype());
+                    Log.d("Retrofit Twitter OAuth", "access token = " + body.getAccessToken());
+                    retrieveData();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<TweetItem>> call, Throwable t) {
-                Log.e(TAG, "Error: " + t.toString());
+            public void onFailure(Call<TwitterAccessToken> call, Throwable t) {
+                Log.e(TAG, "Retrofit Twitter OAuth Error: " + t.toString());
+            }
+        });
+    }
+
+    private void retrieveData() {
+        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationCall, Util.BASE_TWITTER_URL);
+
+        Call<List<TwitterResponseBody>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
+        call.enqueue(new Callback<List<TwitterResponseBody>>() {
+            @Override
+            public void onResponse(Call<List<TwitterResponseBody>> call, Response<List<TwitterResponseBody>> response) {
+                Log.d("Retrofit Twitter call", "response.code()="+response.code());
+                if (response.code() == 200) {
+                    List<TwitterResponseBody> body = response.body();
+                    for (int i = 0; i < 10; ++i) {
+                        String media_url = body.get(i).entities.media != null && body.get(i).entities.media.size() != 0
+                                ? body.get(i).entities.media.get(0).media_url : "";
+                        String hashtag = body.get(i).entities.hashtags != null && body.get(i).entities.hashtags.size() != 0
+                                ? body.get(i).entities.hashtags.get(0).text : "";
+                        Log.d("Retrofit Twitter call", "create_at=" + body.get(i).created_at +
+                                ", id=" + body.get(i).id_str +
+                                ", name=" + body.get(i).user.name +
+                                ", screen_name=" + body.get(i).user.screen_name +
+                                ", profile_image_url=" + body.get(i).user.profile_image_url +
+                                ", media_url=" + media_url +
+                                ", hashtags=" + hashtag +
+                                ", text=" + body.get(i).text);
+                    }
+
+                    //mTweetsRecyclerAdapter.refresAdapter(mTweetList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TwitterResponseBody>> call, Throwable t) {
+                Log.e(TAG, "Retrofit Twitter call Error: " + t.toString());
             }
         });
     }

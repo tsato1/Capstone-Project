@@ -1,11 +1,11 @@
-package com.takahidesato.android.promatchandroid.ui;
+package com.takahidesato.android.promatchandroid.network;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 /**
- * Created by tsato on 4/17/16.
+ * Created by tsato on 4/26/16.
  */
-public class TweetItem {
+public class TwitterResponseBody {
     /* tweet */
     public String created_at;
     public String id_str;
@@ -22,8 +22,8 @@ public class TweetItem {
     }
 
     public class Entities {
-        public Hashtag[] hashtags;
-        public Media[] media;
+        public List<Hashtag> hashtags;
+        public List<Media> media;
         /* media */
         public class Media {
             public String id_str;
