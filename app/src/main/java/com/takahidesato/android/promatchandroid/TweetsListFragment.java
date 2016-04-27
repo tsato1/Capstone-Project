@@ -14,25 +14,19 @@ import android.view.ViewGroup;
 import com.takahidesato.android.promatchandroid.network.TwitterAccessToken;
 import com.takahidesato.android.promatchandroid.network.TwitterApi;
 import com.takahidesato.android.promatchandroid.network.TwitterResponseBody;
-import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
+import com.takahidesato.android.promatchandroid.network.ApiServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.ui.TweetsItem;
 import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by tsato on 4/15/16.
@@ -122,7 +116,7 @@ public class TweetsListFragment extends Fragment {
     }
 
     private void authorize() {
-        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationOAuth, Util.BASE_TWITTER_URL);
+        TwitterApi twitterApi = ApiServiceGenerator.createService(TwitterApi.class, sAuthorizationOAuth, Util.BASE_TWITTER_URL);
 
         Call<TwitterAccessToken> call = twitterApi.getAccessToken(Util.GRANT_TYPE);
         call.enqueue(new Callback<TwitterAccessToken>() {
@@ -146,7 +140,7 @@ public class TweetsListFragment extends Fragment {
     }
 
     private void retrieveData() {
-        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationCall, Util.BASE_TWITTER_URL);
+        TwitterApi twitterApi = ApiServiceGenerator.createService(TwitterApi.class, sAuthorizationCall, Util.BASE_TWITTER_URL);
 
         Call<List<TwitterResponseBody>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
         call.enqueue(new Callback<List<TwitterResponseBody>>() {

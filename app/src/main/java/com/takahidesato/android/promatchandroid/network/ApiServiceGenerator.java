@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by tsato on 4/22/16.
  */
-public class TwitterServiceGenerator {
+public class ApiServiceGenerator {
     private static String sAuthorization = "";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

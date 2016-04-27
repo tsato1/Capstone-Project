@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
+import com.takahidesato.android.promatchandroid.network.ApiServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.network.YouTubeApi;
 import com.takahidesato.android.promatchandroid.network.YouTubeResponseBody;
@@ -26,8 +26,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by tsato on 4/14/16.
@@ -126,7 +124,7 @@ public class SuccessStoriesListFragment extends Fragment {
     }
 
     private void retrieveData() {
-        YouTubeApi youTubeApi = TwitterServiceGenerator.createService(YouTubeApi.class, Util.BASE_GOOGLE_URL);
+        YouTubeApi youTubeApi = ApiServiceGenerator.createService(YouTubeApi.class, Util.BASE_GOOGLE_URL);
 
         Call<YouTubeResponseBody> call = youTubeApi.getSuccess(
                 Util.PART,

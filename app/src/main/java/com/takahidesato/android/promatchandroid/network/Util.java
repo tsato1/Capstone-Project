@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  * Created by tsato on 4/22/16.
  */
 public class Util {
-    /* Twitter */
+    /***** Twitter *****/
     public static final String BASE_TWITTER_URL = "https://api.twitter.com";
     public static final String TWITTER_PATH = "/1.1/statuses/user_timeline.json";
     public static final String TWITTER_OATH2_PATH = "/oauth2/token";
@@ -43,7 +43,7 @@ public class Util {
         return Base64.encodeToString(data, Base64.NO_WRAP);
     }
 
-    /* YouTube */
+    /***** YouTube *****/
     public static final String BASE_GOOGLE_URL = "https://www.googleapis.com";
     public static final String YOUTUBE_PATH = "/youtube/v3/playlistItems";
 
