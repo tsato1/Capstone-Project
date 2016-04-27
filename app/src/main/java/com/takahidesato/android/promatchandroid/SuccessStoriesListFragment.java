@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.takahidesato.android.promatchandroid.network.ApiServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.network.YouTubeApi;
 import com.takahidesato.android.promatchandroid.network.YouTubeResponseBody;
+import com.takahidesato.android.promatchandroid.network.YouTubeServiceGenerator;
 import com.takahidesato.android.promatchandroid.ui.SuccessItem;
 import com.takahidesato.android.promatchandroid.ui.SuccessStoriesRecyclerAdapter;
 
@@ -124,7 +124,7 @@ public class SuccessStoriesListFragment extends Fragment {
     }
 
     private void retrieveData() {
-        YouTubeApi youTubeApi = ApiServiceGenerator.createService(YouTubeApi.class, Util.BASE_GOOGLE_URL);
+        YouTubeApi youTubeApi = YouTubeServiceGenerator.createService(YouTubeApi.class);
 
         Call<YouTubeResponseBody> call = youTubeApi.getSuccess(
                 Util.PART,
@@ -135,9 +135,9 @@ public class SuccessStoriesListFragment extends Fragment {
         call.enqueue(new Callback<YouTubeResponseBody>() {
             @Override
             public void onResponse(Call<YouTubeResponseBody> call, Response<YouTubeResponseBody> response) {
-                if (response.code() == 200) {
-                    Log.d("Retrofit YouTube", "response.code()="+response.code());
+                Log.d("Retrofit YouTube", "response.code()="+response.code());
 
+                if (response.code() == 200) {
                     YouTubeResponseBody item = response.body();
 
                     for (int i = 0; i < 5; i++) {

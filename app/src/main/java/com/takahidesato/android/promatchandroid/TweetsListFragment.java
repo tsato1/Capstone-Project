@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.takahidesato.android.promatchandroid.network.TwitterAccessToken;
 import com.takahidesato.android.promatchandroid.network.TwitterApi;
 import com.takahidesato.android.promatchandroid.network.TwitterResponseBody;
-import com.takahidesato.android.promatchandroid.network.ApiServiceGenerator;
+import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.ui.TweetsItem;
 import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
@@ -112,11 +112,11 @@ public class TweetsListFragment extends Fragment {
             sAuthorizationOAuth = savedInstanceState.getString("oauth");
         }
 
-        //authorize();
+        authorize();
     }
 
     private void authorize() {
-        TwitterApi twitterApi = ApiServiceGenerator.createService(TwitterApi.class, sAuthorizationOAuth, Util.BASE_TWITTER_URL);
+        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationOAuth);
 
         Call<TwitterAccessToken> call = twitterApi.getAccessToken(Util.GRANT_TYPE);
         call.enqueue(new Callback<TwitterAccessToken>() {
@@ -140,7 +140,7 @@ public class TweetsListFragment extends Fragment {
     }
 
     private void retrieveData() {
-        TwitterApi twitterApi = ApiServiceGenerator.createService(TwitterApi.class, sAuthorizationCall, Util.BASE_TWITTER_URL);
+        TwitterApi twitterApi = TwitterServiceGenerator.createService(TwitterApi.class, sAuthorizationCall);
 
         Call<List<TwitterResponseBody>> call = twitterApi.getTweets(Util.SCREEN_NAME, Util.COUNT);
         call.enqueue(new Callback<List<TwitterResponseBody>>() {

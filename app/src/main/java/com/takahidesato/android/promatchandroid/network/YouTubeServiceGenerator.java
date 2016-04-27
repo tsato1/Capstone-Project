@@ -1,7 +1,5 @@
 package com.takahidesato.android.promatchandroid.network;
 
-import android.util.Log;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -12,21 +10,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by tsato on 4/22/16.
+ * Created by tsato on 4/26/16.
  */
-public class ApiServiceGenerator {
+public class YouTubeServiceGenerator {
     private static String sAuthorization = "";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder = new Retrofit.Builder()
+            .baseUrl(Util.BASE_GOOGLE_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass, String baseUrl) {
-        return createService(serviceClass, null, baseUrl);
+    public static <S> S createService(Class<S> serviceClass) {
+        return createService(serviceClass, null);
     }
 
-    public static <S> S createService(Class<S> serviceClass, String authorization, String baseUrl) {
+    public static <S> S createService(Class<S> serviceClass, String authorization) {
         if (authorization != null) {
             sAuthorization = authorization;
             httpClient.addInterceptor(new Interceptor() {
@@ -46,7 +45,6 @@ public class ApiServiceGenerator {
 
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder
-                .baseUrl(baseUrl)
                 .client(client)
                 .build();
         return retrofit.create(serviceClass);
