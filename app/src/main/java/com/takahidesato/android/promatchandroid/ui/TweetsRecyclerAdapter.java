@@ -3,6 +3,7 @@ package com.takahidesato.android.promatchandroid.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,19 +51,13 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
         TweetsItem item = mTweetsList.get(i);
 
-        viewHolder.screenNameTextView.setText(item.id);
+        viewHolder.screenNameTextView.setText(item.screenName);
         viewHolder.tweetTextView.setText(item.text);
     }
 
     @Override
     public int getItemCount() {
         return mTweetsList!=null? mTweetsList.size(): 0;
-    }
-
-    public synchronized void refresAdapter(List<TweetsItem> items) {
-        mTweetsList.clear();
-        mTweetsList.addAll(items);
-        notifyDataSetChanged();
     }
 
     static class TweetsViewHolder extends RecyclerView.ViewHolder {

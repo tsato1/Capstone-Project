@@ -22,7 +22,7 @@ public class Util {
 
     public static final String GRANT_TYPE = "client_credentials";
     public static final String SCREEN_NAME = "novapromatchsv";
-    public static final String COUNT = "10";
+    public static final String COUNT = "50";
 
     /*
     Reference:

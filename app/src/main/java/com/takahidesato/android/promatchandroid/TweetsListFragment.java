@@ -41,7 +41,7 @@ public class TweetsListFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
-    private List<TweetsItem> mTweetList = new ArrayList<>();
+    private List<TweetsItem> mTweetsList = new ArrayList<>();
 
     private static String sAuthorizationOAuth = "";
     private static String sAuthorizationCall = "";
@@ -104,7 +104,7 @@ public class TweetsListFragment extends Fragment {
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetList);
+        mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetsList);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
         /***** onRestoreState() *****/
@@ -147,24 +147,26 @@ public class TweetsListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<TwitterResponseBody>> call, Response<List<TwitterResponseBody>> response) {
                 Log.d("Retrofit Twitter call", "response.code()="+response.code());
+
                 if (response.code() == 200) {
                     List<TwitterResponseBody> body = response.body();
-                    for (int i = 0; i < 10; ++i) {
-                        String media_url = body.get(i).entities.media != null && body.get(i).entities.media.size() != 0
-                                ? body.get(i).entities.media.get(0).media_url : "";
-                        String hashtag = body.get(i).entities.hashtags != null && body.get(i).entities.hashtags.size() != 0
-                                ? body.get(i).entities.hashtags.get(0).text : "";
-                        Log.d("Retrofit Twitter call", "create_at=" + body.get(i).created_at +
-                                ", id=" + body.get(i).id_str +
-                                ", name=" + body.get(i).user.name +
-                                ", screen_name=" + body.get(i).user.screen_name +
-                                ", profile_image_url=" + body.get(i).user.profile_image_url +
-                                ", media_url=" + media_url +
-                                ", hashtags=" + hashtag +
-                                ", text=" + body.get(i).text);
+                    //logDebug(body);
+                    mTweetsList.clear();
+                    for (int i = 0; i < body.size(); ++i) {
+                        TweetsItem item = new TweetsItem(
+                                "id",
+                                body.get(i).id_str,
+                                body.get(i).created_at,
+                                body.get(i).text,
+                                body.get(i).user.name,
+                                body.get(i).user.screen_name,
+                                body.get(i).user.profile_image_url,
+                                ""
+                        );
+                        mTweetsList.add(item);
                     }
 
-                    //mTweetsRecyclerAdapter.refresAdapter(mTweetList);
+                    mTweetsRecyclerAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -173,5 +175,22 @@ public class TweetsListFragment extends Fragment {
                 Log.e(TAG, "Retrofit Twitter call Error: " + t.toString());
             }
         });
+    }
+
+    private void logDebug(List<TwitterResponseBody> body) {
+        for (int i = 0; i < 10; ++i) {
+            String media_url = body.get(i).entities.media != null && body.get(i).entities.media.size() != 0
+                    ? body.get(i).entities.media.get(0).media_url : "";
+            String hashtag = body.get(i).entities.hashtags != null && body.get(i).entities.hashtags.size() != 0
+                    ? body.get(i).entities.hashtags.get(0).text : "";
+            Log.d("Retrofit Twitter call", "create_at=" + body.get(i).created_at +
+                    ", id=" + body.get(i).id_str +
+                    ", name=" + body.get(i).user.name +
+                    ", screen_name=" + body.get(i).user.screen_name +
+                    ", profile_image_url=" + body.get(i).user.profile_image_url +
+                    ", media_url=" + media_url +
+                    ", hashtags=" + hashtag +
+                    ", text=" + body.get(i).text);
+        }
     }
 }

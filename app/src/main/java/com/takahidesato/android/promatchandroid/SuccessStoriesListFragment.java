@@ -138,18 +138,24 @@ public class SuccessStoriesListFragment extends Fragment {
                 Log.d("Retrofit YouTube", "response.code()="+response.code());
 
                 if (response.code() == 200) {
-                    YouTubeResponseBody item = response.body();
-
-                    for (int i = 0; i < 5; i++) {
-                        Log.d("Retrofit YouTube",
-                                "id="+item.items.get(i).id + ", " +
-                                "title="+item.items.get(i).snippet.title +", " +
-                                "description="+item.items.get(i).snippet.description +", " +
-                                "thumbnail default url="+item.items.get(i).snippet.thumbnails.defaultSize.url+", " +
-                                "thumbnail medium url="+item.items.get(i).snippet.thumbnails.medium.url);
+                    YouTubeResponseBody body = response.body();
+                    //logDebug(body);
+                    mSuccessList.clear();
+                    for (int i = 0; i < body.items.size(); i++) {
+                        SuccessItem item = new SuccessItem(
+                                "id",
+                                body.items.get(i).id,
+                                body.items.get(i).snippet.publishedAt,
+                                body.items.get(i).snippet.channelId,
+                                body.items.get(i).snippet.title,
+                                body.items.get(i).snippet.description,
+                                body.items.get(i).snippet.thumbnails.defaultSize.url,
+                                body.items.get(i).snippet.thumbnails.medium.url
+                        );
+                        mSuccessList.add(item);
                     }
 
-                    //mSuccessStoriesRecyclerAdapter.refresAdapter(item.items);
+                    mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -158,5 +164,16 @@ public class SuccessStoriesListFragment extends Fragment {
                 Log.e(TAG, "Retrofit YouTube Error: " + t.toString());
             }
         });
+    }
+
+    private void logDebug(YouTubeResponseBody body) {
+        for (int i = 0; i < body.items.size(); i++) {
+            Log.d("Retrofit YouTube",
+                    "id="+body.items.get(i).id + ", " +
+                            "title="+body.items.get(i).snippet.title +", " +
+                            "description="+body.items.get(i).snippet.description +", " +
+                            "thumbnail default url="+body.items.get(i).snippet.thumbnails.defaultSize.url+", " +
+                            "thumbnail medium url="+body.items.get(i).snippet.thumbnails.medium.url);
+        }
     }
 }

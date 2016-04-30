@@ -3,6 +3,7 @@ package com.takahidesato.android.promatchandroid.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,11 +53,12 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         SuccessItem item = mSuccessList.get(i);
 
         Glide.with(mContext)
-                .load("")
+                .load(item.thumbnailDefaultUrl)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.thumbnailImageView);
 
-        viewHolder.descriptionTextView.setText("Sample text");
+        viewHolder.titleTextView.setText(item.title);
+        viewHolder.descriptionTextView.setText(item.description);
     }
 
     @Override
@@ -64,15 +66,11 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         return (null != mSuccessList? mSuccessList.size(): 0);
     }
 
-    public synchronized void refresAdapter(List<SuccessItem> items) {
-        mSuccessList.clear();
-        mSuccessList.addAll(items);
-        notifyDataSetChanged();
-    }
-
     static class SuccessStoriesViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.imv_thumbnail_success)
         ImageView thumbnailImageView;
+        @Bind(R.id.txv_title_success)
+        TextView titleTextView;
         @Bind(R.id.txv_description_success)
         TextView descriptionTextView;
 
