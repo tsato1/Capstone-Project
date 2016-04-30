@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.takahidesato.android.promatchandroid.DetailActivity;
 import com.takahidesato.android.promatchandroid.R;
 
@@ -33,7 +35,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
     @Override
     public TweetsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_tweets, null);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_tweets, viewGroup, false);
         TweetsViewHolder viewHolder = new TweetsViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,10 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
         TweetsItem item = mTweetsList.get(i);
 
+        Glide.with(mContext)
+                .load(item.profileImageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(viewHolder.profileImageView);
         viewHolder.screenNameTextView.setText(item.screenName);
         viewHolder.tweetTextView.setText(item.text);
     }
@@ -61,6 +67,8 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     }
 
     static class TweetsViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.imv_profile_pic_tweet)
+        ImageView profileImageView;
         @Bind(R.id.txv_screen_name)
         TextView screenNameTextView;
         @Bind(R.id.txv_tweet)

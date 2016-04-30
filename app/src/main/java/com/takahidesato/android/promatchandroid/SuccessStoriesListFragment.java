@@ -35,7 +35,7 @@ public class SuccessStoriesListFragment extends Fragment {
     private static final String KEY = "position";
 
     @Bind(R.id.srl_success)
-    SwipeRefreshLayout mSwipeRefreshLayout; // TODO call refresh(false) to stop animation
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.rcv_success)
     RecyclerView mRecyclerView;
     //@OnItemClick(R.id.rcv_success)
@@ -154,14 +154,15 @@ public class SuccessStoriesListFragment extends Fragment {
                         );
                         mSuccessList.add(item);
                     }
-
                     mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<YouTubeResponseBody> call, Throwable t) {
                 Log.e(TAG, "Retrofit YouTube Error: " + t.toString());
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

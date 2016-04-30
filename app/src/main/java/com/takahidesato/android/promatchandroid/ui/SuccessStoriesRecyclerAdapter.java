@@ -35,7 +35,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
 
     @Override
     public SuccessStoriesViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_success, null);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_success, viewGroup, false);
         SuccessStoriesViewHolder viewHolder = new SuccessStoriesViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         SuccessItem item = mSuccessList.get(i);
 
         Glide.with(mContext)
-                .load(item.thumbnailDefaultUrl)
+                .load(item.thumbnailMediumUrl)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.thumbnailImageView);
 

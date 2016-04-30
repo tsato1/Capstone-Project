@@ -4,7 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_view_margin"
+    android:layout_marginLeft="@dimen/card_view_margin"
+    android:layout_marginRight="@dimen/card_view_margin"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -14,17 +17,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/card_view_padding">
+        android:layout_height="match_parent">
         <ImageView
             android:id="@+id/imv_thumbnail_success"
             android:layout_width="@dimen/thumbnail_image_view_success_width"
-            android:layout_height="@dimen/thumbnail_image_view_success_height"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/thumbnail_image_view_success_margin"
             android:layout_alignParentTop="true" />
         <TextView
             android:id="@+id/txv_title_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imv_thumbnail_success"
             android:layout_toRightOf="@id/imv_thumbnail_success"/>
         <TextView
             android:id="@+id/txv_description_success"

@@ -165,14 +165,15 @@ public class TweetsListFragment extends Fragment {
                         );
                         mTweetsList.add(item);
                     }
-
                     mTweetsRecyclerAdapter.notifyDataSetChanged();
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<TwitterResponseBody>> call, Throwable t) {
                 Log.e(TAG, "Retrofit Twitter call Error: " + t.toString());
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

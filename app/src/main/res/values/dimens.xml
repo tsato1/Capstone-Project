@@ -3,11 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="recycler_view_padding">6dp</dimen>
-    <dimen name="card_view_padding">12dp</dimen>
+    <dimen name="card_view_margin">6dp</dimen>
     <dimen name="card_view_elevation">2dp</dimen>
     <dimen name="card_view_corner_radius">6dp</dimen>
 
-    <dimen name="thumbnail_image_view_success_width">100dp</dimen>
-    <dimen name="thumbnail_image_view_success_height">100dp</dimen>
+    <dimen name="thumbnail_image_view_success_width">140dp</dimen>
+    <dimen name="thumbnail_image_view_success_height">140dp</dimen>
+    <dimen name="thumbnail_image_view_success_margin">10dp</dimen>
+
+    <dimen name="profile_image_tweets_width">100dp</dimen>
+    <dimen name="profile_image_tweets_height">100dp</dimen>
+    <dimen name="profile_image_tweets_margin">10dp</dimen>
 </resources>
