@@ -1,13 +1,11 @@
 package com.takahidesato.android.promatchandroid;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +45,10 @@ public class ViewPagerFragment extends Fragment {
         //mTabs.setCustomTabView(R.layout.tab_item, R.id.txv_tab_title);
         mTabs.setDistributeEvenly(true);
         mTabs.setViewPager(mPager);
+    }
+
+    public void setCurrentItem(int page) {
+        mPager.setCurrentItem(page);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

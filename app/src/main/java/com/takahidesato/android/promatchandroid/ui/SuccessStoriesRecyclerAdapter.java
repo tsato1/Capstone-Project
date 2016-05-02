@@ -1,5 +1,6 @@
 package com.takahidesato.android.promatchandroid.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -37,14 +38,6 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
     public SuccessStoriesViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_success, viewGroup, false);
         SuccessStoriesViewHolder viewHolder = new SuccessStoriesViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
-                mContext.startActivity(intent);
-            }
-        });
         return viewHolder;
     }
 
@@ -74,9 +67,21 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         @Bind(R.id.txv_description_success)
         TextView descriptionTextView;
 
+        private Context mContext;
+
         public SuccessStoriesViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            mContext = view.getContext();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DetailActivity.class);
+                    intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
+                    Log.d("test", "title="+titleTextView.getText());
+                    ((Activity) mContext).startActivityForResult(intent, 1);
+                }
+            });
         }
     }
 }

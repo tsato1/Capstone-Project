@@ -1,5 +1,6 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,29 +39,6 @@ public class SuccessStoriesListFragment extends Fragment {
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.rcv_success)
     RecyclerView mRecyclerView;
-    //@OnItemClick(R.id.rcv_success)
-    //public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-    //    Log.d(TAG, "coming here");
-//        MovieItem item = (MovieItem) parent.getItemAtPosition(position);
-//
-//        if (mIsDualPane) {
-//            Log.d(MovieListFragment.class.getSimpleName(), "You clicked " + item.title + " at " + position);
-//            MovieDetailFragment movieDetailFragment = (MovieDetailFragment) getFragmentManager().findFragmentById(R.id.frag_movie_detail);
-//
-//            Bundle args = movieDetailFragment.getArguments();
-//            args.putParcelable("item", item);
-//            args.putInt("indexOfItem", position);
-//            args.putInt("pageCode", pageCode);
-//            movieDetailFragment.setUpLayout();
-//        } else {
-//            Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-//            if (pageCode == CODE_FAVORITE) item.poster = null;
-//            intent.putExtra("item", item);
-//            intent.putExtra("indexOfItem", position);
-//            intent.putExtra("pageCode", pageCode);
-//            startActivityForResult(intent, pageCode);
-//        }
-    //}
 
     private SuccessStoriesRecyclerAdapter mSuccessStoriesRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
@@ -165,6 +143,12 @@ public class SuccessStoriesListFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        Log.d("test", "oioioioioioio");
     }
 
     private void logDebug(YouTubeResponseBody body) {
