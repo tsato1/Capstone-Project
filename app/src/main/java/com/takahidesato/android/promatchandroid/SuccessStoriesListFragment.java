@@ -1,5 +1,6 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 /**
  * Created by tsato on 4/14/16.
  */
-public class SuccessStoriesListFragment extends Fragment {
+public class SuccessStoriesListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
     private static final String TAG = SuccessStoriesListFragment.class.getSimpleName();
     private static final String KEY = "position";
 
@@ -95,6 +96,7 @@ public class SuccessStoriesListFragment extends Fragment {
         mRecyclerView.setLayoutManager(manager);
 
         mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessList);
+        mSuccessStoriesRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
 
         //TODO wifi / network check
@@ -147,8 +149,17 @@ public class SuccessStoriesListFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
         Log.d("test", "oioioioioioio");
+        super.onActivityResult(requestCode, resultCode, intent);
+
+    }
+
+    @Override
+    public void onCardViewSelected(int position) {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
+        Log.d("test", "title ==== "+mSuccessList.get(position).title);
+        startActivityForResult(intent, 1);
     }
 
     private void logDebug(YouTubeResponseBody body) {
