@@ -1,5 +1,6 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,9 +32,8 @@ import retrofit2.Response;
 /**
  * Created by tsato on 4/15/16.
  */
-public class TweetsListFragment extends Fragment {
+public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapter.OnCardItemClickListener {
     private static final String TAG = TweetsListFragment.class.getSimpleName();
-    private static final String KEY = "position";
 
     @Bind(R.id.srl_tweets)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,10 +46,10 @@ public class TweetsListFragment extends Fragment {
     private static String sAuthorizationOAuth = "";
     private static String sAuthorizationCall = "";
 
-    public static TweetsListFragment getInstance(int position) {
+    public static TweetsListFragment getInstance(int key) {
         TweetsListFragment fragment = new TweetsListFragment();
         Bundle args = new Bundle();
-        args.putInt(KEY, position);
+        args.putInt(DetailActivity.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class TweetsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_tweets, container, false);
         Bundle args = getArguments();
-        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(KEY));
+        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(DetailActivity.FRAGMENT_KEY));
         ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,6 +105,7 @@ public class TweetsListFragment extends Fragment {
         mRecyclerView.setLayoutManager(manager);
 
         mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetsList);
+        mTweetsRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
         /***** onRestoreState() *****/
@@ -176,6 +177,14 @@ public class TweetsListFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onCardItemClick(int position) {
+        Intent intent = new Intent (getContext(), DetailActivity.class);
+        intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_TWEETS);
+        getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_TWEETS);
+        //getParentFragment().startActivity(intent);
     }
 
     private void logDebug(List<TwitterResponseBody> body) {

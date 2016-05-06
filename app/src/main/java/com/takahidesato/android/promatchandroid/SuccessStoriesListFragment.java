@@ -1,6 +1,5 @@
 package com.takahidesato.android.promatchandroid;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -34,7 +33,6 @@ import retrofit2.Response;
  */
 public class SuccessStoriesListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
     private static final String TAG = SuccessStoriesListFragment.class.getSimpleName();
-    private static final String KEY = "position";
 
     @Bind(R.id.srl_success)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -44,10 +42,10 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     private SuccessStoriesRecyclerAdapter mSuccessStoriesRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
 
-    public static SuccessStoriesListFragment getInstance(int position) {
+    public static SuccessStoriesListFragment getInstance(int key) {
         SuccessStoriesListFragment fragment = new SuccessStoriesListFragment();
         Bundle args = new Bundle();
-        args.putInt(KEY, position);
+        args.putInt(DetailActivity.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +54,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_success, container, false);
         Bundle args = getArguments();
-        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(KEY));
+        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(DetailActivity.FRAGMENT_KEY));
         ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -65,6 +63,8 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
                 retrieveData();
             }
         });
+
+        if (getParentFragment() == null) Log.d("test", "parentfragment == null");
 
         return view;
     }
@@ -148,18 +148,10 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.d("test", "oioioioioioio");
-        super.onActivityResult(requestCode, resultCode, intent);
-
-    }
-
-    @Override
-    public void onCardViewSelected(int position) {
+    public void onCardItemSelected(int position) {
         Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
-        Log.d("test", "title ==== "+mSuccessList.get(position).title);
-        startActivityForResult(intent, 1);
+        intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_SUCCESS);
+        getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_SUCCESS);
     }
 
     private void logDebug(YouTubeResponseBody body) {

@@ -26,7 +26,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
 
     private Context mContext;
     private List<SuccessItem> mSuccessList;
-    OnCardItemClickListener mOnCardItemClickListener;
+    private OnCardItemClickListener mOnCardItemClickListener;
 
     public SuccessStoriesRecyclerAdapter(Context context, List<SuccessItem> list) {
         mContext = context;
@@ -76,13 +76,13 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         @Override
         public void onClick(View v) {
             if (mOnCardItemClickListener != null) {
-                mOnCardItemClickListener.onCardViewSelected(getAdapterPosition());
+                mOnCardItemClickListener.onCardItemSelected(getAdapterPosition());
             }
         }
     }
 
     public interface OnCardItemClickListener {
-        void onCardViewSelected(int position);
+        void onCardItemSelected(int position);
     }
 
     public void setOnCardItemClickListener(final OnCardItemClickListener onCardItemClickListener) {

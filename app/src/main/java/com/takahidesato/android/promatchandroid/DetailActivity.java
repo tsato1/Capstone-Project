@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -13,6 +14,8 @@ import android.view.MenuItem;
  */
 public class DetailActivity extends AppCompatActivity {
     public static final String FRAGMENT_KEY = "fragment_key";
+    public static final int FRAGMENT_KEY_SUCCESS = 0;
+    public static final int FRAGMENT_KEY_TWEETS = 1;
 
     private int key;
 
@@ -30,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         key = getIntent().getExtras().getInt(FRAGMENT_KEY);
 
         Fragment fragment = null;
-        Class fragmentClass = SuccessStoriesDetailFragment.class;;
+        Class fragmentClass = SuccessStoriesDetailFragment.class;
         switch(key) {
             case 0:
                 fragmentClass = SuccessStoriesDetailFragment.class;
@@ -69,6 +72,9 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
+//            Log.d("test", "home button pushed");
+//            setResult(RESULT_OK);
+            super.onBackPressed();
             finish();
         }
 

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class ViewPagerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mContext = getContext();
 
-        mAdatper = new ViewPagerAdapter(getFragmentManager());
+        mAdatper = new ViewPagerAdapter(getChildFragmentManager());
 
         mPager = (ViewPager) getView().findViewById(R.id.view_pager);
         mPager.setAdapter(mAdatper);
@@ -54,7 +55,7 @@ public class ViewPagerFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
+        mPager.setCurrentItem(requestCode);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

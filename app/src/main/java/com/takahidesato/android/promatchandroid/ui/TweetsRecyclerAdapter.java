@@ -1,9 +1,7 @@
 package com.takahidesato.android.promatchandroid.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.takahidesato.android.promatchandroid.DetailActivity;
 import com.takahidesato.android.promatchandroid.R;
 
 import java.util.List;
@@ -27,6 +24,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
     private Context mContext;
     private List<TweetsItem> mTweetsList;
+    private OnCardItemClickListener mOnCardItemClickListener;
 
     public TweetsRecyclerAdapter(Context context, List<TweetsItem> list) {
         mContext = context;
@@ -37,15 +35,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public TweetsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item_tweets, viewGroup, false);
         TweetsViewHolder viewHolder = new TweetsViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.FRAGMENT_KEY, KEY);
-                mContext.startActivity(intent);
-            }
-        });
-
         return viewHolder;
     }
 
@@ -66,7 +55,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
         return mTweetsList!=null? mTweetsList.size(): 0;
     }
 
-    static class TweetsViewHolder extends RecyclerView.ViewHolder {
+    class TweetsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.imv_profile_pic_tweet)
         ImageView profileImageView;
         @Bind(R.id.txv_screen_name)
@@ -77,6 +66,20 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
         TweetsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            mOnCardItemClickListener.onCardItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnCardItemClickListener {
+        void onCardItemClick(int position);
+    }
+
+    public void setOnCardItemClickListener(final OnCardItemClickListener onCardItemClickListener) {
+        mOnCardItemClickListener = onCardItemClickListener;
     }
 }
