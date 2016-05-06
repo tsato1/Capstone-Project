@@ -72,10 +72,8 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-//            Log.d("test", "home button pushed");
-//            setResult(RESULT_OK);
-            super.onBackPressed();
             finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
