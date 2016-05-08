@@ -119,7 +119,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
                 if (response.code() == 200) {
                     YouTubeResponseBody body = response.body();
-                    //logDebug(body);
+                    logDebug(body);
                     mSuccessList.clear();
                     for (int i = 0; i < body.items.size(); i++) {
                         SuccessItem item = new SuccessItem(
@@ -151,6 +151,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     public void onCardItemSelected(int position) {
         Intent intent = new Intent(getContext(), DetailActivity.class);
         intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_SUCCESS);
+        intent.putExtra("test", mSuccessList.get(position).thumbnailMediumUrl);
         getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_SUCCESS);
     }
 

@@ -14,4 +14,6 @@
     <dimen name="profile_image_tweets_width">100dp</dimen>
     <dimen name="profile_image_tweets_height">100dp</dimen>
     <dimen name="profile_image_tweets_margin">10dp</dimen>
+
+    <dimen name="text_size_success_title">40sp</dimen>
 </resources>
