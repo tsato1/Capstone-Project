@@ -66,7 +66,7 @@ public class SuccessStoriesDetailFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String url = getActivity().getIntent().getExtras().getString("test");
+        String url = getActivity().getIntent().getExtras().getString("");
         Glide.with(getContext()).load(url).into(mSuccessImageView);
 
         mSuccessTitleTextView.setText("title");

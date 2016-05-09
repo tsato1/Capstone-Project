@@ -155,7 +155,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                     mTweetsList.clear();
                     for (int i = 0; i < body.size(); ++i) {
                         TweetsItem item = new TweetsItem(
-                                "id",
+                                -1,
                                 body.get(i).id_str,
                                 body.get(i).created_at,
                                 body.get(i).text,

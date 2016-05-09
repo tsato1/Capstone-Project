@@ -4,7 +4,7 @@ package com.takahidesato.android.promatchandroid.ui;
  * Created by tsato on 4/26/16.
  */
 public class TweetsItem {
-    public String id; // for this app
+    public int id; // for this app
     public String idStr; // made by twitter
     public String createdAt;
     public String text;
@@ -14,7 +14,7 @@ public class TweetsItem {
     public String mediaImageUrl;
 
     public TweetsItem(
-        String id,
+        int id,
         String idStr,
         String createdAt,
         String text,

@@ -123,7 +123,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
                     mSuccessList.clear();
                     for (int i = 0; i < body.items.size(); i++) {
                         SuccessItem item = new SuccessItem(
-                                "id",
+                                -1,
                                 body.items.get(i).id,
                                 body.items.get(i).snippet.publishedAt,
                                 body.items.get(i).snippet.channelId,
@@ -151,7 +151,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     public void onCardItemSelected(int position) {
         Intent intent = new Intent(getContext(), DetailActivity.class);
         intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_SUCCESS);
-        intent.putExtra("test", mSuccessList.get(position).thumbnailMediumUrl);
+        intent.putExtra("", mSuccessList.get(position).thumbnailMediumUrl);
         getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_SUCCESS);
     }
 
