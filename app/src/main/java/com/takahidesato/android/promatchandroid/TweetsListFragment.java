@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -33,7 +34,7 @@ import retrofit2.Response;
  * Created by tsato on 4/15/16.
  */
 public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapter.OnCardItemClickListener {
-    private static final String TAG = TweetsListFragment.class.getSimpleName();
+    public static final String TAG = TweetsListFragment.class.getSimpleName();
 
     @Bind(R.id.srl_tweets)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -42,6 +43,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
 
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
     private List<TweetsItem> mTweetsList = new ArrayList<>();
+    private boolean mIsDualPane;
 
     private static String sAuthorizationOAuth = "";
     private static String sAuthorizationCall = "";
@@ -101,6 +103,10 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                 columnCount = 2;
             }
         }
+
+        View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
+        mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
+
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
@@ -181,10 +187,21 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
 
     @Override
     public void onCardItemClick(int position) {
-        Intent intent = new Intent (getContext(), DetailActivity.class);
-        intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
-        getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
-        //getParentFragment().startActivity(intent);
+        Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
+
+        if (mIsDualPane) {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            TweetsDetailFragment fragment = (TweetsDetailFragment) manager.findFragmentByTag(TweetsDetailFragment.TAG);
+            Bundle args = fragment.getArguments();
+            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
+            args.putParcelable("item", mTweetsList.get(position));
+            fragment.setUpLayout();
+        } else {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
+            intent.putExtra("item", mTweetsList.get(position));
+            getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
+        }
     }
 
     private void logDebug(List<TwitterResponseBody> body) {

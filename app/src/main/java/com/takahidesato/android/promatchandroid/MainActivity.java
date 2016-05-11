@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TWITTER_API_KEY = "";
     public static final String TWITTER_API_SECRET = "";
 
+    public static boolean IS_DUAL_PANE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        IS_DUAL_PANE = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (IS_DUAL_PANE) {
             Fragment fragment = null;
             Class fragmentClass = SuccessStoriesDetailFragment.class;
 
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             fragment.setArguments(new Bundle());
 
             FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, "TAG").commit();
+            manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, SuccessStoriesDetailFragment.TAG).commit();
         }
 
     }

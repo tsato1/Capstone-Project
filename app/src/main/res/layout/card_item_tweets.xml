@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/imv_profile_pic_tweet"
+            android:id="@+id/imv_profile_pic_twitter"
             android:layout_width="@dimen/profile_image_tweets_width"
             android:layout_height="@dimen/profile_image_tweets_height"
             android:layout_margin="@dimen/profile_image_tweets_margin"
@@ -28,12 +28,12 @@
             android:id="@+id/txv_screen_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imv_profile_pic_tweet"/>
+            android:layout_below="@id/imv_profile_pic_twitter"/>
         <TextView
             android:id="@+id/txv_tweet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imv_profile_pic_tweet"
-            android:layout_toRightOf="@id/imv_profile_pic_tweet"/>
+            android:layout_alignTop="@id/imv_profile_pic_twitter"
+            android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

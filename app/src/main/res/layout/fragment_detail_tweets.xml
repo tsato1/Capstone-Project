@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.takahidesato.android.promatchandroid.ui.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/osv_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Detail tweets"/>
-</LinearLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imv_profile_pic_twitter"
+            android:layout_width="@dimen/profile_image_tweets_width"
+            android:layout_height="@dimen/profile_image_tweets_height"/>
+        <TextView
+            android:id="@+id/txv_name_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+        <TextView
+            android:id="@+id/txv_screen_name_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txv_name_twitter"
+            android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+        <TextView
+            android:id="@+id/txv_text_tweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txv_screen_name_twitter"
+            android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+    </RelativeLayout>
+</com.takahidesato.android.promatchandroid.ui.ObservableScrollView>

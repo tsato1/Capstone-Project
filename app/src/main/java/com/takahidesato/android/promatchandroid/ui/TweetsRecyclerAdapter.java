@@ -56,7 +56,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     }
 
     class TweetsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.imv_profile_pic_tweet)
+        @Bind(R.id.imv_profile_pic_twitter)
         ImageView profileImageView;
         @Bind(R.id.txv_screen_name)
         TextView screenNameTextView;

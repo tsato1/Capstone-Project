@@ -19,7 +19,8 @@ import butterknife.ButterKnife;
  * Created by tsato on 4/15/16.
  */
 public class SuccessStoriesDetailFragment extends Fragment {
-    private static final String TAG = SuccessStoriesDetailFragment.class.getSimpleName();
+    public  static final String TAG = SuccessStoriesDetailFragment.class.getSimpleName();
+
     private static final float PARALLAX_FACTOR = 1.25f;
 
     @Bind(R.id.osv_container)

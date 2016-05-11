@@ -1,7 +1,5 @@
 package com.takahidesato.android.promatchandroid;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -35,7 +33,7 @@ import retrofit2.Response;
  * Created by tsato on 4/14/16.
  */
 public class SuccessStoriesListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
-    private static final String TAG = SuccessStoriesListFragment.class.getSimpleName();
+    public static final String TAG = SuccessStoriesListFragment.class.getSimpleName();
 
     @Bind(R.id.srl_success)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -85,9 +83,6 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
         int columnCount = 1;
         int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
-        Log.d("test", "screenSize="+screenSize);
-
-        //mIsDualPane = (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE)? true: false;
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             columnCount = 2;
             /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -138,7 +133,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
                 if (response.code() == 200) {
                     YouTubeResponseBody body = response.body();
-                    logDebug(body);
+                    //logDebug(body);
                     mSuccessList.clear();
                     for (int i = 0; i < body.items.size(); i++) {
                         SuccessItem item = new SuccessItem(
@@ -172,7 +167,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
         if (mIsDualPane) {
             FragmentManager manager = getActivity().getSupportFragmentManager();
-            SuccessStoriesDetailFragment fragment = (SuccessStoriesDetailFragment) manager.findFragmentByTag("TAG");
+            SuccessStoriesDetailFragment fragment = (SuccessStoriesDetailFragment) manager.findFragmentByTag(SuccessStoriesDetailFragment.TAG);
             Bundle args = fragment.getArguments();
             args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
             args.putParcelable("item", mSuccessList.get(position));

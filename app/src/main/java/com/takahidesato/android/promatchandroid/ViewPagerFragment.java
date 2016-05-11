@@ -46,6 +46,22 @@ public class ViewPagerFragment extends Fragment {
 
         mPager = (ViewPager) getView().findViewById(R.id.view_pager);
         mPager.setAdapter(mAdatper);
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (MainActivity.IS_DUAL_PANE) {
+                    prepareDetailFragment(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         mTabs = (SlidingTabLayout) getView().findViewById(R.id.tab);
         //mTabs.setCustomTabView(R.layout.tab_item, R.id.txv_tab_title);
@@ -53,13 +69,42 @@ public class ViewPagerFragment extends Fragment {
         mTabs.setViewPager(mPager);
     }
 
-    public void setCurrentItem(int page) {
-        mPager.setCurrentItem(page);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         mPager.setCurrentItem(requestCode);
+    }
+
+    private void prepareDetailFragment(int position) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        String tag = "";
+
+        switch (position) {
+            case FRAGMENT_KEY_SUCCESS:
+                fragmentClass = SuccessStoriesDetailFragment.class;
+                tag = SuccessStoriesDetailFragment.TAG;
+                break;
+            case FRAGMENT_KEY_TWEETS:
+                fragmentClass = TweetsDetailFragment.class;
+                tag = TweetsDetailFragment.TAG;
+                break;
+            default:
+                fragmentClass = SuccessStoriesDetailFragment.class;
+                tag = SuccessStoriesDetailFragment.TAG;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        fragment.setArguments(new Bundle());
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, tag).commit();
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
