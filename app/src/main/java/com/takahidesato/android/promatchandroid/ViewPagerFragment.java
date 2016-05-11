@@ -18,6 +18,10 @@ import com.takahidesato.android.promatchandroid.tab.SlidingTabLayout;
  * Created by tsato on 4/15/16.
  */
 public class ViewPagerFragment extends Fragment {
+    public static final String FRAGMENT_KEY = "fragment_key";
+    public static final int FRAGMENT_KEY_SUCCESS = 0;
+    public static final int FRAGMENT_KEY_TWEETS = 1;
+
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private static final int NUM_ITEMS = 2;
 
@@ -69,9 +73,9 @@ public class ViewPagerFragment extends Fragment {
         @Override
         public Fragment getItem(int index) {
             switch (index) {
-                case 0:
+                case FRAGMENT_KEY_SUCCESS:
                     return SuccessStoriesListFragment.getInstance(index);
-                case 1:
+                case FRAGMENT_KEY_TWEETS:
                     return TweetsListFragment.getInstance(index);
                 default:
                     return SuccessStoriesListFragment.getInstance(index);

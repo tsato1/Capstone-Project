@@ -1,9 +1,12 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -41,11 +44,12 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
     private SuccessStoriesRecyclerAdapter mSuccessStoriesRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
+    private boolean mIsDualPane;
 
     public static SuccessStoriesListFragment getInstance(int key) {
         SuccessStoriesListFragment fragment = new SuccessStoriesListFragment();
         Bundle args = new Bundle();
-        args.putInt(DetailActivity.FRAGMENT_KEY, key);
+        args.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +58,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_success, container, false);
         Bundle args = getArguments();
-        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(DetailActivity.FRAGMENT_KEY));
+        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(ViewPagerFragment.FRAGMENT_KEY));
         ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -63,8 +67,6 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
                 retrieveData();
             }
         });
-
-        if (getParentFragment() == null) Log.d("test", "parentfragment == null");
 
         return view;
     }
@@ -82,22 +84,39 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
         /***** determining column count for staggered grid view *****/
         int columnCount = 1;
         int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+
+        Log.d("test", "screenSize="+screenSize);
+
+        //mIsDualPane = (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE)? true: false;
+        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             columnCount = 2;
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 columnCount = 3;
-            }
+            }***/
         } else {
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 columnCount = 2;
             }
         }
+
+        View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
+        mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
+
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
         mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessList);
         mSuccessStoriesRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
+
+//        if (savedInstanceState != null) {
+//            mMovieItem = savedInstanceState.getParcelable("item");
+//            url = savedInstanceState.getString("url");
+//            pageCode = savedInstanceState.getInt("isFavoriteShown");
+//        }
+//
+//        if (pageCode == CODE_FAVORITE) loadFromDatabase();
+//        else fetchFromCloud();
 
         //TODO wifi / network check
         retrieveData();
@@ -149,10 +168,21 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
     @Override
     public void onCardItemSelected(int position) {
-        Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_SUCCESS);
-        intent.putExtra("", mSuccessList.get(position).thumbnailMediumUrl);
-        getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_SUCCESS);
+        Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
+
+        if (mIsDualPane) {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            SuccessStoriesDetailFragment fragment = (SuccessStoriesDetailFragment) manager.findFragmentByTag("TAG");
+            Bundle args = fragment.getArguments();
+            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
+            args.putParcelable("item", mSuccessList.get(position));
+            fragment.setUpLayout();
+        } else {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
+            intent.putExtra("item", mSuccessList.get(position));
+            getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
+        }
     }
 
     private void logDebug(YouTubeResponseBody body) {

@@ -12,9 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
-    <fragment
-        class="com.takahidesato.android.promatchandroid.SuccessStoriesDetailFragment"
-        android:id="@+id/frg_detail"
+    <FrameLayout
+        android:id="@+id/frl_fragment_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"/>

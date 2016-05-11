@@ -2,16 +2,15 @@ package com.takahidesato.android.promatchandroid;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.takahidesato.android.promatchandroid.ui.ObservableScrollView;
+import com.takahidesato.android.promatchandroid.ui.SuccessItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +32,7 @@ public class SuccessStoriesDetailFragment extends Fragment {
     TextView mSuccessTitleTextView;
 
     private int mScrollY;
+    private SuccessItem mSuccessItem;
 
     public static SuccessStoriesDetailFragment getInstance() {
         SuccessStoriesDetailFragment fragment = new SuccessStoriesDetailFragment();
@@ -65,10 +65,22 @@ public class SuccessStoriesDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setUpLayout();
+    }
 
-        String url = getActivity().getIntent().getExtras().getString("");
-        Glide.with(getContext()).load(url).into(mSuccessImageView);
+    public void setUpLayout() {
+        if (getArguments() != null) {
+            mSuccessItem = getArguments().getParcelable("item");
+        }
 
-        mSuccessTitleTextView.setText("title");
+        if (mSuccessItem == null) {
+
+        } else {
+            String url = mSuccessItem.thumbnailMediumUrl;
+            Glide.with(getContext()).load(url).into(mSuccessImageView);
+
+            mSuccessTitleTextView.setText(mSuccessItem.title);
+        }
+
     }
 }

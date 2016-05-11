@@ -49,7 +49,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     public static TweetsListFragment getInstance(int key) {
         TweetsListFragment fragment = new TweetsListFragment();
         Bundle args = new Bundle();
-        args.putInt(DetailActivity.FRAGMENT_KEY, key);
+        args.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_tweets, container, false);
         Bundle args = getArguments();
-        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(DetailActivity.FRAGMENT_KEY));
+        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(ViewPagerFragment.FRAGMENT_KEY));
         ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -182,8 +182,8 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     @Override
     public void onCardItemClick(int position) {
         Intent intent = new Intent (getContext(), DetailActivity.class);
-        intent.putExtra(DetailActivity.FRAGMENT_KEY, DetailActivity.FRAGMENT_KEY_TWEETS);
-        getParentFragment().startActivityForResult(intent, DetailActivity.FRAGMENT_KEY_TWEETS);
+        intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
+        getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
         //getParentFragment().startActivity(intent);
     }
 
