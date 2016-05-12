@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
 /**
  * Created by tsato on 4/15/16.
  */
-public class SuccessStoriesDetailFragment extends Fragment {
-    public  static final String TAG = SuccessStoriesDetailFragment.class.getSimpleName();
+public class SuccessDetailFragment extends Fragment {
+    public  static final String TAG = SuccessDetailFragment.class.getSimpleName();
 
     private static final float PARALLAX_FACTOR = 1.25f;
 
@@ -35,8 +35,8 @@ public class SuccessStoriesDetailFragment extends Fragment {
     private int mScrollY;
     private SuccessItem mSuccessItem;
 
-    public static SuccessStoriesDetailFragment getInstance() {
-        SuccessStoriesDetailFragment fragment = new SuccessStoriesDetailFragment();
+    public static SuccessDetailFragment getInstance() {
+        SuccessDetailFragment fragment = new SuccessDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

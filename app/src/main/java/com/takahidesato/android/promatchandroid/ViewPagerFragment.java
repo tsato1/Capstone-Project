@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,16 +80,16 @@ public class ViewPagerFragment extends Fragment {
 
         switch (position) {
             case FRAGMENT_KEY_SUCCESS:
-                fragmentClass = SuccessStoriesDetailFragment.class;
-                tag = SuccessStoriesDetailFragment.TAG;
+                fragmentClass = SuccessDetailFragment.class;
+                tag = SuccessDetailFragment.TAG;
                 break;
             case FRAGMENT_KEY_TWEETS:
                 fragmentClass = TweetsDetailFragment.class;
                 tag = TweetsDetailFragment.TAG;
                 break;
             default:
-                fragmentClass = SuccessStoriesDetailFragment.class;
-                tag = SuccessStoriesDetailFragment.TAG;
+                fragmentClass = SuccessDetailFragment.class;
+                tag = SuccessDetailFragment.TAG;
         }
 
         try {
@@ -119,11 +118,11 @@ public class ViewPagerFragment extends Fragment {
         public Fragment getItem(int index) {
             switch (index) {
                 case FRAGMENT_KEY_SUCCESS:
-                    return SuccessStoriesListFragment.getInstance(index);
+                    return SuccessListFragment.getInstance(index);
                 case FRAGMENT_KEY_TWEETS:
                     return TweetsListFragment.getInstance(index);
                 default:
-                    return SuccessStoriesListFragment.getInstance(index);
+                    return SuccessListFragment.getInstance(index);
             }
         }
 

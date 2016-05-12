@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -29,10 +28,10 @@ public class DetailActivity extends AppCompatActivity {
         key = getIntent().getExtras().getInt(ViewPagerFragment.FRAGMENT_KEY);
 
         Fragment fragment = null;
-        Class fragmentClass = SuccessStoriesDetailFragment.class;
+        Class fragmentClass = SuccessDetailFragment.class;
         switch(key) {
             case 0:
-                fragmentClass = SuccessStoriesDetailFragment.class;
+                fragmentClass = SuccessDetailFragment.class;
                 break;
             case 1:
                 fragmentClass = TweetsDetailFragment.class;

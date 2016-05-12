@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (IS_DUAL_PANE) {
             Fragment fragment = null;
-            Class fragmentClass = SuccessStoriesDetailFragment.class;
+            Class fragmentClass = SuccessDetailFragment.class;
 
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             fragment.setArguments(new Bundle());
 
             FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, SuccessStoriesDetailFragment.TAG).commit();
+            manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, SuccessDetailFragment.TAG).commit();
         }
 
     }

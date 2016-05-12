@@ -32,8 +32,8 @@ import retrofit2.Response;
 /**
  * Created by tsato on 4/14/16.
  */
-public class SuccessStoriesListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
-    public static final String TAG = SuccessStoriesListFragment.class.getSimpleName();
+public class SuccessListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
+    public static final String TAG = SuccessListFragment.class.getSimpleName();
 
     @Bind(R.id.srl_success)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -44,8 +44,8 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
     private List<SuccessItem> mSuccessList = new ArrayList<>();
     private boolean mIsDualPane;
 
-    public static SuccessStoriesListFragment getInstance(int key) {
-        SuccessStoriesListFragment fragment = new SuccessStoriesListFragment();
+    public static SuccessListFragment getInstance(int key) {
+        SuccessListFragment fragment = new SuccessListFragment();
         Bundle args = new Bundle();
         args.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
         fragment.setArguments(args);
@@ -167,7 +167,7 @@ public class SuccessStoriesListFragment extends Fragment implements SuccessStori
 
         if (mIsDualPane) {
             FragmentManager manager = getActivity().getSupportFragmentManager();
-            SuccessStoriesDetailFragment fragment = (SuccessStoriesDetailFragment) manager.findFragmentByTag(SuccessStoriesDetailFragment.TAG);
+            SuccessDetailFragment fragment = (SuccessDetailFragment) manager.findFragmentByTag(SuccessDetailFragment.TAG);
             Bundle args = fragment.getArguments();
             args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
             args.putParcelable("item", mSuccessList.get(position));
