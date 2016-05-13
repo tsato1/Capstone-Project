@@ -20,6 +20,8 @@ public class ViewPagerFragment extends Fragment {
     public static final String FRAGMENT_KEY = "fragment_key";
     public static final int FRAGMENT_KEY_SUCCESS = 0;
     public static final int FRAGMENT_KEY_TWEETS = 1;
+    public static final int FRAGMENT_KEY_SUCCESS_FAVORITE = 2;
+    public static final int FRAGMENT_KEY_TWEETS_FAVORITE = 3;
 
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private static final int NUM_ITEMS = 2;
@@ -87,6 +89,14 @@ public class ViewPagerFragment extends Fragment {
                 fragmentClass = TweetsDetailFragment.class;
                 tag = TweetsDetailFragment.TAG;
                 break;
+            case FRAGMENT_KEY_SUCCESS_FAVORITE:
+                fragmentClass = SuccessDetailFragment.class;
+                tag = SuccessDetailFragment.TAG;
+                break;
+            case FRAGMENT_KEY_TWEETS_FAVORITE:
+                fragmentClass = TweetsDetailFragment.class;
+                tag = TweetsDetailFragment.TAG;
+                break;
             default:
                 fragmentClass = SuccessDetailFragment.class;
                 tag = SuccessDetailFragment.TAG;
@@ -121,6 +131,10 @@ public class ViewPagerFragment extends Fragment {
                     return SuccessListFragment.getInstance(index);
                 case FRAGMENT_KEY_TWEETS:
                     return TweetsListFragment.getInstance(index);
+                case FRAGMENT_KEY_SUCCESS_FAVORITE:
+                    return SuccessListFavoriteFragment.getInstance(index);
+                case FRAGMENT_KEY_TWEETS_FAVORITE:
+                    return TweetsListFavoriteFragment.getInstance(index);
                 default:
                     return SuccessListFragment.getInstance(index);
             }
