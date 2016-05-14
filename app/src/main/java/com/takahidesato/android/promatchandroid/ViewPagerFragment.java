@@ -24,7 +24,7 @@ public class ViewPagerFragment extends Fragment {
     public static final int FRAGMENT_KEY_TWEETS_FAVORITE = 3;
 
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
-    private static final int NUM_ITEMS = 2;
+    private static final int NUM_ITEMS = 4;
 
     private Context mContext;
 

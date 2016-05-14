@@ -18,7 +18,7 @@ import com.takahidesato.android.promatchandroid.network.YouTubeApi;
 import com.takahidesato.android.promatchandroid.network.YouTubeResponseBody;
 import com.takahidesato.android.promatchandroid.network.YouTubeServiceGenerator;
 import com.takahidesato.android.promatchandroid.ui.SuccessItem;
-import com.takahidesato.android.promatchandroid.ui.SuccessStoriesRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.ui.SuccessRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import retrofit2.Response;
 /**
  * Created by tsato on 4/14/16.
  */
-public class SuccessListFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
+public class SuccessListFragment extends Fragment implements SuccessRecyclerAdapter.OnCardItemClickListener {
     public static final String TAG = SuccessListFragment.class.getSimpleName();
 
     @Bind(R.id.srl_success)
@@ -40,7 +40,7 @@ public class SuccessListFragment extends Fragment implements SuccessStoriesRecyc
     @Bind(R.id.rcv_success)
     RecyclerView mRecyclerView;
 
-    private SuccessStoriesRecyclerAdapter mSuccessStoriesRecyclerAdapter = null;
+    private SuccessRecyclerAdapter mSuccessRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
     private boolean mIsDualPane;
 
@@ -100,9 +100,9 @@ public class SuccessListFragment extends Fragment implements SuccessStoriesRecyc
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessList);
-        mSuccessStoriesRecyclerAdapter.setOnCardItemClickListener(this);
-        mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
+        mSuccessRecyclerAdapter = new SuccessRecyclerAdapter(getContext(), mSuccessList);
+        mSuccessRecyclerAdapter.setOnCardItemClickListener(this);
+        mRecyclerView.setAdapter(mSuccessRecyclerAdapter);
 
 //        if (savedInstanceState != null) {
 //            mMovieItem = savedInstanceState.getParcelable("item");
@@ -148,7 +148,7 @@ public class SuccessListFragment extends Fragment implements SuccessStoriesRecyc
                         );
                         mSuccessList.add(item);
                     }
-                    mSuccessStoriesRecyclerAdapter.notifyDataSetChanged();
+                    mSuccessRecyclerAdapter.notifyDataSetChanged();
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -162,7 +162,7 @@ public class SuccessListFragment extends Fragment implements SuccessStoriesRecyc
     }
 
     @Override
-    public void onCardItemSelected(int position) {
+    public void onCardItemClick(int position) {
         Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
 
         if (mIsDualPane) {

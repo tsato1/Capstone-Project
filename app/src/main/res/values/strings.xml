@@ -3,9 +3,13 @@
 
     <string name="success">Success Stories</string>
     <string name="tweets">Tweets</string>
+    <string name="success_favorite">Favorite Success</string>
+    <string name="tweets_favorite">Favorite Tweets</string>
     <string-array name="tabs">
         <item>@string/success</item>
         <item>@string/tweets</item>
+        <item>@string/success_favorite</item>
+        <item>@string/tweets_favorite</item>
     </string-array>
 
     <string name="action_favorites">Favorites</string>

@@ -1,8 +1,10 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -11,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.takahidesato.android.promatchandroid.ui.SuccessItem;
-import com.takahidesato.android.promatchandroid.ui.SuccessStoriesRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.ui.TweetsItem;
+import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +25,16 @@ import butterknife.ButterKnife;
 /**
  * Created by tsato on 5/11/16.
  */
-public class TweetsListFavoriteFragment extends Fragment implements SuccessStoriesRecyclerAdapter.OnCardItemClickListener {
+public class TweetsListFavoriteFragment extends Fragment implements TweetsRecyclerAdapter.OnCardItemClickListener {
     public static final String TAG = TweetsListFavoriteFragment.class.getSimpleName();
 
-    @Bind(R.id.srl_success)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.rcv_success)
+    @Bind(R.id.srl_tweets)
+    SwipeRefreshLayout mTweetsRefreshLayout;
+    @Bind(R.id.rcv_tweets)
     RecyclerView mRecyclerView;
 
-    private SuccessStoriesRecyclerAdapter mSuccessStoriesRecyclerAdapter = null;
-    private List<SuccessItem> mSuccessFavoriteList = new ArrayList<>();
+    private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
+    private List<TweetsItem> mTweetsFavoriteList = new ArrayList<>();
     private boolean mIsDualPane;
 
     public static Fragment getInstance(int key) {
@@ -82,16 +84,30 @@ public class TweetsListFavoriteFragment extends Fragment implements SuccessStori
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        mSuccessStoriesRecyclerAdapter = new SuccessStoriesRecyclerAdapter(getContext(), mSuccessFavoriteList);
-        mSuccessStoriesRecyclerAdapter.setOnCardItemClickListener(this);
-        mRecyclerView.setAdapter(mSuccessStoriesRecyclerAdapter);
+        mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetsFavoriteList);
+        mTweetsRecyclerAdapter.setOnCardItemClickListener(this);
+        mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
         //todo implement cursor loader
     }
 
 
     @Override
-    public void onCardItemSelected(int position) {
+    public void onCardItemClick(int position) {
+        Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
 
+        if (mIsDualPane) {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            SuccessDetailFragment fragment = (SuccessDetailFragment) manager.findFragmentByTag(SuccessDetailFragment.TAG);
+            Bundle args = fragment.getArguments();
+            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
+            args.putParcelable("item", mTweetsFavoriteList.get(position));
+            fragment.setUpLayout();
+        } else {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
+            intent.putExtra("item", mTweetsFavoriteList.get(position));
+            getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
+        }
     }
 }

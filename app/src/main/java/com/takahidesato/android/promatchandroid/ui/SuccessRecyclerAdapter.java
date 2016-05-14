@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
 /**
  * Created by tsato on 4/17/16.
  */
-public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessStoriesRecyclerAdapter.SuccessStoriesViewHolder> {
-    private final static String TAG = SuccessStoriesRecyclerAdapter.class.getSimpleName();
+public class SuccessRecyclerAdapter extends RecyclerView.Adapter<SuccessRecyclerAdapter.SuccessStoriesViewHolder> {
+    private final static String TAG = SuccessRecyclerAdapter.class.getSimpleName();
 
     private final static int KEY = 0; // = SuccessDetailFragment
 
@@ -28,7 +28,7 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
     private List<SuccessItem> mSuccessList;
     private OnCardItemClickListener mOnCardItemClickListener;
 
-    public SuccessStoriesRecyclerAdapter(Context context, List<SuccessItem> list) {
+    public SuccessRecyclerAdapter(Context context, List<SuccessItem> list) {
         mContext = context;
         mSuccessList = list;
     }
@@ -76,13 +76,13 @@ public class SuccessStoriesRecyclerAdapter extends RecyclerView.Adapter<SuccessS
         @Override
         public void onClick(View v) {
             if (mOnCardItemClickListener != null) {
-                mOnCardItemClickListener.onCardItemSelected(getAdapterPosition());
+                mOnCardItemClickListener.onCardItemClick(getAdapterPosition());
             }
         }
     }
 
     public interface OnCardItemClickListener {
-        void onCardItemSelected(int position);
+        void onCardItemClick(int position);
     }
 
     public void setOnCardItemClickListener(final OnCardItemClickListener onCardItemClickListener) {
