@@ -23,7 +23,7 @@ public class DBContentProvider extends ContentProvider {
     private static final String SQLITE_FILENAME = "promatch.sqlite";
 
     public enum Contract {
-        TABLE_VIDEOS(
+        TABLE_SUCCESS(
                 BaseColumns._ID,
                 DBColumns.COL_ID_ITEM,
                 DBColumns.COL_PUBLISHED_AT,
@@ -60,12 +60,12 @@ public class DBContentProvider extends ContentProvider {
 
     public static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_VIDEOS.tableName, Contract.TABLE_VIDEOS.allCode);
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_VIDEOS.tableName + "/#", Contract.TABLE_VIDEOS.byIdCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName, Contract.TABLE_SUCCESS.allCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName + "/#", Contract.TABLE_SUCCESS.byIdCode);
         sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS.tableName, Contract.TABLE_TWEETS.allCode);
         sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS + "/#", Contract.TABLE_TWEETS.byIdCode);
-//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_VIDEOS.tableName, Movie.TABLE_VIDEOS.allCode);
-//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_VIDEOS + "/#", Movie.TABLE_VIDEOS.byIdCode);
+//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS.tableName, Movie.TABLE_SUCCESS.allCode);
+//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS + "/#", Movie.TABLE_SUCCESS.byIdCode);
     }
 
 

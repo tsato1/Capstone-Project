@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.takahidesato.android.promatchandroid.ui.ObservableScrollView
+<com.takahidesato.android.promatchandroid.adapter.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/osv_container"
     android:layout_width="match_parent"
@@ -32,4 +32,4 @@
             android:layout_below="@id/txv_screen_name_twitter"
             android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
     </RelativeLayout>
-</com.takahidesato.android.promatchandroid.ui.ObservableScrollView>
+</com.takahidesato.android.promatchandroid.adapter.ObservableScrollView>

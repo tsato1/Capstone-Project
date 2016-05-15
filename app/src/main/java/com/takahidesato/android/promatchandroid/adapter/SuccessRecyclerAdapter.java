@@ -1,4 +1,4 @@
-package com.takahidesato.android.promatchandroid.ui;
+package com.takahidesato.android.promatchandroid.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

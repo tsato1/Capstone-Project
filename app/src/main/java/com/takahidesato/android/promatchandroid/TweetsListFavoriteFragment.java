@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.takahidesato.android.promatchandroid.ui.TweetsItem;
-import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
+import com.takahidesato.android.promatchandroid.adapter.TweetsRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:configChanges="orientation"
         android:theme="@style/AppTheme">
+        <provider
+            android:authorities="com.takahidesato.android.promatchandroid.database"
+            android:name=".database.DBContentProvider"
+            android:exported="true">
+        </provider>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"

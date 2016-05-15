@@ -1,4 +1,4 @@
-package com.takahidesato.android.promatchandroid.ui;
+package com.takahidesato.android.promatchandroid.adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;

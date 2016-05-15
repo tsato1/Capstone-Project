@@ -2,9 +2,12 @@ package com.takahidesato.android.promatchandroid;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -13,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.takahidesato.android.promatchandroid.ui.SuccessItem;
-import com.takahidesato.android.promatchandroid.ui.SuccessRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
+import com.takahidesato.android.promatchandroid.adapter.SuccessRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.database.DBColumns;
+import com.takahidesato.android.promatchandroid.database.DBLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +30,8 @@ import butterknife.ButterKnife;
 /**
  * Created by tsato on 5/11/16.
  */
-public class SuccessListFavoriteFragment extends Fragment implements SuccessRecyclerAdapter.OnCardItemClickListener {
+public class SuccessListFavoriteFragment extends Fragment
+        implements SuccessRecyclerAdapter.OnCardItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
     public static final String TAG = SuccessListFavoriteFragment.class.getSimpleName();
 
     @Bind(R.id.srl_success)
@@ -36,6 +42,7 @@ public class SuccessListFavoriteFragment extends Fragment implements SuccessRecy
     private SuccessRecyclerAdapter mSuccessRecyclerAdapter = null;
     private List<SuccessItem> mSuccessFavoriteList = new ArrayList<>();
     private boolean mIsDualPane;
+    private Cursor mCursor;
 
     public static Fragment getInstance(int key) {
         Fragment fragment = new SuccessListFavoriteFragment();
@@ -65,6 +72,8 @@ public class SuccessListFavoriteFragment extends Fragment implements SuccessRecy
     @Override
     public void onActivityCreated(Bundle savedInstatnceState) {
         super.onActivityCreated(savedInstatnceState);
+
+        getLoaderManager().initLoader(0, null, this);
 
         View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
         mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
@@ -111,5 +120,36 @@ public class SuccessListFavoriteFragment extends Fragment implements SuccessRecy
             intent.putExtra("item", mSuccessFavoriteList.get(position));
             getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return DBLoader.newInstanceForAll(getContext(), DBColumns.TABLE_SUCCESS);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        mCursor = cursor;
+
+        if (mCursor.moveToFirst()) {
+            do {
+                SuccessItem item = new SuccessItem(
+                        mCursor.getInt(mCursor.getColumnIndex(DBColumns._ID)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_ID_ITEM)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_PUBLISHED_AT)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_CHANNEL_ID)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_TITLE)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_DESCRIPTION)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_DEFAULT_URL)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_MEDIUM_URL))
+                );
+                Log.d(TAG, "_id = " + item.id + " : " + item.title);
+            } while (mCursor.moveToNext());
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        mCursor = null;
     }
 }

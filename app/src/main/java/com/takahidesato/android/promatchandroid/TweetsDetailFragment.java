@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.takahidesato.android.promatchandroid.ui.TweetsItem;
+import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

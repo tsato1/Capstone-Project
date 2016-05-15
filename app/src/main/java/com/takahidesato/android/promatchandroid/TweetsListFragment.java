@@ -18,8 +18,8 @@ import com.takahidesato.android.promatchandroid.network.TwitterApi;
 import com.takahidesato.android.promatchandroid.network.TwitterResponseBody;
 import com.takahidesato.android.promatchandroid.network.TwitterServiceGenerator;
 import com.takahidesato.android.promatchandroid.network.Util;
-import com.takahidesato.android.promatchandroid.ui.TweetsItem;
-import com.takahidesato.android.promatchandroid.ui.TweetsRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
+import com.takahidesato.android.promatchandroid.adapter.TweetsRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

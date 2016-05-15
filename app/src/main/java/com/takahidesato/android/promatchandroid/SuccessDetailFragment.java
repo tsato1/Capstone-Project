@@ -9,11 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.takahidesato.android.promatchandroid.ui.ObservableScrollView;
-import com.takahidesato.android.promatchandroid.ui.SuccessItem;
+import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
+import com.takahidesato.android.promatchandroid.adapter.SuccessAsync;
+import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tsato on 4/15/16.
@@ -23,6 +25,8 @@ public class SuccessDetailFragment extends Fragment {
 
     private static final float PARALLAX_FACTOR = 1.25f;
 
+    private static boolean sIsFavorite = false;
+
     @Bind(R.id.osv_container)
     ObservableScrollView mObservableScrollView;
     @Bind(R.id.frl_success_image_container)
@@ -31,6 +35,24 @@ public class SuccessDetailFragment extends Fragment {
     ImageView mSuccessImageView;
     @Bind(R.id.txv_title_success)
     TextView mSuccessTitleTextView;
+    @Bind(R.id.imv_favorite)
+    ImageView mFavoriteImageView;
+    @OnClick(R.id.imv_favorite)
+    public void onFavoriteClick(View v) {
+        if (sIsFavorite) {
+            // todo are you sure you want unfavorite this item?
+        } else {
+            new SuccessAsync(getActivity(), mSuccessItem).execute();
+        }
+        sIsFavorite = !sIsFavorite;
+        setFavoriteImageView();
+    }
+    @Bind(R.id.imv_share)
+    ImageView mShareImageView;
+    @OnClick(R.id.imv_share)
+    public void onShareClick(View v) {
+
+    }
 
     private int mScrollY;
     private SuccessItem mSuccessItem;
@@ -54,6 +76,7 @@ public class SuccessDetailFragment extends Fragment {
                 mSuccessImageContainer.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
             }
         });
+
         return view;
     }
 
@@ -66,7 +89,17 @@ public class SuccessDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            sIsFavorite = savedInstanceState.getBoolean("isFavorite");
+        }
+
         setUpLayout();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("isFavorite", sIsFavorite);
     }
 
     public void setUpLayout() {
@@ -83,5 +116,14 @@ public class SuccessDetailFragment extends Fragment {
             mSuccessTitleTextView.setText(mSuccessItem.title);
         }
 
+        setFavoriteImageView();
+    }
+
+    public void setFavoriteImageView() {
+        if (sIsFavorite) {
+            mFavoriteImageView.setImageResource(R.mipmap.ic_star_black_24dp);
+        } else {
+            mFavoriteImageView.setImageResource(R.mipmap.ic_star_border_black_24dp);
+        }
     }
 }

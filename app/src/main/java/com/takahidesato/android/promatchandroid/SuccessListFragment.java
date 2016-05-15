@@ -17,8 +17,8 @@ import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.network.YouTubeApi;
 import com.takahidesato.android.promatchandroid.network.YouTubeResponseBody;
 import com.takahidesato.android.promatchandroid.network.YouTubeServiceGenerator;
-import com.takahidesato.android.promatchandroid.ui.SuccessItem;
-import com.takahidesato.android.promatchandroid.ui.SuccessRecyclerAdapter;
+import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
+import com.takahidesato.android.promatchandroid.adapter.SuccessRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

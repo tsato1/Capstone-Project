@@ -1,9 +1,7 @@
-package com.takahidesato.android.promatchandroid.ui;
+package com.takahidesato.android.promatchandroid.adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.List;
 
 /**
  * Created by tsato on 4/26/16.

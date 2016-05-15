@@ -6,9 +6,7 @@ import android.provider.BaseColumns;
  * Created by tsato on 5/7/16.
  */
 public class DBColumns implements BaseColumns {
-    public static final String COL_ID = "_id";
-
-    public static final String TABLE_VIDEOS = "table_videos";
+    public static final String TABLE_SUCCESS = "table_success";
     public static final String COL_ID_ITEM = "_id_item";
     public static final String COL_PUBLISHED_AT = "_published_at";
     public static final String COL_CHANNEL_ID = "_channel_id";
