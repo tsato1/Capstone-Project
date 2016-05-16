@@ -11,8 +11,8 @@
         <item>@string/success_favorite</item>
         <item>@string/tweets_favorite</item>
     </string-array>
-
     <string name="action_favorites">Favorites</string>
 
+    <string name="item_was_saved">Item was saved as Favorite</string>
 
 </resources>

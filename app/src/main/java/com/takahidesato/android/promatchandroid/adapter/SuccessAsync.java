@@ -3,7 +3,9 @@ package com.takahidesato.android.promatchandroid.adapter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.takahidesato.android.promatchandroid.R;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
 import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 
@@ -43,6 +45,6 @@ public class SuccessAsync extends AsyncTask<String, Void, String> {
 
     @Override
     public void onPostExecute(String result) {
-
+        Toast.makeText(mContext, R.string.item_was_saved, Toast.LENGTH_SHORT).show();
     }
 }

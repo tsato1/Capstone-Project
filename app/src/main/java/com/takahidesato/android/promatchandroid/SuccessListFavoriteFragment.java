@@ -56,11 +56,21 @@ public class SuccessListFavoriteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_success, container, false);
         ButterKnife.bind(this, view);
-
         Bundle args = getArguments();
         if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(ViewPagerFragment.FRAGMENT_KEY));
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reloadData();
+            }
+        });
+
         return view;
+    }
+
+    public void reloadData() {
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
@@ -99,8 +109,6 @@ public class SuccessListFavoriteFragment extends Fragment
         mSuccessRecyclerAdapter = new SuccessRecyclerAdapter(getContext(), mSuccessFavoriteList);
         mSuccessRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mSuccessRecyclerAdapter);
-
-        //todo implement cursor loader
     }
 
     @Override
@@ -130,6 +138,7 @@ public class SuccessListFavoriteFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mCursor = cursor;
+        mSuccessFavoriteList.clear();
 
         if (mCursor.moveToFirst()) {
             do {
@@ -143,13 +152,18 @@ public class SuccessListFavoriteFragment extends Fragment
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_DEFAULT_URL)),
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_MEDIUM_URL))
                 );
-                Log.d(TAG, "_id = " + item.id + " : " + item.title);
+                mSuccessFavoriteList.add(item);
+                //Log.d(TAG, "_id = " + item.id + " : " + item.title);
             } while (mCursor.moveToNext());
         }
+        mSuccessRecyclerAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
+        mSuccessRecyclerAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -1,7 +1,10 @@
 package com.takahidesato.android.promatchandroid;
 
+import android.content.ContentUris;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
 import com.takahidesato.android.promatchandroid.adapter.SuccessAsync;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
+import com.takahidesato.android.promatchandroid.database.DBColumns;
+import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,8 +45,9 @@ public class SuccessDetailFragment extends Fragment {
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
-            // todo are you sure you want unfavorite this item?
+            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, mSuccessItem.id), null, null);
         } else {
+            Log.d(TAG, "item="+mSuccessItem.title);
             new SuccessAsync(getActivity(), mSuccessItem).execute();
         }
         sIsFavorite = !sIsFavorite;
@@ -114,6 +120,10 @@ public class SuccessDetailFragment extends Fragment {
             Glide.with(getContext()).load(url).into(mSuccessImageView);
 
             mSuccessTitleTextView.setText(mSuccessItem.title);
+
+
+            sIsFavorite = itemExists(String.valueOf(mSuccessItem.title));
+            Log.d("test", String.valueOf(sIsFavorite) + mSuccessItem.id);
         }
 
         setFavoriteImageView();
@@ -125,5 +135,15 @@ public class SuccessDetailFragment extends Fragment {
         } else {
             mFavoriteImageView.setImageResource(R.mipmap.ic_star_border_black_24dp);
         }
+    }
+
+    private boolean itemExists(String searchItem) {
+        String selection = DBColumns.COL_TITLE + " =?";
+        String[] selectionArgs = { searchItem };
+
+        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, null, selection, selectionArgs, null, null);
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
     }
 }
