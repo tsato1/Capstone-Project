@@ -16,4 +16,6 @@
     <dimen name="profile_image_tweets_margin">10dp</dimen>
 
     <dimen name="text_size_success_title">40sp</dimen>
+
+    <dimen name="detail_view_margin_horizontal">80dp</dimen>
 </resources>

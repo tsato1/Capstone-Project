@@ -7,24 +7,14 @@ import android.support.v4.content.CursorLoader;
 /**
  * Created by tsato on 5/14/16.
  */
-public class DBLoader extends CursorLoader {
-    private DBLoader(Context context, Uri uri) {
+public class DBSuccessLoader extends CursorLoader {
+    private DBSuccessLoader(Context context, Uri uri) {
         super(context, uri, Query.SUCCESS, null, null, null);
     }
 
-    public static DBLoader newInstanceForAll(Context context, String table) {
-        switch (table) {
-            case DBColumns.TABLE_SUCCESS:
-                return new DBLoader(context, DBContentProvider.Contract.TABLE_SUCCESS.contentUri);
-            case DBColumns.TABLE_TWEETS:
-                return new DBLoader(context, DBContentProvider.Contract.TABLE_TWEETS.contentUri);
-        }
-        return null;
+    public static DBSuccessLoader newInstanceForAll(Context context) {
+        return new DBSuccessLoader(context, DBContentProvider.Contract.TABLE_SUCCESS.contentUri);
     }
-
-//    public static DBLoader newInstanceForItemId(Context context, long id) {
-//        return new DBLoader(context, DBContentProvider.Contract.)
-//    }
 
     public interface Query {
         String[] SUCCESS = {

@@ -40,6 +40,8 @@ public class SuccessDetailFragment extends Fragment {
     ImageView mSuccessImageView;
     @Bind(R.id.txv_title_success)
     TextView mSuccessTitleTextView;
+    @Bind(R.id.txv_date_success)
+    TextView mSuccessDateTextView;
     @Bind(R.id.imv_favorite)
     ImageView mFavoriteImageView;
     @OnClick(R.id.imv_favorite)
@@ -117,13 +119,12 @@ public class SuccessDetailFragment extends Fragment {
 
         } else {
             String url = mSuccessItem.thumbnailMediumUrl;
-            Glide.with(getContext()).load(url).into(mSuccessImageView);
+            Glide.with(getActivity().getApplicationContext()).load(url).into(mSuccessImageView);
 
             mSuccessTitleTextView.setText(mSuccessItem.title);
-
+            mSuccessDateTextView.setText(mSuccessItem.publishedAt); // todo substring from description to get date
 
             sIsFavorite = itemExists(String.valueOf(mSuccessItem.title));
-            Log.d("test", String.valueOf(sIsFavorite) + mSuccessItem.id);
         }
 
         setFavoriteImageView();

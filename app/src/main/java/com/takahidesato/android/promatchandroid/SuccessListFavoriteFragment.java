@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
 import com.takahidesato.android.promatchandroid.adapter.SuccessRecyclerAdapter;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
-import com.takahidesato.android.promatchandroid.database.DBLoader;
+import com.takahidesato.android.promatchandroid.database.DBSuccessLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +94,7 @@ public class SuccessListFavoriteFragment extends Fragment
 
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             columnCount = 2;
-            /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-             columnCount = 3;
-             }***/
+            /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {columnCount = 3;}***/
         } else {
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 columnCount = 2;
@@ -132,7 +130,7 @@ public class SuccessListFavoriteFragment extends Fragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return DBLoader.newInstanceForAll(getContext(), DBColumns.TABLE_SUCCESS);
+        return DBSuccessLoader.newInstanceForAll(getContext());
     }
 
     @Override

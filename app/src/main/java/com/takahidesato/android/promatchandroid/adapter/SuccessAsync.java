@@ -26,12 +26,12 @@ public class SuccessAsync extends AsyncTask<String, Void, String> {
 
     @Override
     public void onPreExecute() {
-        mContentValues = new ContentValues();
-        mContentValues.clear();
     }
 
     @Override
     public String doInBackground(String... args) {
+        mContentValues = new ContentValues();
+        mContentValues.clear();
         mContentValues.put(DBColumns.COL_ID_ITEM, mSuccessItem.idItem);
         mContentValues.put(DBColumns.COL_PUBLISHED_AT, mSuccessItem.publishedAt);
         mContentValues.put(DBColumns.COL_CHANNEL_ID, mSuccessItem.channelId);
