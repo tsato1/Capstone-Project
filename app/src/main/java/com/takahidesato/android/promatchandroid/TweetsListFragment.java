@@ -36,6 +36,9 @@ import retrofit2.Response;
 public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapter.OnCardItemClickListener {
     public static final String TAG = TweetsListFragment.class.getSimpleName();
 
+    private static String sAuthorizationOAuth = "";
+    private static String sAuthorizationCall = "";
+
     @Bind(R.id.srl_tweets)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.rcv_tweets)
@@ -44,9 +47,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
     private List<TweetsItem> mTweetsList = new ArrayList<>();
     private boolean mIsDualPane;
-
-    private static String sAuthorizationOAuth = "";
-    private static String sAuthorizationCall = "";
+    private TweetsItem mTweetsItem;
 
     public static TweetsListFragment getInstance(int key) {
         TweetsListFragment fragment = new TweetsListFragment();
@@ -54,12 +55,6 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
         args.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString("oauth", sAuthorizationOAuth);
-        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -104,8 +99,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
             }
         }
 
-        View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
-        mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
+        mIsDualPane = MainActivity.IS_DUAL_PANE;
 
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -114,12 +108,19 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
         mTweetsRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
 
-        /***** onRestoreState() *****/
         if (savedInstanceState != null) {
             sAuthorizationOAuth = savedInstanceState.getString("oauth");
+            mTweetsItem = savedInstanceState.getParcelable("item");
         }
 
         authorize();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("oauth", sAuthorizationOAuth);
+        savedInstanceState.putParcelable("item", mTweetsItem);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void authorize() {
@@ -136,12 +137,15 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                     Log.d("Retrofit Twitter OAuth", "access type  = " + body.getTokentype());
                     Log.d("Retrofit Twitter OAuth", "access token = " + body.getAccessToken());
                     retrieveData();
+                } else {
+                    if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<TwitterAccessToken> call, Throwable t) {
                 Log.e(TAG, "Retrofit Twitter OAuth Error: " + t.toString());
+                if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -171,16 +175,17 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                                 ""
                         );
                         mTweetsList.add(item);
+                        mTweetsItem = item;
                     }
                     mTweetsRecyclerAdapter.notifyDataSetChanged();
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<TwitterResponseBody>> call, Throwable t) {
                 Log.e(TAG, "Retrofit Twitter call Error: " + t.toString());
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -189,7 +194,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     public void onCardItemClick(int position) {
         Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
 
-        if (mIsDualPane) {
+        if (MainActivity.IS_DUAL_PANE) {
             FragmentManager manager = getActivity().getSupportFragmentManager();
             TweetsDetailFragment fragment = (TweetsDetailFragment) manager.findFragmentByTag(TweetsDetailFragment.TAG);
             Bundle args = fragment.getArguments();

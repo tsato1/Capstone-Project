@@ -42,6 +42,7 @@ public class SuccessListFavoriteFragment extends Fragment
     private SuccessRecyclerAdapter mSuccessRecyclerAdapter = null;
     private List<SuccessItem> mSuccessFavoriteList = new ArrayList<>();
     private boolean mIsDualPane;
+    private SuccessItem mSuccessItem;
     private Cursor mCursor;
 
     public static Fragment getInstance(int key) {
@@ -69,10 +70,6 @@ public class SuccessListFavoriteFragment extends Fragment
         return view;
     }
 
-    public void reloadData() {
-        getLoaderManager().restartLoader(0, null, this);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -84,9 +81,6 @@ public class SuccessListFavoriteFragment extends Fragment
         super.onActivityCreated(savedInstatnceState);
 
         getLoaderManager().initLoader(0, null, this);
-
-        View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
-        mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
 
         /***** determining column count for staggered grid view *****/
         int columnCount = 1;
@@ -101,12 +95,30 @@ public class SuccessListFavoriteFragment extends Fragment
             }
         }
 
+        mIsDualPane = MainActivity.IS_DUAL_PANE;
+
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
         mSuccessRecyclerAdapter = new SuccessRecyclerAdapter(getContext(), mSuccessFavoriteList);
         mSuccessRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mSuccessRecyclerAdapter);
+
+        if (savedInstatnceState != null) {
+            mSuccessItem = savedInstatnceState.getParcelable("item");
+        }
+
+        reloadData();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("item", mSuccessItem);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void reloadData() {
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
@@ -151,6 +163,7 @@ public class SuccessListFavoriteFragment extends Fragment
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_MEDIUM_URL))
                 );
                 mSuccessFavoriteList.add(item);
+                mSuccessItem = item;
                 //Log.d(TAG, "_id = " + item.id + " : " + item.title);
             } while (mCursor.moveToNext());
         }
@@ -162,6 +175,6 @@ public class SuccessListFavoriteFragment extends Fragment
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         mSuccessRecyclerAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false); //todo null point ex here
     }
 }

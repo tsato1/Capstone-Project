@@ -42,6 +42,7 @@ public class TweetsListFavoriteFragment extends Fragment
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
     private List<TweetsItem> mTweetsFavoriteList = new ArrayList<>();
     private boolean mIsDualPane;
+    private TweetsItem mTweetsItem;
     private Cursor mCursor;
 
     public static Fragment getInstance(int key) {
@@ -69,10 +70,6 @@ public class TweetsListFavoriteFragment extends Fragment
         return view;
     }
 
-    public void reloadData() {
-        getLoaderManager().restartLoader(0, null, this);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroy();
@@ -96,14 +93,31 @@ public class TweetsListFavoriteFragment extends Fragment
             }
         }
 
+        mIsDualPane = MainActivity.IS_DUAL_PANE;
+
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
         mTweetsRecyclerAdapter = new TweetsRecyclerAdapter(getContext(), mTweetsFavoriteList);
         mTweetsRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mTweetsRecyclerAdapter);
+
+        if (savedInstanceState != null) {
+            mTweetsItem = savedInstanceState.getParcelable("item");
+        }
+
+        reloadData();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("item", mTweetsItem);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void reloadData() {
+        getLoaderManager().restartLoader(0, null, this);
+    }
 
     @Override
     public void onCardItemClick(int position) {
@@ -147,6 +161,7 @@ public class TweetsListFavoriteFragment extends Fragment
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_MEDIA_IMAGE_URL))
                 );
                 mTweetsFavoriteList.add(item);
+                mTweetsItem = item;
             } while (mCursor.moveToNext());
         }
         mTweetsRecyclerAdapter.notifyDataSetChanged();

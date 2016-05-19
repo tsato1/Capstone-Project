@@ -43,6 +43,7 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
     private SuccessRecyclerAdapter mSuccessRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
     private boolean mIsDualPane;
+    private SuccessItem mSuccessItem;
 
     public static SuccessListFragment getInstance(int key) {
         SuccessListFragment fragment = new SuccessListFragment();
@@ -94,8 +95,7 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
             }
         }
 
-        View detailFragment = getActivity().findViewById(R.id.frl_fragment_container);
-        mIsDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
+        mIsDualPane = MainActivity.IS_DUAL_PANE;
 
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -104,17 +104,18 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
         mSuccessRecyclerAdapter.setOnCardItemClickListener(this);
         mRecyclerView.setAdapter(mSuccessRecyclerAdapter);
 
-//        if (savedInstanceState != null) {
-//            mMovieItem = savedInstanceState.getParcelable("item");
-//            url = savedInstanceState.getString("url");
-//            pageCode = savedInstanceState.getInt("isFavoriteShown");
-//        }
-//
-//        if (pageCode == CODE_FAVORITE) loadFromDatabase();
-//        else fetchFromCloud();
+        if (savedInstanceState != null) {
+            mSuccessItem = savedInstanceState.getParcelable("item");
+        }
 
         //TODO wifi / network check
         retrieveData();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("item", mSuccessItem);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void retrieveData() {
@@ -147,23 +148,24 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
                                 body.items.get(i).snippet.thumbnails.medium.url
                         );
                         mSuccessList.add(item);
+                        mSuccessItem = item;
                     }
                     mSuccessRecyclerAdapter.notifyDataSetChanged();
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<YouTubeResponseBody> call, Throwable t) {
                 Log.e(TAG, "Retrofit YouTube Error: " + t.toString());
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
     @Override
     public void onCardItemClick(int position) {
-        Log.d(TAG, "onCardItemSelected(): Card Position = " + position);
+        Log.d(TAG, "onCardItemSelected(): Card Position = " + position + mIsDualPane);
 
         if (mIsDualPane) {
             FragmentManager manager = getActivity().getSupportFragmentManager();
