@@ -35,10 +35,16 @@ public class DetailActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = SuccessDetailFragment.class;
         switch(key) {
-            case 0:
+            case ViewPagerFragment.FRAGMENT_KEY_SUCCESS:
                 fragmentClass = SuccessDetailFragment.class;
                 break;
-            case 1:
+            case ViewPagerFragment.FRAGMENT_KEY_TWEETS:
+                fragmentClass = TweetsDetailFragment.class;
+                break;
+            case ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE:
+                fragmentClass = SuccessDetailFragment.class;
+                break;
+            case ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE:
                 fragmentClass = TweetsDetailFragment.class;
                 break;
         }

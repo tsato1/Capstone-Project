@@ -198,7 +198,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
             FragmentManager manager = getActivity().getSupportFragmentManager();
             TweetsDetailFragment fragment = (TweetsDetailFragment) manager.findFragmentByTag(TweetsDetailFragment.TAG);
             Bundle args = fragment.getArguments();
-            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS);
+            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS);
             args.putParcelable("item", mTweetsList.get(position));
             fragment.setUpLayout();
         } else {

@@ -168,13 +168,13 @@ public class SuccessListFavoriteFragment extends Fragment
             } while (mCursor.moveToNext());
         }
         mSuccessRecyclerAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         mSuccessRecyclerAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false); //todo null point ex here
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
     }
 }

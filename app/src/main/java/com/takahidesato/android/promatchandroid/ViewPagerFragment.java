@@ -97,9 +97,6 @@ public class ViewPagerFragment extends Fragment {
                 fragmentClass = TweetsDetailFragment.class;
                 tag = TweetsDetailFragment.TAG;
                 break;
-            default:
-                fragmentClass = SuccessDetailFragment.class;
-                tag = SuccessDetailFragment.TAG;
         }
 
         try {

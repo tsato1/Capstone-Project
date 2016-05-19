@@ -125,7 +125,7 @@ public class TweetsListFavoriteFragment extends Fragment
 
         if (mIsDualPane) {
             FragmentManager manager = getActivity().getSupportFragmentManager();
-            SuccessDetailFragment fragment = (SuccessDetailFragment) manager.findFragmentByTag(SuccessDetailFragment.TAG);
+            TweetsDetailFragment fragment = (TweetsDetailFragment) manager.findFragmentByTag(TweetsDetailFragment.TAG);
             Bundle args = fragment.getArguments();
             args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
             args.putParcelable("item", mTweetsFavoriteList.get(position));
@@ -165,13 +165,13 @@ public class TweetsListFavoriteFragment extends Fragment
             } while (mCursor.moveToNext());
         }
         mTweetsRecyclerAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         mTweetsRecyclerAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
     }
 }
