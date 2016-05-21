@@ -9,6 +9,7 @@
         android:id="@+id/rcv_tweets"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingRight="@dimen/card_view_margin"
         android:paddingBottom="@dimen/card_view_margin"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"/>

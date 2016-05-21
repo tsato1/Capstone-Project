@@ -45,6 +45,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
         Glide.with(mContext)
                 .load(item.profileImageUrl)
                 .placeholder(R.mipmap.ic_launcher)
+                .fitCenter()
                 .into(viewHolder.profileImageView);
         viewHolder.screenNameTextView.setText(item.screenName);
         viewHolder.tweetTextView.setText(item.text);

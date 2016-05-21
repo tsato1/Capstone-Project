@@ -55,7 +55,7 @@ public class SuccessListFavoriteFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorite_success, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_success, container, false);
         ButterKnife.bind(this, view);
         Bundle args = getArguments();
         if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(ViewPagerFragment.FRAGMENT_KEY));
@@ -85,7 +85,6 @@ public class SuccessListFavoriteFragment extends Fragment
         /***** determining column count for staggered grid view *****/
         int columnCount = 1;
         int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             columnCount = 2;
             /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {columnCount = 3;}***/

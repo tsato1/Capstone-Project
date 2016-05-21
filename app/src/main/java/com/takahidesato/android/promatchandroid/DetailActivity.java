@@ -22,10 +22,9 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        View detailFragment = findViewById(R.id.frl_fragment_container);
-        boolean isDualPane = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
-
-        if (isDualPane && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        if ((screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
+                && (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)) {
             finish();
             return;
         }

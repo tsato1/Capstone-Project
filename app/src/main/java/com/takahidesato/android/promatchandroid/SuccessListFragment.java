@@ -86,9 +86,7 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
 
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             columnCount = 2;
-            /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                columnCount = 3;
-            }***/
+            /***if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {columnCount = 3;}***/
         } else {
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 columnCount = 2;

@@ -47,6 +47,7 @@ public class SuccessRecyclerAdapter extends RecyclerView.Adapter<SuccessRecycler
         Glide.with(mContext)
                 .load(item.thumbnailMediumUrl)
                 .placeholder(R.mipmap.ic_launcher)
+                .fitCenter()
                 .into(viewHolder.thumbnailImageView);
 
         viewHolder.titleTextView.setText(item.title);

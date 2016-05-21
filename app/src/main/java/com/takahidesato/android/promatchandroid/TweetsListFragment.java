@@ -87,17 +87,17 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
 
         /***** determining column count for staggered grid view *****/
         int columnCount = 1;
-        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            columnCount = 2;
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                columnCount = 3;
-            }
-        } else {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                columnCount = 2;
-            }
-        }
+//        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+//        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+//            columnCount = 2;
+//            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                columnCount = 3;
+//            }
+//        } else {
+//            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                columnCount = 2;
+//            }
+//        }
 
         mIsDualPane = MainActivity.IS_DUAL_PANE;
 
