@@ -17,5 +17,6 @@
 
     <dimen name="text_size_success_title">40sp</dimen>
 
-    <dimen name="detail_card_width">500dp</dimen>
+    <dimen name="detail_card_width">-1px</dimen>
+    <dimen name="detail_memo_text_size">28sp</dimen>
 </resources>
