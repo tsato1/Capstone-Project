@@ -15,4 +15,5 @@
 
     <string name="item_was_saved">Item was saved as Favorite</string>
 
+    <string name="detail_memo_text_hint">Write a memo</string>
 </resources>
