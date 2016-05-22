@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#00ffffff" />
+    <padding
+        android:left="@dimen/profile_image_tweets_padding"
+        android:top="@dimen/profile_image_tweets_padding"
+        android:right="@dimen/profile_image_tweets_padding"
+        android:bottom="@dimen/profile_image_tweets_padding" />
+    <corners android:radius="@dimen/profile_image_tweets_corner_radius" />
+    <stroke android:width="@dimen/profile_image_tweets_padding"
+        android:color="#ffffffff" />
+</shape>

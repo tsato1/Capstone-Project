@@ -14,9 +14,13 @@
     <dimen name="profile_image_tweets_width">60dp</dimen>
     <dimen name="profile_image_tweets_height">60dp</dimen>
     <dimen name="profile_image_tweets_margin">10dp</dimen>
+    <dimen name="profile_image_tweets_padding">6dp</dimen>
+    <dimen name="profile_image_tweets_corner_radius">12dp</dimen>
 
     <dimen name="text_size_success_title">40sp</dimen>
 
     <dimen name="detail_card_width">-1px</dimen>
     <dimen name="detail_memo_text_size">28sp</dimen>
+    <dimen name="detail_status_bar_vertical_padding">20dp</dimen>
+    <dimen name="detail_status_bar_elements_padding">4dp</dimen>
 </resources>

@@ -24,28 +24,38 @@
                 android:id="@+id/rll_tweet_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/imv_profile_pic_twitter"
+                <FrameLayout
+                    android:id="@+id/fml_profile_pic_twitter"
                     android:layout_width="@dimen/profile_image_tweets_width"
-                    android:layout_height="@dimen/profile_image_tweets_height"/>
+                    android:layout_height="@dimen/profile_image_tweets_height">
+                    <ImageView
+                        android:id="@+id/imv_profile_pic_twitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/profile_image_tweets_padding"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/rounded_frame"/>
+                </FrameLayout>
                 <TextView
                     android:id="@+id/txv_name_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+                    android:layout_toRightOf="@id/fml_profile_pic_twitter"/>
                 <TextView
                     android:id="@+id/txv_screen_name_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txv_name_twitter"
-                    android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+                    android:layout_toRightOf="@id/fml_profile_pic_twitter"/>
                 <TextView
                     android:id="@+id/txv_text_tweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txv_screen_name_twitter"
-                    android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+                    android:layout_toRightOf="@id/fml_profile_pic_twitter"/>
             </RelativeLayout>
             <LinearLayout
                 android:id="@+id/rll_icon_bar"
@@ -79,7 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rll_icon_bar"
-                android:textSize="@dimen/detail_memo_text_size"/>
+                android:textSize="@dimen/detail_memo_text_size"
+                android:visibility="gone"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
