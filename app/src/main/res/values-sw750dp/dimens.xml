@@ -12,6 +12,7 @@
     <dimen name="profile_image_tweets_height">90dp</dimen>
     <dimen name="profile_image_tweets_margin">14dp</dimen>
 
-    <dimen name="detail_card_width">600dp</dimen>
+    <dimen name="detail_success_card_width">600dp</dimen>
+    <dimen name="detail_tweets_card_width">680dp</dimen>
     <dimen name="detail_memo_text_size">38sp</dimen>
 </resources>

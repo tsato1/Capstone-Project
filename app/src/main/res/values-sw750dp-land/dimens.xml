@@ -1,3 +1,4 @@
 <resources>
-    <dimen name="detail_card_width">-1px</dimen>
+    <dimen name="detail_success_card_width">-1px</dimen>
+    <dimen name="detail_tweets_card_width">-1px</dimen>
 </resources>

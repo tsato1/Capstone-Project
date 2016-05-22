@@ -19,8 +19,11 @@
 
     <dimen name="text_size_success_title">40sp</dimen>
 
-    <dimen name="detail_card_width">-1px</dimen>
+    <dimen name="detail_success_card_width">-1px</dimen>
+    <dimen name="detail_tweets_card_width">-1px</dimen>
     <dimen name="detail_memo_text_size">28sp</dimen>
     <dimen name="detail_status_bar_vertical_padding">20dp</dimen>
     <dimen name="detail_status_bar_elements_padding">4dp</dimen>
+
+    <dimen name="detail_tweets_margin_right_of_name">6dp</dimen>
 </resources>

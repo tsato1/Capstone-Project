@@ -1,3 +1,4 @@
 <resources>
-    <dimen name="detail_card_width">500dp</dimen>
+    <dimen name="detail_success_card_width">500dp</dimen>
+    <dimen name="detail_tweets_card_width">550dp</dimen>
 </resources>
