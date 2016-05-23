@@ -135,8 +135,15 @@ public class SuccessListFavoriteFragment extends Fragment
             Intent intent = new Intent(getContext(), DetailActivity.class);
             intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
             intent.putExtra("item", mSuccessFavoriteList.get(position));
-            getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            //getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        reloadData();
     }
 
     @Override

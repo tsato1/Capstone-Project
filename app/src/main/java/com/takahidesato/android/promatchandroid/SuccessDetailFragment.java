@@ -49,7 +49,7 @@ public class SuccessDetailFragment extends Fragment {
         if (sIsFavorite) {
             getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, mSuccessItem.id), null, null);
         } else {
-            Log.d(TAG, "item="+mSuccessItem.title);
+            //Log.d(TAG, "item="+mSuccessItem.title);
             new SuccessAsync(getActivity(), mSuccessItem).execute();
         }
         sIsFavorite = !sIsFavorite;
@@ -111,18 +111,22 @@ public class SuccessDetailFragment extends Fragment {
     }
 
     public void setUpLayout() {
+        mObservableScrollView.setVisibility(View.VISIBLE);
+
         if (getArguments() != null) {
             mSuccessItem = getArguments().getParcelable("item");
         }
 
         if (mSuccessItem == null) {
-
+            mObservableScrollView.setVisibility(View.GONE);
         } else {
             String url = mSuccessItem.thumbnailMediumUrl;
             Glide.with(getActivity().getApplicationContext()).load(url).into(mSuccessImageView);
 
             mSuccessTitleTextView.setText(mSuccessItem.title);
-            mSuccessDateTextView.setText(mSuccessItem.publishedAt); // todo substring from description to get date
+
+            String date = mSuccessItem.description.substring(mSuccessItem.description.length()-9, mSuccessItem.description.length()-1);
+            mSuccessDateTextView.setText(date);
 
             sIsFavorite = itemExists(String.valueOf(mSuccessItem.title));
         }
@@ -144,7 +148,18 @@ public class SuccessDetailFragment extends Fragment {
 
         Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, null, selection, selectionArgs, null, null);
         boolean exists = (cursor.getCount() > 0);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(cursor.getColumnIndex(DBColumns.COL_TITLE)).equals(searchItem)) {
+                    mSuccessItem.id = cursor.getInt(cursor.getColumnIndex(DBColumns._ID));
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
+
         cursor.close();
+
         return exists;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
 import com.takahidesato.android.promatchandroid.adapter.TweetsAsync;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
@@ -29,6 +30,8 @@ public class TweetsDetailFragment extends Fragment {
 
     private static boolean sIsFavorite = false;
 
+    @Bind(R.id.osv_container)
+    ObservableScrollView mObservableScrollView;
     @Bind(R.id.imv_profile_pic_twitter)
     ImageView mProfileImageView;
     @Bind(R.id.txv_name_twitter)
@@ -42,9 +45,10 @@ public class TweetsDetailFragment extends Fragment {
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
+            //Log.d(TAG, "item id="+mTweetItem.id+", text="+mTweetItem.text);
             getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS.contentUri, mTweetItem.id), null, null);
         } else {
-            Log.d(TAG, "item name="+mTweetItem.name);
+            //Log.d(TAG, "item id="+mTweetItem.id);
             new TweetsAsync(getActivity(), mTweetItem).execute();
         }
         sIsFavorite = !sIsFavorite;
@@ -76,16 +80,28 @@ public class TweetsDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            sIsFavorite = savedInstanceState.getBoolean("isFavorite");
+        }
+
         setUpLayout();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("isFavorite", sIsFavorite);
+    }
+
     public void setUpLayout() {
+        mObservableScrollView.setVisibility(View.VISIBLE);
+
         if (getArguments() != null) {
             mTweetItem = getArguments().getParcelable("item");
         }
 
         if (mTweetItem == null) {
-
+            mObservableScrollView.setVisibility(View.GONE);
         } else {
             Glide.with(getActivity().getApplicationContext()).load(mTweetItem.profileImageUrl).into(mProfileImageView);
             mNameTextView.setText(mTweetItem.name);
@@ -94,6 +110,8 @@ public class TweetsDetailFragment extends Fragment {
 
             sIsFavorite = itemExists(mTweetItem.idStr);
         }
+
+        setFavoriteImageView();
     }
 
     public void setFavoriteImageView() {
@@ -110,7 +128,18 @@ public class TweetsDetailFragment extends Fragment {
 
         Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_TWEETS.contentUri, null, selection, selectionArgs, null, null);
         boolean exists = (cursor.getCount() > 0);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(cursor.getColumnIndex(DBColumns.COL_ID_STR)).equals(searchItem)) {
+                    mTweetItem.id = cursor.getInt(cursor.getColumnIndex(DBColumns._ID));
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
+
         cursor.close();
+
         return exists;
     }
 }

@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.takahidesato.android.promatchandroid.network.TwitterAccessToken;
 import com.takahidesato.android.promatchandroid.network.TwitterApi;
@@ -43,6 +46,8 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.rcv_tweets)
     RecyclerView mRecyclerView;
+    @Bind(R.id.txv_network_alert)
+    TextView mNetworkAlertTextView;
 
     private TweetsRecyclerAdapter mTweetsRecyclerAdapter = null;
     private List<TweetsItem> mTweetsList = new ArrayList<>();
@@ -139,6 +144,8 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                     retrieveData();
                 } else {
                     if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
+                    if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                    if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -146,6 +153,8 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
             public void onFailure(Call<TwitterAccessToken> call, Throwable t) {
                 Log.e(TAG, "Retrofit Twitter OAuth Error: " + t.toString());
                 if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
+                if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -178,6 +187,11 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                         mTweetsItem = item;
                     }
                     mTweetsRecyclerAdapter.notifyDataSetChanged();
+                    if (mRecyclerView != null) mRecyclerView.setVisibility(View.VISIBLE);
+                    if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.GONE);
+                } else {
+                    if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                    if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
                 }
                 if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -186,6 +200,8 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
             public void onFailure(Call<List<TwitterResponseBody>> call, Throwable t) {
                 Log.e(TAG, "Retrofit Twitter call Error: " + t.toString());
                 if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
+                if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
             }
         });
     }

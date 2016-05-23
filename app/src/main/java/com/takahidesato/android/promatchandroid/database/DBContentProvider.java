@@ -63,7 +63,7 @@ public class DBContentProvider extends ContentProvider {
         sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName, Contract.TABLE_SUCCESS.allCode);
         sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName + "/#", Contract.TABLE_SUCCESS.byIdCode);
         sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS.tableName, Contract.TABLE_TWEETS.allCode);
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS + "/#", Contract.TABLE_TWEETS.byIdCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS.tableName + "/#", Contract.TABLE_TWEETS.byIdCode);
 //        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS.tableName, Movie.TABLE_SUCCESS.allCode);
 //        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS + "/#", Movie.TABLE_SUCCESS.byIdCode);
     }

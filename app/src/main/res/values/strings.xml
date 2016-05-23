@@ -16,4 +16,7 @@
     <string name="item_was_saved">Item was saved as Favorite</string>
 
     <string name="detail_memo_text_hint">Write a memo</string>
+
+    <string name="network_not_connected">Not Connected to Network</string>
+    <string name="please_connect_network">Please Connect to Network</string>
 </resources>

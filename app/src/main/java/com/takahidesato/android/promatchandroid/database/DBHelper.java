@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
             );
             sqLiteDatabase.execSQL(
                     "CREATE TABLE " + DBColumns.TABLE_TWEETS + " ("
-                    + DBColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + DBColumns._ID + " INTEGER PRIMARY KEY,"
                     + DBColumns.COL_ID_STR + " TEXT NOT NULL,"
                     + DBColumns.COL_CREATED_AT + " TEXT NOT NULL,"
                     + DBColumns.COL_TEXT + " TEXT NOT NULL,"

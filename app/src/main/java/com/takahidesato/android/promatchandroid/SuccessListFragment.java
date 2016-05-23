@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.takahidesato.android.promatchandroid.network.Util;
 import com.takahidesato.android.promatchandroid.network.YouTubeApi;
@@ -39,6 +40,8 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.rcv_success)
     RecyclerView mRecyclerView;
+    @Bind(R.id.txv_network_alert)
+    TextView mNetworkAlertTextView;
 
     private SuccessRecyclerAdapter mSuccessRecyclerAdapter = null;
     private List<SuccessItem> mSuccessList = new ArrayList<>();
@@ -106,7 +109,6 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
             mSuccessItem = savedInstanceState.getParcelable("item");
         }
 
-        //TODO wifi / network check
         retrieveData();
     }
 
@@ -149,6 +151,11 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
                         mSuccessItem = item;
                     }
                     mSuccessRecyclerAdapter.notifyDataSetChanged();
+                    if (mRecyclerView != null) mRecyclerView.setVisibility(View.VISIBLE);
+                    if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.GONE);
+                } else {
+                    if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                    if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
                 }
                 if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -157,6 +164,8 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
             public void onFailure(Call<YouTubeResponseBody> call, Throwable t) {
                 Log.e(TAG, "Retrofit YouTube Error: " + t.toString());
                 if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(false);
+                if (mRecyclerView != null) mRecyclerView.setVisibility(View.GONE);
+                if (mNetworkAlertTextView != null) mNetworkAlertTextView.setVisibility(View.VISIBLE);
             }
         });
     }

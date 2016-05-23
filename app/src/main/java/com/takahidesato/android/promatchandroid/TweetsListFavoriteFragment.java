@@ -133,8 +133,15 @@ public class TweetsListFavoriteFragment extends Fragment
             Intent intent = new Intent(getContext(), DetailActivity.class);
             intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
             intent.putExtra("item", mTweetsFavoriteList.get(position));
-            getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
+            //getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
+            startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        reloadData();
     }
 
     @Override
