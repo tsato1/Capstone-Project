@@ -1,55 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/annotation_hours"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/promatch_hours"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/annotation_phone"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/promatch_phone"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/annotation_email"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/promatch_email"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/annotation_location"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/promatch_location"/>
-
-    <fragment
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/settings_map_margin"
-        tools:context=".SettingsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-</LinearLayout>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/annotation_hours"
+            style="@style/AnnotationTextView"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/promatch_hours"
+            style="@style/ExplanationTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/annotation_phone"
+            style="@style/AnnotationTextView"/>
+        <TextView
+            android:id="@+id/txv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/promatch_phone"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/ExplanationTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/annotation_email"
+            style="@style/AnnotationTextView"/>
+        <TextView
+            android:id="@+id/txv_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/promatch_email"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/ExplanationTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/annotation_location"
+            style="@style/AnnotationTextView"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/promatch_location"
+            style="@style/ExplanationTextView"/>
+
+        <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:layout_width="@dimen/map_size"
+            android:layout_height="@dimen/map_size"
+            android:layout_marginTop="@dimen/settings_map_margin"
+            tools:context=".SettingsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+    </LinearLayout>
+</ScrollView>

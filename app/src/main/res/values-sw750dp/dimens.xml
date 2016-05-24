@@ -15,4 +15,6 @@
     <dimen name="detail_success_card_width">600dp</dimen>
     <dimen name="detail_tweets_card_width">680dp</dimen>
     <dimen name="detail_memo_text_size">38sp</dimen>
+
+    <dimen name="map_size">750dp</dimen>
 </resources>

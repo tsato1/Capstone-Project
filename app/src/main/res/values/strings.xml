@@ -20,15 +20,13 @@
     <string name="annotation_phone">Phone</string>
     <string name="annotation_email">Email</string>
     <string name="annotation_location">Location</string>
-    <string name="promatch_hours">Monday – Friday, 8:00 a.m. – 4:00 p.m.
-        Mondays: 11:30 a.m. – 12:00 noon
-        Thursdays: 9:30 a.m. – 12:00 noon</string>
-    <string name="promatch_phone">408-730-7671</string>
-    <string name="promatch_email">promatch@novaworks.org </string>
-    <string name="promatch_location">ProMatch
-        NOVA Job Center
-        505 W. Olive Avenue, Suite 737
-        Sunnyvale, CA  94086</string>
+    <string name="promatch_hours">
+        Monday – Friday, 8:00 a.m. – 4:00 p.m.\n
+        \u2022 Mondays: 11:30 a.m. – 12:00 noon\n
+        \u2022 Thursdays: 9:30 a.m. – 12:00 noon</string>
+    <string name="promatch_phone"><u>408-730-7671</u></string>
+    <string name="promatch_email"><u>promatch@novaworks.org</u></string>
+    <string name="promatch_location">ProMatch\nNOVA Job Center\n505 W. Olive Avenue, Suite 737\nSunnyvale, CA  94086</string>
 
     <string name="item_was_saved">Item was saved as Favorite</string>
 

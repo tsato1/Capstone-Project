@@ -29,4 +29,7 @@
     <dimen name="detail_tweets_margin_right_of_name">6dp</dimen>
 
     <dimen name="settings_map_margin">8dp</dimen>
+    <dimen name="annotation_text_size">18sp</dimen>
+    <dimen name="explanation_text_size">12sp</dimen>
+    <dimen name="map_size">500dp</dimen>
 </resources>
