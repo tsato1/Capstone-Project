@@ -34,6 +34,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-maps:9.0.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
 
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
@@ -42,3 +43,5 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

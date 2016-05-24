@@ -12,12 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.tab.SlidingTabLayout;
 
 /**
  * Created by tsato on 4/15/16.
  */
 public class ViewPagerFragment extends Fragment {
+    private enum fragment {
+        SUCCESS,
+        TWEETS,
+        SUCCESS_FAVORITE,
+        TWEETS_FAVORITE
+    }
     public static final String FRAGMENT_KEY = "fragment_key";
     public static final int FRAGMENT_KEY_SUCCESS = 0;
     public static final int FRAGMENT_KEY_TWEETS = 1;
@@ -32,6 +40,14 @@ public class ViewPagerFragment extends Fragment {
     private ViewPagerAdapter mAdatper;
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
+    private Tracker mTracker;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +74,10 @@ public class ViewPagerFragment extends Fragment {
                 if (MainActivity.IS_DUAL_PANE) {
                     prepareDetailFragment(position);
                 }
+
+                Log.i(TAG, "Setting screen name: " + fragment.values()[position]);
+                mTracker.setScreenName("Screen Name = " + fragment.values()[position]);
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
 
             @Override

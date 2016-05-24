@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "542482632936",
+    "project_id": "promatchandroid"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542482632936:android:1051349d6cf6c843",
+        "android_client_info": {
+          "package_name": "com.takahidesato.android.promatchandroid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-wALbjUmVyXjj7pUDHJ14mIMsxTM8AME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78270731-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

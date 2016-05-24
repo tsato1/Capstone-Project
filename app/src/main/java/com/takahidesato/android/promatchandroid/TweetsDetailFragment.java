@@ -1,6 +1,7 @@
 package com.takahidesato.android.promatchandroid;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
 import com.takahidesato.android.promatchandroid.adapter.TweetsAsync;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
@@ -53,14 +56,34 @@ public class TweetsDetailFragment extends Fragment {
         sIsFavorite = !sIsFavorite;
         setFavoriteImageView();
     }
+    @OnClick(R.id.imv_share)
+    public void onShareClick(View v) {
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Share: idStr = "+mTweetItem.idStr)
+                .build());
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, mTweetItem.text);
+        startActivity(intent);
+    }
 
     private TweetsItem mTweetItem;
+    private Tracker mTracker;
 
     public static TweetsDetailFragment getInstance() {
         TweetsDetailFragment fragment = new TweetsDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override

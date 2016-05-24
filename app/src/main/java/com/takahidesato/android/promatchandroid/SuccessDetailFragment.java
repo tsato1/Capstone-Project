@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
 import com.takahidesato.android.promatchandroid.adapter.SuccessAsync;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
@@ -67,6 +69,11 @@ public class SuccessDetailFragment extends Fragment {
     }
     @OnClick(R.id.imv_share)
     public void onShareClick(View v) {
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Share: idItem = " + mSuccessItem.idItem)
+                .build());
+
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, "http://www.youtube.com/watch?v=" + mSuccessItem.videoId);
@@ -75,12 +82,20 @@ public class SuccessDetailFragment extends Fragment {
 
     private int mScrollY;
     private SuccessItem mSuccessItem;
+    private Tracker mTracker;
 
     public static SuccessDetailFragment getInstance() {
         SuccessDetailFragment fragment = new SuccessDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
