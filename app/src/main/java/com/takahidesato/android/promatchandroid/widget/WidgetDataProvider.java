@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by tsato on 5/23/16.
  */
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
+    public static final String TAG = WidgetDataProvider.class.getSimpleName();
 
     List<WidgetItem> mCollections = new ArrayList();
 
@@ -44,9 +46,11 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public RemoteViews getViewAt(int position) {
+        Log.d(TAG, "getViewAt() called");
+
         RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_list_item);
 
-        mView.setTextViewText(R.id.txv_screen_name, mCollections.get(position).screenName);
+        mView.setTextViewText(R.id.txv_screen_name, "@"+mCollections.get(position).screenName);
         mView.setTextViewText(R.id.txv_created_at, mCollections.get(position).createdAt);
         mView.setTextViewText(R.id.txv_tweet, mCollections.get(position).tweet);
 
@@ -99,6 +103,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void initData() {
+        Log.d(TAG, "initData() called");
         if (mContext != null) {
             mCollections.clear();
 

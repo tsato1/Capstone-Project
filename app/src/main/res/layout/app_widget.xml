@@ -4,16 +4,21 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/widget_padding"
     android:background="@color/colorWhite">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_logo_margin"
+        android:layout_marginEnd="@dimen/widget_logo_margin"
         android:src="@mipmap/ic_launcher"/>
     <ListView
         android:id="@+id/lsv_widget_collection"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:divider="@color/colorBlack"
+        android:dividerHeight="@dimen/divider_height"/>
 
 </LinearLayout>

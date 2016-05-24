@@ -24,9 +24,4 @@
         <item name="android:textSize">@dimen/explanation_text_size</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
-    <style name="SeparatorView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/colorBlack</item>
-    </style>
 </resources>

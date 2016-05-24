@@ -19,4 +19,7 @@
     <dimen name="detail_memo_text_size">38sp</dimen>
 
     <dimen name="map_size">750dp</dimen>
+
+    <dimen name="widget_padding">4dp</dimen>
+    <dimen name="widget_item_vertical_margin">3dp</dimen>
 </resources>

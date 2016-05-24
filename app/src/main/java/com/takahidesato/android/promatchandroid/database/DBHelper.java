@@ -43,7 +43,8 @@ public class DBHelper extends SQLiteOpenHelper {
             );
             sqLiteDatabase.execSQL(
                     "CREATE TABLE " + DBColumns.TABLE_TWEETS_REP + " ("
-                    + DBColumns.COL_SCREEN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + DBColumns._ID + " INTEGER PRIMARY KEY,"
+                    + DBColumns.COL_SCREEN_NAME + " TEXT NOT NULL,"
                     + DBColumns.COL_CREATED_AT + " TEXT NOT NULL,"
                     + DBColumns.COL_TEXT + " TEXT NOT NULL);"
             );
