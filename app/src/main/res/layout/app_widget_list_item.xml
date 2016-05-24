@@ -15,7 +15,9 @@
         android:id="@+id/txv_created_at"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:visibility="gone"/>
+    <!-- todo: in the future calc diff between now and time and display-->
     <TextView
         android:id="@+id/txv_tweet"
         android:layout_width="wrap_content"

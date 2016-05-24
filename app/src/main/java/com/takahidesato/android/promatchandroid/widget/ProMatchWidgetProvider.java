@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.takahidesato.android.promatchandroid.MainActivity;
 import com.takahidesato.android.promatchandroid.R;
 
 /**
@@ -33,7 +36,6 @@ public class ProMatchWidgetProvider extends AppWidgetProvider {
         for (int widgetId : appWidgetIds) {
             RemoteViews mView = initViews(context, appWidgetManager, widgetId);
 
-            // Adding collection list item handler
             final Intent onItemClick = new Intent(context, ProMatchWidgetProvider.class);
             onItemClick.setAction(ACTION_TOAST);
             onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
@@ -42,6 +44,7 @@ public class ProMatchWidgetProvider extends AppWidgetProvider {
 
             appWidgetManager.updateAppWidget(widgetId, mView);
         }
+
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         final int N = appWidgetIds.length;
     }

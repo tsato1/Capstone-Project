@@ -53,7 +53,7 @@ public class FetchService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(TAG,"onHandleIntent() called");
+        //Log.d(TAG,"onHandleIntent() called");
         authorize();
         return;
     }

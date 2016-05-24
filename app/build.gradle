@@ -11,9 +11,18 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("releasekey.keystore")
+            storePassword "N0VAProM@tch"
+            keyAlias "ReleaseKey"
+            keyPassword "N0VAProM@tch"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,13 +44,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-maps:9.0.0'
     compile 'com.google.android.gms:play-services-analytics:9.0.0'
-
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'com.android.support:support-annotations:23.4.0'
-    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    }
 }
 
 apply plugin: 'com.google.gms.google-services'

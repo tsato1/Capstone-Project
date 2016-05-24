@@ -46,7 +46,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Log.d(TAG, "getViewAt() called");
+        //Log.d(TAG, "getViewAt() called");
 
         RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_list_item);
 
@@ -103,7 +103,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void initData() {
-        Log.d(TAG, "initData() called");
+        //Log.d(TAG, "initData() called");
         if (mContext != null) {
             mCollections.clear();
 
