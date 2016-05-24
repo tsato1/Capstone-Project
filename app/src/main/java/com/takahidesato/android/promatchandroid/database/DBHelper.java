@@ -26,7 +26,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     + DBColumns.COL_TITLE + " TEXT NOT NULL,"
                     + DBColumns.COL_DESCRIPTION + " TEXT NOT NULL,"
                     + DBColumns.COL_THUMBNAIL_DEFAULT_URL + " TEXT NOT NULL,"
-                    + DBColumns.COL_THUMBNAIL_MEDIUM_URL + " TEXT NOT NULL);"
+                    + DBColumns.COL_THUMBNAIL_MEDIUM_URL + " TEXT NOT NULL,"
+                    + DBColumns.COL_THUMBNAIL_HIGH_URL + " TEXT NOT NULL,"
+                    + DBColumns.COL_VIDEO_ID + " TEXT NOT NULL);"
             );
             sqLiteDatabase.execSQL(
                     "CREATE TABLE " + DBColumns.TABLE_TWEETS + " ("

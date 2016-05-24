@@ -25,11 +25,13 @@ public class YouTubeResponseBody {
             public String title;
             public String description;
             public Thumbnails thumbnails;
+            public ResourceId resourceId;
 
             public class Thumbnails {
                 @SerializedName(value="default")
                 public Default defaultSize;
                 public Medium medium;
+                public High high;
 
                 public class Default {
                     public String url;
@@ -41,6 +43,15 @@ public class YouTubeResponseBody {
                     public String width;
                     public String height;
                 }
+                public class High {
+                    public String url;
+                    public String width;
+                    public String height;
+                }
+            }
+
+            public class ResourceId {
+                public String videoId;
             }
         }
     }

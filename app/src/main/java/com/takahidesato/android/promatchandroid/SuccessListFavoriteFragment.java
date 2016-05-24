@@ -166,7 +166,9 @@ public class SuccessListFavoriteFragment extends Fragment
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_TITLE)),
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_DESCRIPTION)),
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_DEFAULT_URL)),
-                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_MEDIUM_URL))
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_MEDIUM_URL)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_THUMBNAIL_HIGH_URL)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_VIDEO_ID))
                 );
                 mSuccessFavoriteList.add(item);
                 mSuccessItem = item;

@@ -31,7 +31,9 @@ public class DBContentProvider extends ContentProvider {
                 DBColumns.COL_TITLE,
                 DBColumns.COL_DESCRIPTION,
                 DBColumns.COL_THUMBNAIL_DEFAULT_URL,
-                DBColumns.COL_THUMBNAIL_MEDIUM_URL
+                DBColumns.COL_THUMBNAIL_MEDIUM_URL,
+                DBColumns.COL_THUMBNAIL_HIGH_URL,
+                DBColumns.COL_VIDEO_ID
         ),
         TABLE_TWEETS(
                 BaseColumns._ID,

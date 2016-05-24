@@ -1,7 +1,9 @@
 package com.takahidesato.android.promatchandroid;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -44,6 +46,15 @@ public class SuccessDetailFragment extends Fragment {
     TextView mSuccessDateTextView;
     @Bind(R.id.imv_favorite)
     ImageView mFavoriteImageView;
+    @Bind(R.id.imv_share)
+    ImageView mShareImageView;
+    @OnClick(R.id.imv_image_success)
+    public void onImageClick(View v) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://www.youtube.com/watch?v=" + mSuccessItem.videoId));
+        intent.putExtra("VIDEO_ID", mSuccessItem.videoId);
+        getContext().startActivity(intent);
+    }
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
@@ -55,11 +66,12 @@ public class SuccessDetailFragment extends Fragment {
         sIsFavorite = !sIsFavorite;
         setFavoriteImageView();
     }
-    @Bind(R.id.imv_share)
-    ImageView mShareImageView;
     @OnClick(R.id.imv_share)
     public void onShareClick(View v) {
-
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "http://www.youtube.com/watch?v=" + mSuccessItem.videoId);
+        startActivity(intent);
     }
 
     private int mScrollY;

@@ -39,6 +39,8 @@ public class SuccessAsync extends AsyncTask<String, Void, String> {
         mContentValues.put(DBColumns.COL_DESCRIPTION, mSuccessItem.description);
         mContentValues.put(DBColumns.COL_THUMBNAIL_DEFAULT_URL, mSuccessItem.thumbnailDefaultUrl);
         mContentValues.put(DBColumns.COL_THUMBNAIL_MEDIUM_URL, mSuccessItem.thumbnailMediumUrl);
+        mContentValues.put(DBColumns.COL_THUMBNAIL_HIGH_URL, mSuccessItem.thumbnailHighUrl);
+        mContentValues.put(DBColumns.COL_VIDEO_ID, mSuccessItem.videoId);
         mContext.getContentResolver().insert(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, mContentValues);
         return "";
     }

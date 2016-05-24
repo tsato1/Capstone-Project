@@ -145,7 +145,9 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
                                 body.items.get(i).snippet.title,
                                 body.items.get(i).snippet.description,
                                 body.items.get(i).snippet.thumbnails.defaultSize.url,
-                                body.items.get(i).snippet.thumbnails.medium.url
+                                body.items.get(i).snippet.thumbnails.medium.url,
+                                body.items.get(i).snippet.thumbnails.high.url,
+                                body.items.get(i).snippet.resourceId.videoId
                         );
                         mSuccessList.add(item);
                         mSuccessItem = item;
@@ -193,10 +195,13 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
         for (int i = 0; i < body.items.size(); i++) {
             Log.d("Retrofit YouTube",
                     "id="+body.items.get(i).id + ", " +
-                            "title="+body.items.get(i).snippet.title +", " +
-                            "description="+body.items.get(i).snippet.description +", " +
-                            "thumbnail default url="+body.items.get(i).snippet.thumbnails.defaultSize.url+", " +
-                            "thumbnail medium url="+body.items.get(i).snippet.thumbnails.medium.url);
+                    "title="+body.items.get(i).snippet.title +", " +
+                    "description="+body.items.get(i).snippet.description +", " +
+                    "thumbnail default url="+body.items.get(i).snippet.thumbnails.defaultSize.url+", " +
+                    "thumbnail medium url="+body.items.get(i).snippet.thumbnails.medium.url +", " +
+                    "thumbnail high url="+body.items.get(i).snippet.thumbnails.high.url + ", " +
+                    "videoId="+body.items.get(i).snippet.resourceId.videoId
+            );
         }
     }
 }

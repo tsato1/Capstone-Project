@@ -31,5 +31,5 @@
     <dimen name="settings_map_margin">8dp</dimen>
     <dimen name="annotation_text_size">18sp</dimen>
     <dimen name="explanation_text_size">12sp</dimen>
-    <dimen name="map_size">500dp</dimen>
+    <dimen name="map_size">400dp</dimen>
 </resources>
