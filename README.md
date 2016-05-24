@@ -37,13 +37,6 @@ If it needs to pull or send data to/from a web service or API only once, or on a
 OR
 It it performs short duration, on-demand requests (such as search), app uses an AsyncTask.
 
-## Diagram
-
-Here's a simple diagram of implementation of this app
-
-<img src='http://i.imgur.com/pvhC2eL.png' title='Diagram' width='' alt='Diagram' />
-
-Diagram taken from [Udacity](http://www.udacity.com/).
 
 ## License
 
