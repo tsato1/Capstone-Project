@@ -47,7 +47,8 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
                 .placeholder(R.mipmap.ic_launcher)
                 .fitCenter()
                 .into(viewHolder.profileImageView);
-        viewHolder.screenNameTextView.setText(item.screenName);
+        viewHolder.nameTextView.setText(item.name);
+        viewHolder.screenNameTextView.setText("@"+item.screenName);
         viewHolder.tweetTextView.setText(item.text);
     }
 
@@ -59,6 +60,8 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     class TweetsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.imv_profile_pic_twitter)
         ImageView profileImageView;
+        @Bind(R.id.txv_name)
+        TextView nameTextView;
         @Bind(R.id.txv_screen_name)
         TextView screenNameTextView;
         @Bind(R.id.txv_tweet)

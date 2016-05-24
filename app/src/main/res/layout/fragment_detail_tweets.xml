@@ -24,7 +24,8 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/rll_tweet_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="@dimen/tweet_card_padding">
                 <FrameLayout
                     android:id="@+id/fml_profile_pic_twitter"
                     android:layout_width="@dimen/profile_image_tweets_width"
@@ -44,21 +45,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@id/fml_profile_pic_twitter"
-                    android:layout_marginRight="@dimen/detail_tweets_margin_right_of_name"
+                    android:layout_toEndOf="@id/fml_profile_pic_twitter"
+                    android:layout_marginEnd="@dimen/detail_tweets_margin_right_of_name"
                     android:textColor="@color/colorBlack"/>
                 <TextView
                     android:id="@+id/txv_screen_name_twitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/txv_name_twitter"
+                    android:layout_toEndOf="@id/txv_name_twitter"
                     android:textColor="@color/colorGrey"/>
                 <TextView
                     android:id="@+id/txv_text_tweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txv_screen_name_twitter"
-                    android:layout_toRightOf="@id/fml_profile_pic_twitter"
+                    android:layout_toEndOf="@id/fml_profile_pic_twitter"
                     android:textColor="@color/colorBlack"/>
             </RelativeLayout>
             <LinearLayout
@@ -66,7 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@id/rll_tweet_content">
+                android:layout_below="@id/rll_tweet_content"
+                android:paddingTop="@dimen/detail_status_bar_elements_padding"
+                android:paddingBottom="@dimen/detail_status_bar_elements_padding">
                 <ImageView
                     android:id="@+id/imv_edit"
                     android:layout_width="wrap_content"

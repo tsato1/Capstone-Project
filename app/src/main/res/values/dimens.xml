@@ -8,6 +8,8 @@
     <dimen name="card_view_elevation">2dp</dimen>
     <dimen name="card_view_corner_radius">6dp</dimen>
 
+    <dimen name="tweet_card_padding">8dp</dimen>
+
     <dimen name="thumbnail_image_view_success_width">140dp</dimen>
     <dimen name="thumbnail_image_view_success_height">140dp</dimen>
     <dimen name="thumbnail_image_view_success_margin">10dp</dimen>

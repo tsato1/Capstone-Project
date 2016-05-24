@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginTop="@dimen/card_view_margin"
-    android:layout_marginLeft="@dimen/card_view_margin"
+    android:layout_marginStart="@dimen/card_view_margin"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -17,23 +17,43 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/imv_profile_pic_twitter"
+        android:layout_height="match_parent"
+        android:padding="@dimen/tweet_card_padding">
+        <FrameLayout
+            android:id="@+id/fml_profile_pic_twitter"
             android:layout_width="@dimen/profile_image_tweets_width"
             android:layout_height="@dimen/profile_image_tweets_height"
-            android:layout_margin="@dimen/profile_image_tweets_margin"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true" >
+            <ImageView
+                android:id="@+id/imv_profile_pic_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/profile_image_tweets_padding"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rounded_frame"/>
+        </FrameLayout>
+        <TextView
+            android:id="@+id/txv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/fml_profile_pic_twitter"
+            android:layout_marginEnd="@dimen/detail_tweets_margin_right_of_name"
+            android:textColor="@color/colorBlack"/>
         <TextView
             android:id="@+id/txv_screen_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imv_profile_pic_twitter"/>
+            android:layout_toEndOf="@id/txv_name"
+            android:textColor="@color/colorGrey"/>
         <TextView
             android:id="@+id/txv_tweet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imv_profile_pic_twitter"
-            android:layout_toRightOf="@id/imv_profile_pic_twitter"/>
+            android:layout_below="@id/txv_screen_name"
+            android:layout_toEndOf="@id/fml_profile_pic_twitter"
+            android:textColor="@color/colorBlack"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

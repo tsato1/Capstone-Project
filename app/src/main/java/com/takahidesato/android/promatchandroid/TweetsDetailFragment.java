@@ -104,7 +104,7 @@ public class TweetsDetailFragment extends Fragment {
         } else {
             Glide.with(getActivity().getApplicationContext()).load(mTweetItem.profileImageUrl).into(mProfileImageView);
             mNameTextView.setText(mTweetItem.name);
-            mScreenNameTextView.setText(mTweetItem.screenName);
+            mScreenNameTextView.setText("@"+mTweetItem.screenName);
             mTweetTextView.setText(mTweetItem.text);
 
             sIsFavorite = itemExists(mTweetItem.idStr);
