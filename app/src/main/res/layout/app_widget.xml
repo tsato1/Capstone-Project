@@ -12,7 +12,7 @@
         android:src="@mipmap/ic_launcher"/>
     <ListView
         android:id="@+id/lsv_widget_collection"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 

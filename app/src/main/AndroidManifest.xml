@@ -68,6 +68,7 @@
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+        <!-- Activities -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
