@@ -39,7 +39,7 @@ public class TweetsAsync extends AsyncTask<String, Void, String> {
         mContentValues.put(DBColumns.COL_SCREEN_NAME, mTweetsItem.screenName);
         mContentValues.put(DBColumns.COL_PROFILE_IMAGE_URL, mTweetsItem.profileImageUrl);
         mContentValues.put(DBColumns.COL_MEDIA_IMAGE_URL, mTweetsItem.mediaImageUrl);
-        mContext.getContentResolver().insert(DBContentProvider.Contract.TABLE_TWEETS.contentUri, mContentValues);
+        mContext.getContentResolver().insert(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, mContentValues);
         return "";
     }
 

@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by tsato on 5/7/16.
  */
 public class DBColumns implements BaseColumns {
-    public static final String TABLE_SUCCESS = "table_success";
+    public static final String TABLE_SUCCESS_FAV = "table_success_fav"; // favorite
     public static final String COL_ID_ITEM = "_id_item";
     public static final String COL_PUBLISHED_AT = "_published_at";
     public static final String COL_CHANNEL_ID = "_channel_id";
@@ -17,7 +17,8 @@ public class DBColumns implements BaseColumns {
     public static final String COL_THUMBNAIL_HIGH_URL = "_thumbnail_high_url";
     public static final String COL_VIDEO_ID = "_video_id";
 
-    public static final String TABLE_TWEETS = "table_tweets";
+    public static final String TABLE_TWEETS_FAV = "table_tweets_fav"; // favorite
+    public static final String TABLE_TWEETS_REP = "table_tweets_rep"; // repository for widget
     public static final String COL_ID_STR = "_id_str";
     public static final String COL_CREATED_AT = "_created_at";
     public static final String COL_TEXT = "_text";

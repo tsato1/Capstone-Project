@@ -1,7 +1,6 @@
 package com.takahidesato.android.promatchandroid;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_about) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(intent);
             return true;
         }

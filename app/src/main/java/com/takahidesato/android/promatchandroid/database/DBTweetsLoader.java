@@ -13,7 +13,7 @@ public class DBTweetsLoader extends CursorLoader {
     }
 
     public static DBTweetsLoader newInstanceForAll(Context context) {
-        return new DBTweetsLoader(context, DBContentProvider.Contract.TABLE_TWEETS.contentUri);
+        return new DBTweetsLoader(context, DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri);
     }
 
     public interface Query {

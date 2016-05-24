@@ -13,7 +13,7 @@ public class DBSuccessLoader extends CursorLoader {
     }
 
     public static DBSuccessLoader newInstanceForAll(Context context) {
-        return new DBSuccessLoader(context, DBContentProvider.Contract.TABLE_SUCCESS.contentUri);
+        return new DBSuccessLoader(context, DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri);
     }
 
     public interface Query {

@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class SuccessDetailFragment extends Fragment {
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
-            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, mSuccessItem.id), null, null);
+            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri, mSuccessItem.id), null, null);
         } else {
             //Log.d(TAG, "item="+mSuccessItem.title);
             new SuccessAsync(getActivity(), mSuccessItem).execute();
@@ -158,7 +157,7 @@ public class SuccessDetailFragment extends Fragment {
         String selection = DBColumns.COL_TITLE + " =?";
         String[] selectionArgs = { searchItem };
 
-        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_SUCCESS.contentUri, null, selection, selectionArgs, null, null);
+        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri, null, selection, selectionArgs, null, null);
         boolean exists = (cursor.getCount() > 0);
 
         if (cursor.moveToFirst()) {

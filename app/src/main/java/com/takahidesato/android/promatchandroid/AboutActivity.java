@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by tsato on 5/23/16.
  */
-public class SettingsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AboutActivity extends AppCompatActivity implements OnMapReadyCallback {
     @Bind(R.id.txv_phone)
     TextView mPhoneTextView;
     @Bind(R.id.txv_email)
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

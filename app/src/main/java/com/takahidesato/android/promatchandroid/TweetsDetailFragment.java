@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class TweetsDetailFragment extends Fragment {
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
             //Log.d(TAG, "item id="+mTweetItem.id+", text="+mTweetItem.text);
-            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS.contentUri, mTweetItem.id), null, null);
+            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, mTweetItem.id), null, null);
         } else {
             //Log.d(TAG, "item id="+mTweetItem.id);
             new TweetsAsync(getActivity(), mTweetItem).execute();
@@ -126,7 +125,7 @@ public class TweetsDetailFragment extends Fragment {
         String selection = DBColumns.COL_ID_STR + " =?";
         String[] selectionArgs = { searchItem };
 
-        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_TWEETS.contentUri, null, selection, selectionArgs, null, null);
+        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, null, selection, selectionArgs, null, null);
         boolean exists = (cursor.getCount() > 0);
 
         if (cursor.moveToFirst()) {

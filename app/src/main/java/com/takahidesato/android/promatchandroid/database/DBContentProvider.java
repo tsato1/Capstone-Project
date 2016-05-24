@@ -23,7 +23,7 @@ public class DBContentProvider extends ContentProvider {
     private static final String SQLITE_FILENAME = "promatch.sqlite";
 
     public enum Contract {
-        TABLE_SUCCESS(
+        TABLE_SUCCESS_FAV (
                 BaseColumns._ID,
                 DBColumns.COL_ID_ITEM,
                 DBColumns.COL_PUBLISHED_AT,
@@ -35,7 +35,7 @@ public class DBContentProvider extends ContentProvider {
                 DBColumns.COL_THUMBNAIL_HIGH_URL,
                 DBColumns.COL_VIDEO_ID
         ),
-        TABLE_TWEETS(
+        TABLE_TWEETS_FAV (
                 BaseColumns._ID,
                 DBColumns.COL_ID_STR,
                 DBColumns.COL_CREATED_AT,
@@ -44,6 +44,12 @@ public class DBContentProvider extends ContentProvider {
                 DBColumns.COL_SCREEN_NAME,
                 DBColumns.COL_PROFILE_IMAGE_URL,
                 DBColumns.COL_MEDIA_IMAGE_URL
+        ),
+        TABLE_TWEETS_REP (
+                BaseColumns._ID,
+                DBColumns.COL_SCREEN_NAME,
+                DBColumns.COL_CREATED_AT,
+                DBColumns.COL_TEXT
         );
 
         Contract(final String... columns) {
@@ -62,12 +68,12 @@ public class DBContentProvider extends ContentProvider {
 
     public static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName, Contract.TABLE_SUCCESS.allCode);
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS.tableName + "/#", Contract.TABLE_SUCCESS.byIdCode);
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS.tableName, Contract.TABLE_TWEETS.allCode);
-        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS.tableName + "/#", Contract.TABLE_TWEETS.byIdCode);
-//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS.tableName, Movie.TABLE_SUCCESS.allCode);
-//        sUriMatcher.addURI(AUTHORITY, Movie.TABLE_SUCCESS + "/#", Movie.TABLE_SUCCESS.byIdCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS_FAV.tableName, Contract.TABLE_SUCCESS_FAV.allCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_SUCCESS_FAV.tableName + "/#", Contract.TABLE_SUCCESS_FAV.byIdCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS_FAV.tableName, Contract.TABLE_TWEETS_FAV.allCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS_FAV.tableName + "/#", Contract.TABLE_TWEETS_FAV.byIdCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS_REP.tableName, Contract.TABLE_TWEETS_REP.allCode);
+        sUriMatcher.addURI(AUTHORITY, Contract.TABLE_TWEETS_REP.tableName + "/#", Contract.TABLE_TWEETS_REP.byIdCode);
     }
 
 

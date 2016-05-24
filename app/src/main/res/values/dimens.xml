@@ -32,4 +32,7 @@
     <dimen name="annotation_text_size">18sp</dimen>
     <dimen name="explanation_text_size">12sp</dimen>
     <dimen name="map_size">400dp</dimen>
+
+    <dimen name="app_widget_min_width">294dp</dimen>
+    <dimen name="app_widget_min_height">72dp</dimen>
 </resources>
