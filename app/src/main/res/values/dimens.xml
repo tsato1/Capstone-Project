@@ -1,8 +1,8 @@
 <resources>
     <dimen name="network_not_connected_text_size">20sp</dimen>
 
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">14dp</dimen>
+    <dimen name="activity_vertical_margin">14dp</dimen>
 
     <dimen name="card_view_margin">4dp</dimen>
     <dimen name="card_view_elevation">2dp</dimen>
@@ -27,4 +27,6 @@
     <dimen name="detail_status_bar_elements_padding">4dp</dimen>
 
     <dimen name="detail_tweets_margin_right_of_name">6dp</dimen>
+
+    <dimen name="settings_map_margin">8dp</dimen>
 </resources>

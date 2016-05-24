@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.udacity.tsato.popularmovies.MainActivity">
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_about"
         android:orderInCategory="100"
-        android:title="@string/action_favorites"
-        app:showAsAction="never"/>
+        android:title="@string/action_about"
+        android:src="@mipmap/ic_launcher"
+        app:showAsAction="always"/>
 </menu>
