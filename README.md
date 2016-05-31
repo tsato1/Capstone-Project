@@ -1,7 +1,6 @@
 # *Capstone-Project*
 
-**Capstone-Project** is an android application that works as a hub of crucial information for job seekers. 
-It displays success stories and tweets from ProMatch* with rich user interface and saves them in database for later use.
+**ProMatch Android** is an android application for an organization ProMatch that works as a hub of crucial information for job seekers. It displays success stories and tweets from ProMatch* with rich user interface and saves them in database for later use.
 
 *ProMatch
 ProMatch is an interactive career resource center for professionals who are seeking work in the greater San Francisco Bay Area. 
