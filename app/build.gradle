@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+def YOUTUBE_CONSUMER_KEY = '"' + YouTubeConsumerKeyProp + '"' ?: '"Define YouTube Consumer key"';
+def TWITTER_CONSUMER_KEY = '"' + TwitterConsumerKeyProp + '"' ?: '"Define Twitter Consumer key"';
+def TWITTER_CONSUMER_SECRET = '"' + TwitterConsumerSecretProp + '"' ?: '"Define Twitter Consumer secret"';
+def GOOGLE_MAPS_API_KEY = '"' + GoogleMapsApiKeyProp + '"' ?: '"Define Google Maps Api Key"';
 
 android {
     compileSdkVersion 23
@@ -10,6 +16,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        resValue 'string', 'GOOGLE_MAPS_API_KEY', GOOGLE_MAPS_API_KEY
     }
     signingConfigs {
         release {
@@ -20,10 +28,18 @@ android {
         }
     }
     buildTypes {
-        release {
+        release { type->
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            type.buildConfigField 'String', 'YOUTUBE_CONSUMER_KEY', YOUTUBE_CONSUMER_KEY
+            type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
+            type.buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', TWITTER_CONSUMER_SECRET
+        }
+        debug { type->
+            type.buildConfigField 'String', 'YOUTUBE_CONSUMER_KEY', YOUTUBE_CONSUMER_KEY
+            type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
+            type.buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', TWITTER_CONSUMER_SECRET
         }
     }
 }
@@ -45,5 +61,3 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.0.0'
     compile 'com.google.android.gms:play-services-analytics:9.0.0'
 }
-
-apply plugin: 'com.google.gms.google-services'

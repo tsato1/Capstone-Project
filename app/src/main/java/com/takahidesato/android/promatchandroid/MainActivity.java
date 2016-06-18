@@ -17,9 +17,9 @@ import com.takahidesato.android.promatchandroid.widget.FetchService;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    public static final String YOUTUBE_API_KEY = "";
-    public static final String TWITTER_API_KEY = "";
-    public static final String TWITTER_API_SECRET = "";
+    public static final String YOUTUBE_API_KEY = BuildConfig.YOUTUBE_CONSUMER_KEY;
+    public static final String TWITTER_API_KEY = BuildConfig.TWITTER_CONSUMER_KEY;
+    public static final String TWITTER_API_SECRET = BuildConfig.TWITTER_CONSUMER_SECRET;
 
     public static boolean IS_DUAL_PANE;
 
