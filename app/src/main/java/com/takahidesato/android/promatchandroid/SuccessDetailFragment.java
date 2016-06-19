@@ -9,7 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +37,7 @@ public class SuccessDetailFragment extends Fragment {
     private static final float PARALLAX_FACTOR = 1.25f;
 
     private static boolean sIsFavorite = false;
+    private static boolean sisEditable = false;
 
     @Bind(R.id.osv_container)
     ObservableScrollView mObservableScrollView;
@@ -45,10 +49,20 @@ public class SuccessDetailFragment extends Fragment {
     TextView mSuccessTitleTextView;
     @Bind(R.id.txv_date_success)
     TextView mSuccessDateTextView;
+    @Bind(R.id.imv_edit)
+    ImageView mEditImageView;
     @Bind(R.id.imv_favorite)
     ImageView mFavoriteImageView;
     @Bind(R.id.imv_share)
     ImageView mShareImageView;
+    @Bind(R.id.txv_memo)
+    TextView mMemoTextView;
+    @Bind(R.id.lnl_editor)
+    LinearLayout mEditorLayout;
+    @Bind(R.id.edt_memo)
+    EditText mMemoEditText;
+    @Bind(R.id.imb_save_memo)
+    ImageButton mSaveMemoImageButton;
     @OnClick(R.id.imv_image_success)
     public void onImageClick(View v) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -56,12 +70,16 @@ public class SuccessDetailFragment extends Fragment {
         intent.putExtra("VIDEO_ID", mSuccessItem.videoId);
         getContext().startActivity(intent);
     }
+    @OnClick(R.id.imv_edit)
+    public void onEditClick(View v) {
+        sisEditable = !sisEditable;
+        setEditLinearLayout();
+    }
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
             getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri, mSuccessItem.id), null, null);
         } else {
-            //Log.d(TAG, "item="+mSuccessItem.title);
             new SuccessAsync(getActivity(), mSuccessItem).execute();
         }
         sIsFavorite = !sIsFavorite;
@@ -78,6 +96,11 @@ public class SuccessDetailFragment extends Fragment {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, "http://www.youtube.com/watch?v=" + mSuccessItem.videoId);
         startActivity(intent);
+    }
+    @OnClick(R.id.imb_save_memo)
+    public void onSaveMemoClick(View v) {
+        String memo = mMemoEditText.getText().toString();
+        mMemoTextView.setText(memo);
     }
 
     private int mScrollY;
@@ -163,8 +186,20 @@ public class SuccessDetailFragment extends Fragment {
     public void setFavoriteImageView() {
         if (sIsFavorite) {
             mFavoriteImageView.setImageResource(R.mipmap.ic_star_black_24dp);
+            mEditImageView.setVisibility(View.VISIBLE);
+            mMemoTextView.setVisibility(View.VISIBLE);
         } else {
             mFavoriteImageView.setImageResource(R.mipmap.ic_star_border_black_24dp);
+            mEditImageView.setVisibility(View.INVISIBLE);
+            mMemoTextView.setVisibility(View.GONE);
+        }
+    }
+
+    public void setEditLinearLayout() {
+        if (sisEditable) {
+            mEditorLayout.setVisibility(View.VISIBLE);
+        } else {
+            mEditorLayout.setVisibility(View.GONE);
         }
     }
 

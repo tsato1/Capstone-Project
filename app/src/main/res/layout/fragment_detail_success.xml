@@ -91,9 +91,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rll_status_bar"
+                android:paddingLeft="@dimen/detail_memo_padding_horizontal"
+                android:paddingRight="@dimen/detail_memo_padding_horizontal"
                 android:textSize="@dimen/detail_memo_text_size"
                 android:visibility="gone"/>
             <LinearLayout
+                android:id="@+id/lnl_editor"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,8 +108,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:inputType="textMultiLine"
+                    android:lines="20"
+                    android:minLines="5"
                     android:hint="@string/detail_memo_text_hint"/>
                 <ImageButton
+                    android:id="@+id/imb_save_memo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_launcher"/>
