@@ -12,14 +12,14 @@ import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 /**
  * Created by tsato on 5/17/16.
  */
-public class TweetsAsync extends AsyncTask<String, Void, String> {
-    public static final String TAG = TweetsAsync.class.getSimpleName();
+public class TweetsItemSaveAsync extends AsyncTask<String, Void, String> {
+    public static final String TAG = TweetsItemSaveAsync.class.getSimpleName();
 
     private Context mContext;
     private TweetsItem mTweetsItem;
     private ContentValues mContentValues;
 
-    public TweetsAsync(Context context, TweetsItem tweetItem) {
+    public TweetsItemSaveAsync(Context context, TweetsItem tweetItem) {
         mContext = context;
         mTweetsItem = tweetItem;
     }

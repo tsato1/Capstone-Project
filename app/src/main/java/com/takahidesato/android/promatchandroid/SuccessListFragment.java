@@ -147,7 +147,8 @@ public class SuccessListFragment extends Fragment implements SuccessRecyclerAdap
                                 body.items.get(i).snippet.thumbnails.defaultSize.url,
                                 body.items.get(i).snippet.thumbnails.medium.url,
                                 body.items.get(i).snippet.thumbnails.high.url,
-                                body.items.get(i).snippet.resourceId.videoId
+                                body.items.get(i).snippet.resourceId.videoId,
+                                ""
                         );
                         mSuccessList.add(item);
                         mSuccessItem = item;

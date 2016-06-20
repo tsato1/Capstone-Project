@@ -16,6 +16,7 @@ public class DBColumns implements BaseColumns {
     public static final String COL_THUMBNAIL_MEDIUM_URL = "_thumbnail_medium_url";
     public static final String COL_THUMBNAIL_HIGH_URL = "_thumbnail_high_url";
     public static final String COL_VIDEO_ID = "_video_id";
+    public static final String COL_MEMO = "_memo";
 
     public static final String TABLE_TWEETS_FAV = "table_tweets_fav"; // favorite
     public static final String TABLE_TWEETS_REP = "table_tweets_rep"; // repository for widget

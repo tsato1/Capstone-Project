@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
-import com.takahidesato.android.promatchandroid.adapter.TweetsAsync;
+import com.takahidesato.android.promatchandroid.adapter.TweetsItemSaveAsync;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
 import com.takahidesato.android.promatchandroid.database.DBContentProvider;
@@ -51,7 +51,7 @@ public class TweetsDetailFragment extends Fragment {
             getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, mTweetItem.id), null, null);
         } else {
             //Log.d(TAG, "item id="+mTweetItem.id);
-            new TweetsAsync(getActivity(), mTweetItem).execute();
+            new TweetsItemSaveAsync(getActivity(), mTweetItem).execute();
         }
         sIsFavorite = !sIsFavorite;
         setFavoriteImageView();

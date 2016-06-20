@@ -17,6 +17,7 @@ public class SuccessItem implements Parcelable {
     public String thumbnailMediumUrl;
     public String thumbnailHighUrl;
     public String videoId;
+    public String memo;
 
     public SuccessItem(int id,
                        String idItem,
@@ -27,7 +28,8 @@ public class SuccessItem implements Parcelable {
                        String thumbnailDefaultUrl,
                        String thumbnailMediumUrl,
                        String thumbnailHighUrl,
-                       String videoId) {
+                       String videoId,
+                       String memo) {
         this.id = id;
         this.idItem = idItem;
         this.publishedAt = publishedAt;
@@ -38,6 +40,7 @@ public class SuccessItem implements Parcelable {
         this.thumbnailMediumUrl = thumbnailMediumUrl;
         this.thumbnailHighUrl = thumbnailHighUrl;
         this.videoId = videoId;
+        this.memo = memo;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -61,6 +64,7 @@ public class SuccessItem implements Parcelable {
         this.thumbnailMediumUrl = in.readString();
         this.thumbnailHighUrl = in.readString();
         this.videoId = in.readString();
+        this.memo = in.readString();
     }
 
     @Override
@@ -80,5 +84,6 @@ public class SuccessItem implements Parcelable {
         out.writeString(this.thumbnailMediumUrl);
         out.writeString(this.thumbnailHighUrl);
         out.writeString(this.videoId);
+        out.writeString(this.memo);
     }
 }

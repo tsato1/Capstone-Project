@@ -12,14 +12,14 @@ import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 /**
  * Created by tsato on 5/13/16.
  */
-public class SuccessAsync extends AsyncTask<String, Void, String> {
-    public static final String TAG = SuccessAsync.class.getSimpleName();
+public class SuccessItemSaveAsync extends AsyncTask<String, Void, String> {
+    public static final String TAG = SuccessItemSaveAsync.class.getSimpleName();
 
     private Context mContext;
     private SuccessItem mSuccessItem;
     private ContentValues mContentValues;
 
-    public SuccessAsync(Context context, SuccessItem successItem) {
+    public SuccessItemSaveAsync(Context context, SuccessItem successItem) {
         mContext = context;
         mSuccessItem = successItem;
     }
@@ -41,6 +41,7 @@ public class SuccessAsync extends AsyncTask<String, Void, String> {
         mContentValues.put(DBColumns.COL_THUMBNAIL_MEDIUM_URL, mSuccessItem.thumbnailMediumUrl);
         mContentValues.put(DBColumns.COL_THUMBNAIL_HIGH_URL, mSuccessItem.thumbnailHighUrl);
         mContentValues.put(DBColumns.COL_VIDEO_ID, mSuccessItem.videoId);
+        mContentValues.put(DBColumns.COL_MEMO, mSuccessItem.memo);
         mContext.getContentResolver().insert(DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri, mContentValues);
         return "";
     }

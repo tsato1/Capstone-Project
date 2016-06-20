@@ -33,7 +33,8 @@ public class DBContentProvider extends ContentProvider {
                 DBColumns.COL_THUMBNAIL_DEFAULT_URL,
                 DBColumns.COL_THUMBNAIL_MEDIUM_URL,
                 DBColumns.COL_THUMBNAIL_HIGH_URL,
-                DBColumns.COL_VIDEO_ID
+                DBColumns.COL_VIDEO_ID,
+                DBColumns.COL_MEMO
         ),
         TABLE_TWEETS_FAV (
                 BaseColumns._ID,
@@ -114,7 +115,8 @@ public class DBContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         checkUri(uri);
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        final int count = db.update(uri.getPathSegments().get(0), values, appendSelection(uri, selection), appendSelectionArgs(uri, selectionArgs));
+        final int count = db.update(uri.getPathSegments().get(0), values, selection, selectionArgs);
+        //final int count = db.update(uri.getPathSegments().get(0), values, appendSelection(uri, selection), appendSelectionArgs(uri, selectionArgs));
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }

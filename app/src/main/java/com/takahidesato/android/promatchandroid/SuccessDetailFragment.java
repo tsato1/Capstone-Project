@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +22,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
-import com.takahidesato.android.promatchandroid.adapter.SuccessAsync;
+import com.takahidesato.android.promatchandroid.adapter.SuccessItemSaveAsync;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
+import com.takahidesato.android.promatchandroid.adapter.SuccessMemoSaveThread;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
 import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 
@@ -38,6 +42,9 @@ public class SuccessDetailFragment extends Fragment {
 
     private static boolean sIsFavorite = false;
     private static boolean sisEditable = false;
+
+    SuccessMemoSaveThread mMemoSaveThread;
+    Handler mMemoSavedHandler;
 
     @Bind(R.id.osv_container)
     ObservableScrollView mObservableScrollView;
@@ -73,14 +80,14 @@ public class SuccessDetailFragment extends Fragment {
     @OnClick(R.id.imv_edit)
     public void onEditClick(View v) {
         sisEditable = !sisEditable;
-        setEditLinearLayout();
+        setUpLayout();
     }
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
             getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_SUCCESS_FAV.contentUri, mSuccessItem.id), null, null);
         } else {
-            new SuccessAsync(getActivity(), mSuccessItem).execute();
+            new SuccessItemSaveAsync(getActivity(), mSuccessItem).execute();
         }
         sIsFavorite = !sIsFavorite;
         setFavoriteImageView();
@@ -101,6 +108,13 @@ public class SuccessDetailFragment extends Fragment {
     public void onSaveMemoClick(View v) {
         String memo = mMemoEditText.getText().toString();
         mMemoTextView.setText(memo);
+        mMemoSavedHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                setUpLayout();
+            }
+        };
+        mMemoSaveThread = new SuccessMemoSaveThread(getContext(), mMemoSavedHandler, mSuccessItem.id, memo);
+        mMemoSaveThread.start();
     }
 
     private int mScrollY;
@@ -141,6 +155,7 @@ public class SuccessDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        if (mMemoSaveThread != null) mMemoSaveThread.interrupt();
     }
 
     @Override
@@ -178,9 +193,13 @@ public class SuccessDetailFragment extends Fragment {
             mSuccessDateTextView.setText(date);
 
             sIsFavorite = itemExists(String.valueOf(mSuccessItem.title));
+
+            mMemoTextView.setText(mSuccessItem.memo);
+            mMemoEditText.setText(mMemoTextView.getText().toString());
         }
 
         setFavoriteImageView();
+        setEditLinearLayout();
     }
 
     public void setFavoriteImageView() {
@@ -214,6 +233,7 @@ public class SuccessDetailFragment extends Fragment {
             do {
                 if (cursor.getString(cursor.getColumnIndex(DBColumns.COL_TITLE)).equals(searchItem)) {
                     mSuccessItem.id = cursor.getInt(cursor.getColumnIndex(DBColumns._ID));
+                    mSuccessItem.memo = cursor.getString(cursor.getColumnIndex(DBColumns.COL_MEMO));
                     break;
                 }
             } while (cursor.moveToNext());

@@ -28,6 +28,7 @@ public class DBSuccessLoader extends CursorLoader {
                 DBColumns.COL_THUMBNAIL_MEDIUM_URL,
                 DBColumns.COL_THUMBNAIL_HIGH_URL,
                 DBColumns.COL_VIDEO_ID,
+                DBColumns.COL_MEMO,
         };
     }
 }
