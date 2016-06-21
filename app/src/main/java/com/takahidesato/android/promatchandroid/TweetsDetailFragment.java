@@ -4,19 +4,25 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
+import com.takahidesato.android.promatchandroid.adapter.SuccessMemoSaveThread;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItemSaveAsync;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
+import com.takahidesato.android.promatchandroid.adapter.TweetsMemoSaveThread;
 import com.takahidesato.android.promatchandroid.database.DBColumns;
 import com.takahidesato.android.promatchandroid.database.DBContentProvider;
 
@@ -31,6 +37,10 @@ public class TweetsDetailFragment extends Fragment {
     public static final String TAG = TweetsDetailFragment.class.getSimpleName();
 
     private static boolean sIsFavorite = false;
+    private static boolean sIsEditable = false;
+
+    TweetsMemoSaveThread mMemoSaveThread;
+    Handler mMemoSavedHandler;
 
     @Bind(R.id.osv_container)
     ObservableScrollView mObservableScrollView;
@@ -42,34 +52,57 @@ public class TweetsDetailFragment extends Fragment {
     TextView mScreenNameTextView;
     @Bind(R.id.txv_text_tweet)
     TextView mTweetTextView;
+    @Bind(R.id.imv_edit)
+    ImageView mEditImageView;
     @Bind(R.id.imv_favorite)
     ImageView mFavoriteImageView;
+    @Bind(R.id.txv_memo)
+    TextView mMemoTextView;
+    @Bind(R.id.lnl_editor)
+    LinearLayout mEditorLayout;
+    @Bind(R.id.edt_memo)
+    EditText mMemoEditText;
     @OnClick(R.id.imv_favorite)
     public void onFavoriteClick(View v) {
         if (sIsFavorite) {
-            //Log.d(TAG, "item id="+mTweetItem.id+", text="+mTweetItem.text);
-            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, mTweetItem.id), null, null);
+            getActivity().getContentResolver().delete(ContentUris.withAppendedId(DBContentProvider.Contract.TABLE_TWEETS_FAV.contentUri, mTweetsItem.id), null, null);
         } else {
-            //Log.d(TAG, "item id="+mTweetItem.id);
-            new TweetsItemSaveAsync(getActivity(), mTweetItem).execute();
+            new TweetsItemSaveAsync(getActivity(), mTweetsItem).execute();
         }
         sIsFavorite = !sIsFavorite;
         setFavoriteImageView();
+    }
+    @OnClick(R.id.imv_edit)
+    public void onEditClick(View v) {
+        sIsEditable = !sIsEditable;
+        setUpLayout();
     }
     @OnClick(R.id.imv_share)
     public void onShareClick(View v) {
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Action")
-                .setAction("Share: idStr = "+mTweetItem.idStr)
+                .setAction("Share: idStr = "+ mTweetsItem.idStr)
                 .build());
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, mTweetItem.text);
+        intent.putExtra(Intent.EXTRA_TEXT, mTweetsItem.text);
         startActivity(intent);
     }
+    @OnClick(R.id.imb_save_memo)
+    public void onSaveMemoClick(View v) {
+        String memo = mMemoEditText.getText().toString();
+        mMemoTextView.setText(memo);
+        mMemoSavedHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                setUpLayout();
+            }
+        };
+        mMemoSaveThread = new TweetsMemoSaveThread(getContext(), mMemoSavedHandler, mTweetsItem.id, memo);
+        mMemoSaveThread.start();
+    }
 
-    private TweetsItem mTweetItem;
+    private TweetsItem mTweetsItem;
     private Tracker mTracker;
 
     public static TweetsDetailFragment getInstance() {
@@ -119,28 +152,44 @@ public class TweetsDetailFragment extends Fragment {
         mObservableScrollView.setVisibility(View.VISIBLE);
 
         if (getArguments() != null) {
-            mTweetItem = getArguments().getParcelable("item");
+            mTweetsItem = getArguments().getParcelable("item");
         }
 
-        if (mTweetItem == null) {
+        if (mTweetsItem == null) {
             mObservableScrollView.setVisibility(View.GONE);
         } else {
-            Glide.with(getActivity().getApplicationContext()).load(mTweetItem.profileImageUrl).into(mProfileImageView);
-            mNameTextView.setText(mTweetItem.name);
-            mScreenNameTextView.setText("@"+mTweetItem.screenName);
-            mTweetTextView.setText(mTweetItem.text);
+            Glide.with(getActivity().getApplicationContext()).load(mTweetsItem.profileImageUrl).into(mProfileImageView);
+            mNameTextView.setText(mTweetsItem.name);
+            mScreenNameTextView.setText("@"+ mTweetsItem.screenName);
+            mTweetTextView.setText(mTweetsItem.text);
 
-            sIsFavorite = itemExists(mTweetItem.idStr);
+            sIsFavorite = itemExists(mTweetsItem.idStr);
+
+            mMemoTextView.setText(mTweetsItem.memo);
+            mMemoEditText.setText(mMemoTextView.getText().toString());
         }
 
         setFavoriteImageView();
+        setEditLinearLayout();
     }
 
     public void setFavoriteImageView() {
         if (sIsFavorite) {
             mFavoriteImageView.setImageResource(R.mipmap.ic_star_black_24dp);
+            mEditImageView.setVisibility(View.VISIBLE);
+            mMemoTextView.setVisibility(View.VISIBLE);
         } else {
             mFavoriteImageView.setImageResource(R.mipmap.ic_star_border_black_24dp);
+            mEditImageView.setVisibility(View.INVISIBLE);
+            mMemoTextView.setVisibility(View.GONE);
+        }
+    }
+
+    public void setEditLinearLayout() {
+        if (sIsEditable) {
+            mEditorLayout.setVisibility(View.VISIBLE);
+        } else {
+            mEditorLayout.setVisibility(View.GONE);
         }
     }
 
@@ -154,7 +203,8 @@ public class TweetsDetailFragment extends Fragment {
         if (cursor.moveToFirst()) {
             do {
                 if (cursor.getString(cursor.getColumnIndex(DBColumns.COL_ID_STR)).equals(searchItem)) {
-                    mTweetItem.id = cursor.getInt(cursor.getColumnIndex(DBColumns._ID));
+                    mTweetsItem.id = cursor.getInt(cursor.getColumnIndex(DBColumns._ID));
+                    mTweetsItem.memo = cursor.getString(cursor.getColumnIndex(DBColumns.COL_MEMO));
                     break;
                 }
             } while (cursor.moveToNext());

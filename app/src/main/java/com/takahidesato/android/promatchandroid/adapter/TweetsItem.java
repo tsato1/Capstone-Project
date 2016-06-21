@@ -15,6 +15,7 @@ public class TweetsItem implements Parcelable {
     public String screenName;
     public String profileImageUrl;
     public String mediaImageUrl;
+    public String memo;
 
     public TweetsItem(
         int id,
@@ -24,7 +25,8 @@ public class TweetsItem implements Parcelable {
         String name,
         String screenName,
         String profileImageUrl,
-        String mediaImageUrl
+        String mediaImageUrl,
+        String memo
     ) {
         this.id = id;
         this.idStr = idStr;
@@ -34,6 +36,7 @@ public class TweetsItem implements Parcelable {
         this.screenName = screenName;
         this.profileImageUrl = profileImageUrl;
         this.mediaImageUrl = mediaImageUrl;
+        this.memo = memo;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator<TweetsItem>() {
@@ -55,6 +58,7 @@ public class TweetsItem implements Parcelable {
         this.screenName = in.readString();
         this.profileImageUrl = in.readString();
         this.mediaImageUrl = in.readString();
+        this.memo = in.readString();
     }
 
     @Override
@@ -72,5 +76,6 @@ public class TweetsItem implements Parcelable {
         out.writeString(this.screenName);
         out.writeString(this.profileImageUrl);
         out.writeString(this.mediaImageUrl);
+        out.writeString(this.memo);
     }
 }

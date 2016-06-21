@@ -181,6 +181,7 @@ public class TweetsListFragment extends Fragment implements TweetsRecyclerAdapte
                                 body.get(i).user.name,
                                 body.get(i).user.screen_name,
                                 body.get(i).user.profile_image_url,
+                                "",
                                 ""
                         );
                         mTweetsList.add(item);

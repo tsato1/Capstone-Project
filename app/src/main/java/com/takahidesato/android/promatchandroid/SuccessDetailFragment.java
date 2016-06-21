@@ -8,12 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +39,7 @@ public class SuccessDetailFragment extends Fragment {
     private static final float PARALLAX_FACTOR = 1.25f;
 
     private static boolean sIsFavorite = false;
-    private static boolean sisEditable = false;
+    private static boolean sIsEditable = false;
 
     SuccessMemoSaveThread mMemoSaveThread;
     Handler mMemoSavedHandler;
@@ -60,16 +58,12 @@ public class SuccessDetailFragment extends Fragment {
     ImageView mEditImageView;
     @Bind(R.id.imv_favorite)
     ImageView mFavoriteImageView;
-    @Bind(R.id.imv_share)
-    ImageView mShareImageView;
     @Bind(R.id.txv_memo)
     TextView mMemoTextView;
     @Bind(R.id.lnl_editor)
     LinearLayout mEditorLayout;
     @Bind(R.id.edt_memo)
     EditText mMemoEditText;
-    @Bind(R.id.imb_save_memo)
-    ImageButton mSaveMemoImageButton;
     @OnClick(R.id.imv_image_success)
     public void onImageClick(View v) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -79,7 +73,7 @@ public class SuccessDetailFragment extends Fragment {
     }
     @OnClick(R.id.imv_edit)
     public void onEditClick(View v) {
-        sisEditable = !sisEditable;
+        sIsEditable = !sIsEditable;
         setUpLayout();
     }
     @OnClick(R.id.imv_favorite)
@@ -215,7 +209,7 @@ public class SuccessDetailFragment extends Fragment {
     }
 
     public void setEditLinearLayout() {
-        if (sisEditable) {
+        if (sIsEditable) {
             mEditorLayout.setVisibility(View.VISIBLE);
         } else {
             mEditorLayout.setVisibility(View.GONE);

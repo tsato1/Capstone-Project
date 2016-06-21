@@ -44,7 +44,8 @@ public class DBContentProvider extends ContentProvider {
                 DBColumns.COL_NAME,
                 DBColumns.COL_SCREEN_NAME,
                 DBColumns.COL_PROFILE_IMAGE_URL,
-                DBColumns.COL_MEDIA_IMAGE_URL
+                DBColumns.COL_MEDIA_IMAGE_URL,
+                DBColumns.COL_MEMO
         ),
         TABLE_TWEETS_REP (
                 BaseColumns._ID,

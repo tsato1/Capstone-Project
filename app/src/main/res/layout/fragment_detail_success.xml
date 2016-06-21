@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:singleLine="false"
-                    android:maxLines ="5"
+                    android:maxLines ="10"
                     android:maxLength ="2000"
                     android:inputType="textCapSentences|textMultiLine"
                     android:scrollHorizontally="false"

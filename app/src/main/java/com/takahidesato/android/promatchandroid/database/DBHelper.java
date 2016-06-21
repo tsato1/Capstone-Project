@@ -40,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     + DBColumns.COL_NAME + " TEXT NOT NULL,"
                     + DBColumns.COL_SCREEN_NAME + " TEXT NOT NULL,"
                     + DBColumns.COL_PROFILE_IMAGE_URL + " TEXT NOT NULL,"
-                    + DBColumns.COL_MEDIA_IMAGE_URL + " TEXT NOT NULL);"
+                    + DBColumns.COL_MEDIA_IMAGE_URL + " TEXT NOT NULL,"
+                    + DBColumns.COL_MEMO + " TEXT NOT NULL);"
             );
             sqLiteDatabase.execSQL(
                     "CREATE TABLE " + DBColumns.TABLE_TWEETS_REP + " ("

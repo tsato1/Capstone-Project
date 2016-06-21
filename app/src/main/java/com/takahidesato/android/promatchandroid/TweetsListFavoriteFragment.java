@@ -164,7 +164,8 @@ public class TweetsListFavoriteFragment extends Fragment
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_NAME)),
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_SCREEN_NAME)),
                         mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_PROFILE_IMAGE_URL)),
-                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_MEDIA_IMAGE_URL))
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_MEDIA_IMAGE_URL)),
+                        mCursor.getString(mCursor.getColumnIndex(DBColumns.COL_MEMO))
                 );
                 mTweetsFavoriteList.add(item);
                 mTweetsItem = item;
