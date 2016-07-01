@@ -48,7 +48,7 @@ public class SuccessListFavoriteFragment extends Fragment
     public static Fragment getInstance(int key) {
         Fragment fragment = new SuccessListFavoriteFragment();
         Bundle args = new Bundle();
-        args.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
+        args.putInt(MainActivity.FRAGMENT_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +58,7 @@ public class SuccessListFavoriteFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_list_success, container, false);
         ButterKnife.bind(this, view);
         Bundle args = getArguments();
-        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(ViewPagerFragment.FRAGMENT_KEY));
+        if (args != null) Log.i(TAG, "Fragment position = " + args.getInt(MainActivity.FRAGMENT_KEY));
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -128,15 +128,15 @@ public class SuccessListFavoriteFragment extends Fragment
             FragmentManager manager = getActivity().getSupportFragmentManager();
             SuccessDetailFragment fragment = (SuccessDetailFragment) manager.findFragmentByTag(SuccessDetailFragment.TAG);
             Bundle args = fragment.getArguments();
-            args.putInt(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            args.putInt(MainActivity.FRAGMENT_KEY, MainActivity.FRAGMENT_KEY_SUCCESS_FAVORITE);
             args.putParcelable("item", mSuccessFavoriteList.get(position));
             fragment.setUpLayout();
         } else {
             Intent intent = new Intent(getContext(), DetailActivity.class);
-            intent.putExtra(ViewPagerFragment.FRAGMENT_KEY, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            intent.putExtra(MainActivity.FRAGMENT_KEY, MainActivity.FRAGMENT_KEY_SUCCESS_FAVORITE);
             intent.putExtra("item", mSuccessFavoriteList.get(position));
-            //getParentFragment().startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
-            startActivityForResult(intent, ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            //getParentFragment().startActivityForResult(intent, SuccessViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE);
+            startActivityForResult(intent, MainActivity.FRAGMENT_KEY_SUCCESS_FAVORITE);
         }
     }
 

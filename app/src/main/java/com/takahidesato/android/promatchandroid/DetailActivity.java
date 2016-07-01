@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 /**
  * Created by tsato on 4/15/16.
  */
 public class DetailActivity extends AppCompatActivity {
-
     private int key;
 
     @Override
@@ -29,21 +26,21 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        key = getIntent().getExtras().getInt(ViewPagerFragment.FRAGMENT_KEY);
+        key = getIntent().getExtras().getInt(MainActivity.FRAGMENT_KEY);
 
         Fragment fragment = null;
         Class fragmentClass = SuccessDetailFragment.class;
         switch(key) {
-            case ViewPagerFragment.FRAGMENT_KEY_SUCCESS:
+            case MainActivity.FRAGMENT_KEY_SUCCESS:
                 fragmentClass = SuccessDetailFragment.class;
                 break;
-            case ViewPagerFragment.FRAGMENT_KEY_TWEETS:
+            case MainActivity.FRAGMENT_KEY_TWEETS:
                 fragmentClass = TweetsDetailFragment.class;
                 break;
-            case ViewPagerFragment.FRAGMENT_KEY_SUCCESS_FAVORITE:
+            case MainActivity.FRAGMENT_KEY_SUCCESS_FAVORITE:
                 fragmentClass = SuccessDetailFragment.class;
                 break;
-            case ViewPagerFragment.FRAGMENT_KEY_TWEETS_FAVORITE:
+            case MainActivity.FRAGMENT_KEY_TWEETS_FAVORITE:
                 fragmentClass = TweetsDetailFragment.class;
                 break;
         }
@@ -62,14 +59,14 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt(ViewPagerFragment.FRAGMENT_KEY, key);
+        savedInstanceState.putInt(MainActivity.FRAGMENT_KEY, key);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        key = savedInstanceState.getInt(ViewPagerFragment.FRAGMENT_KEY);
+        key = savedInstanceState.getInt(MainActivity.FRAGMENT_KEY);
     }
 
     @Override

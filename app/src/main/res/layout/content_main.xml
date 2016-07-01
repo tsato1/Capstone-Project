@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize">
 
-    <fragment
-        class="com.takahidesato.android.promatchandroid.ViewPagerFragment"
-        android:id="@+id/frg_view_pager"
+    <FrameLayout
+        android:id="@+id/frl_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

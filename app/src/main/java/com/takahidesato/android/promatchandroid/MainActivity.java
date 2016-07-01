@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,14 +28,22 @@ public class MainActivity extends AppCompatActivity {
     public static final String TWITTER_API_KEY = BuildConfig.TWITTER_CONSUMER_KEY;
     public static final String TWITTER_API_SECRET = BuildConfig.TWITTER_CONSUMER_SECRET;
 
+    public static final String FRAGMENT_KEY = "fragment_key";
+    public static final int FRAGMENT_KEY_SUCCESS = 0;
+    public static final int FRAGMENT_KEY_TWEETS = 1;
+    public static final int FRAGMENT_KEY_SUCCESS_FAVORITE = 2;
+    public static final int FRAGMENT_KEY_TWEETS_FAVORITE = 3;
+
     public static boolean IS_DUAL_PANE;
+
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    //@Bind(R.id.navigation_view)
-    //NavigationView mNavigationView;
+    @Bind(R.id.navigation_view)
+    NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +51,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        //setDrawerContent();
+        setDrawerToggle();
+        setDrawerContent();
+        setDetailFragment();
 
-        View detailFragment = findViewById(R.id.frl_fragment_container);
+        if (findViewById(R.id.frl_view_pager) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+            SuccessViewPagerFragment firstFragment = new SuccessViewPagerFragment();
+            firstFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().replace(R.id.frl_view_pager, firstFragment).commit();
+        }
+
+        Intent service_start = new Intent(this, FetchService.class);
+        startService(service_start);
+    }
+
+    private void setDrawerToggle() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+//                PageChannelsFragment fragment = (PageChannelsFragment) getFragmentManager().findFragmentByTag(PageChannelsFragment.class.getSimpleName());
+//
+//                if (fragment != null) {
+//                    fragment.resetSearchFilter();
+//                }
+            }
+        };
+    }
+
+    private void setDetailFragment() {
+        View detailFragment = findViewById(R.id.frl_fragment_detail_container);
         IS_DUAL_PANE = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
-
         if (IS_DUAL_PANE) {
             Fragment fragment = null;
             Class fragmentClass = SuccessDetailFragment.class;
@@ -62,57 +106,55 @@ public class MainActivity extends AppCompatActivity {
             fragment.setArguments(new Bundle());
 
             FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.frl_fragment_container, fragment, SuccessDetailFragment.TAG).commit();
+            manager.beginTransaction().replace(R.id.frl_fragment_detail_container, fragment, SuccessDetailFragment.TAG).commit();
         }
-
-        Intent service_start = new Intent(this, FetchService.class);
-        startService(service_start);
     }
 
-//    private void setDrawerContent() {
-//        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                selectDrawerItem(menuItem);
-//                return true;
-//            }
-//        });
-//    }
+    private void setDrawerContent() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+            }
+        });
+    }
 
-//    public void selectDrawerItem(MenuItem menuItem) {
-//        Fragment fragment = null;
-//        Class fragmentClass;
-//        switch(menuItem.getItemId()) {
-//            case R.id.nav_first_fragment:
-//                fragmentClass = SuccessListFragment.class;
-//                break;
-//            case R.id.nav_second_fragment:
-//                fragmentClass = SuccessListFavoriteFragment.class;
-//                break;
-//            case R.id.nav_third_fragment:
-//                fragmentClass = TweetsListFragment.class;
-//                break;
-//            default:
-//                fragmentClass = SuccessListFragment.class;
-//        }
-//
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(android.R.id.content, fragment).commit();
-//
-//        menuItem.setChecked(true);
-//        setTitle(menuItem.getTitle());
-//        mDrawerLayout.closeDrawers();
-//    }
+    public void selectDrawerItem(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass;
+        switch(menuItem.getItemId()) {
+            case R.id.nav_first_fragment:
+                fragmentClass = SuccessViewPagerFragment.class;
+                break;
+            case R.id.nav_second_fragment:
+                fragmentClass = TweetsViewPagerFragment.class;
+                break;
+            case R.id.nav_third_fragment:
+                fragmentClass = SuccessViewPagerFragment.class;
+                break;
+            default:
+                fragmentClass = SuccessViewPagerFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frl_view_pager, fragment).commit();
+
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawerLayout.closeDrawers();
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     @Override
