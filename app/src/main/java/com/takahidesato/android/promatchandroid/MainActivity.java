@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String TWITTER_API_SECRET = BuildConfig.TWITTER_CONSUMER_SECRET;
 
     public static final String FRAGMENT_KEY = "fragment_key";
-    public static final int FRAGMENT_KEY_SUCCESS = 0;
-    public static final int FRAGMENT_KEY_TWEETS = 1;
-    public static final int FRAGMENT_KEY_SUCCESS_FAVORITE = 2;
-    public static final int FRAGMENT_KEY_TWEETS_FAVORITE = 3;
+    public static final int FRAGMENT_KEY_SUCCESS = 100;
+    public static final int FRAGMENT_KEY_TWEETS = 200;
+    public static final int FRAGMENT_KEY_SUCCESS_FAVORITE = 101;
+    public static final int FRAGMENT_KEY_TWEETS_FAVORITE = 201;
 
     public static boolean IS_DUAL_PANE;
 
@@ -124,15 +124,21 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
+            case R.id.nav_success:
                 fragmentClass = SuccessViewPagerFragment.class;
                 break;
-            case R.id.nav_second_fragment:
+            case R.id.nav_tweets:
                 fragmentClass = TweetsViewPagerFragment.class;
                 break;
-            case R.id.nav_third_fragment:
+            case R.id.nav_linkedin:
                 fragmentClass = SuccessViewPagerFragment.class;
                 break;
+            case R.id.nav_settings:
+                return;
+            case R.id.nav_about:
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                return;
             default:
                 fragmentClass = SuccessViewPagerFragment.class;
         }
@@ -176,10 +182,8 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_about:
-                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_about:
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

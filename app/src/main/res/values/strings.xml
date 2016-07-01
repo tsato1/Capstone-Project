@@ -5,22 +5,32 @@
 
     <string name="success">Success Stories</string>
     <string name="tweets">Tweets</string>
+    <string name="linkedin">LinkedIn</string>
     <string name="success_favorite">Favorite Success</string>
     <string name="tweets_favorite">Favorite Tweets</string>
-    <string-array name="tabs">
+    <string name="linkedin_favorite">Favorite LinkedIn</string>
+    <string-array name="tabs_success">
         <item>@string/success</item>
-        <item>@string/tweets</item>
         <item>@string/success_favorite</item>
+    </string-array>
+    <string-array name="tabs_tweets">
+        <item>@string/tweets</item>
         <item>@string/tweets_favorite</item>
     </string-array>
-    <string name="action_favorites">Favorites</string>
+    <string-array name="tabs_linkedin">
+        <item>@string/linkedin</item>
+        <item>@string/linkedin_favorite</item>
+    </string-array>
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_success">@string/success</string>
+    <string name="drawer_tweets">@string/tweets</string>
+    <string name="drawer_linkedin">@string/linkedin</string>
+    <string name="drawer_settings">@string/action_settings</string>
+    <string name="drawer_about">@string/action_about</string>
 
     <string name="annotation_hours">Hours</string>
     <string name="annotation_phone">Phone</string>

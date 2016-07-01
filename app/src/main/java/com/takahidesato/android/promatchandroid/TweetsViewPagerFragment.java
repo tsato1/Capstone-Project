@@ -34,6 +34,7 @@ public class TweetsViewPagerFragment extends Fragment {
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
     private Tracker mTracker;
+    private Fragment mCurrentFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,26 +58,26 @@ public class TweetsViewPagerFragment extends Fragment {
 
         mPager = (ViewPager) getView().findViewById(R.id.view_pager);
         mPager.setAdapter(mAdatper);
-//        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                if (MainActivity.IS_DUAL_PANE) {
-//                    prepareDetailFragment(position);
-//                }
-//
-//                Log.i(TAG, "Setting screen name: " + fragment.values()[position]);
-//                mTracker.setScreenName("Screen Name = " + fragment.values()[position]);
-//                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//            }
-//        });
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (MainActivity.IS_DUAL_PANE) {
+                    prepareDetailFragment(position);
+                }
+
+                Log.i(TAG, "Setting screen name: " + fragment.values()[position]);
+                mTracker.setScreenName("Screen Name = " + fragment.values()[position]);
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         mTabs = (SlidingTabLayout) getView().findViewById(R.id.tab);
         //mTabs.setCustomTabView(R.layout.tab_item, R.id.txv_tab_title);
@@ -86,22 +87,8 @@ public class TweetsViewPagerFragment extends Fragment {
 
     private void prepareDetailFragment(int position) {
         Fragment fragment = null;
-        Class fragmentClass = null;
-        String tag = "";
-
-//        switch (position) {
-//            case 0:
-//                fragmentClass = TweetsDetailFragment.class;
-//                tag = TweetsDetailFragment.TAG;
-//                break;
-//            case 1:
-//                fragmentClass = TweetsDetailFragment.class;
-//                tag = TweetsDetailFragment.TAG;
-//                break;
-//        }
-
-        fragmentClass = TweetsDetailFragment.class;
-        tag = TweetsDetailFragment.TAG;
+        Class fragmentClass = TweetsDetailFragment.class;
+        String tag = TweetsDetailFragment.TAG;
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -122,7 +109,7 @@ public class TweetsViewPagerFragment extends Fragment {
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
-            tabTitles = mContext.getResources().getStringArray(R.array.tabs);
+            tabTitles = mContext.getResources().getStringArray(R.array.tabs_tweets);
         }
 
         @Override
@@ -146,13 +133,31 @@ public class TweetsViewPagerFragment extends Fragment {
         public int getCount() {
             return NUM_ITEMS;
         }
+
+        @Override
+        public int getItemPosition(Object object){
+            return POSITION_NONE;
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            if (mCurrentFragment != object) {
+                mCurrentFragment = (Fragment) object;
+
+                /* if current fragment is favorite fragment, reload data from database */
+                if (mCurrentFragment.getArguments().getInt(MainActivity.FRAGMENT_KEY)%10 == 1) {
+                    ((TweetsListFavoriteFragment) mCurrentFragment).reloadData();
+                }
+            }
+            super.setPrimaryItem(container, position, object);
+        }
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        mPager.setCurrentItem(requestCode);
+        mPager.setCurrentItem(requestCode%10);
         Log.d(TAG, "onActivityResult()");
     }
 }

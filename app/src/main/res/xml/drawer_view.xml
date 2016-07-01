@@ -2,29 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
+            android:id="@+id/nav_success"
             android:icon="@mipmap/ic_launcher"
-            android:title="First" />
+            android:title="@string/drawer_success" />
         <item
-            android:id="@+id/nav_second_fragment"
+            android:id="@+id/nav_tweets"
             android:icon="@mipmap/ic_launcher"
-            android:title="Second" />
+            android:title="@string/drawer_tweets" />
         <item
-            android:id="@+id/nav_third_fragment"
+            android:id="@+id/nav_linkedin"
             android:icon="@mipmap/ic_launcher"
-            android:title="Third" />
+            android:title="@string/drawer_linkedin" />
     </group>
 
-<!--    <item android:title="Sub items">
+    <item android:title="">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:icon="@drawable/ic_dashboard"
-                    android:title="Sub item 1" />
+                    android:id="@+id/nav_settings"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/drawer_settings" />
                 <item
-                    android:icon="@drawable/ic_forum"
-                    android:title="Sub item 2" />
+                    android:id="@+id/nav_about"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/drawer_about" />
             </group>
         </menu>
-    </item>-->
+    </item>
 </menu>

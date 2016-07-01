@@ -143,6 +143,7 @@ public class SuccessListFavoriteFragment extends Fragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        Log.d(TAG, "onActivityResult()");
         reloadData();
     }
 
