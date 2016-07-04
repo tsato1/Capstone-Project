@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 import com.takahidesato.android.promatchandroid.R;
 
 import java.util.List;
@@ -44,10 +44,11 @@ public class SuccessRecyclerAdapter extends RecyclerView.Adapter<SuccessRecycler
     public void onBindViewHolder(SuccessStoriesViewHolder viewHolder, int i) {
         SuccessItem item = mSuccessList.get(i);
 
-        Glide.with(mContext)
-                .load(item.thumbnailMediumUrl)
+        Picasso.with(mContext)
+                .load(item.thumbnailHighUrl)
                 .placeholder(R.mipmap.ic_launcher)
-                .fitCenter()
+                .fit()
+                .centerCrop()
                 .into(viewHolder.thumbnailImageView);
 
         viewHolder.titleTextView.setText(item.title);

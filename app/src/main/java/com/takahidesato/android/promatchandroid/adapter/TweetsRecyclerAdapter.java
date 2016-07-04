@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 import com.takahidesato.android.promatchandroid.R;
 
 import java.util.List;
@@ -42,10 +42,9 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(TweetsViewHolder viewHolder, int i) {
         TweetsItem item = mTweetsList.get(i);
 
-        Glide.with(mContext)
+        Picasso.with(mContext)
                 .load(item.profileImageUrl)
                 .placeholder(R.mipmap.ic_launcher)
-                .fitCenter()
                 .into(viewHolder.profileImageView);
         viewHolder.nameTextView.setText(item.name);
         viewHolder.screenNameTextView.setText("@"+item.screenName);

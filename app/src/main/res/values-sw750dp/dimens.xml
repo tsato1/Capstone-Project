@@ -6,9 +6,8 @@
 
     <dimen name="tweet_card_padding">16dp</dimen>
 
-    <dimen name="thumbnail_image_view_success_width">180dp</dimen>
-    <dimen name="thumbnail_image_view_success_height">180dp</dimen>
-    <dimen name="thumbnail_image_view_success_margin">10dp</dimen>
+    <dimen name="thumbnail_image_view_success_width">160dp</dimen>
+    <dimen name="thumbnail_image_view_success_height">128dp</dimen>
 
     <dimen name="profile_image_tweets_width">90dp</dimen>
     <dimen name="profile_image_tweets_height">90dp</dimen>
@@ -16,6 +15,7 @@
 
     <dimen name="detail_success_card_width">600dp</dimen>
     <dimen name="detail_tweets_card_width">680dp</dimen>
+    <dimen name="detail_success_thumbnail_height">400dp</dimen>
     <dimen name="detail_memo_text_size">38sp</dimen>
 
     <dimen name="map_size">750dp</dimen>

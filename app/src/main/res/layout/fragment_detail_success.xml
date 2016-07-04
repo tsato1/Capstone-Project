@@ -26,10 +26,14 @@
                 <ImageView
                     android:id="@+id/imv_image_success"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/detail_success_thumbnail_height"
+                    android:adjustViewBounds="true"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/detail_success_thumbnail_min_height"
+                    android:background="@color/colorGrey"/>
             </FrameLayout>
             <RelativeLayout
                 android:id="@+id/rll_status_bar"

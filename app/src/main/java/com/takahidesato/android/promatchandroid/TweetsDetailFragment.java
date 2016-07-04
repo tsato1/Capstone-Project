@@ -15,11 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
-import com.takahidesato.android.promatchandroid.adapter.SuccessMemoSaveThread;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItemSaveAsync;
 import com.takahidesato.android.promatchandroid.adapter.TweetsItem;
 import com.takahidesato.android.promatchandroid.adapter.TweetsMemoSaveThread;
@@ -158,7 +157,9 @@ public class TweetsDetailFragment extends Fragment {
         if (mTweetsItem == null) {
             mObservableScrollView.setVisibility(View.GONE);
         } else {
-            Glide.with(getActivity().getApplicationContext()).load(mTweetsItem.profileImageUrl).into(mProfileImageView);
+            Picasso.with(getActivity().getApplicationContext())
+                    .load(mTweetsItem.profileImageUrl)
+                    .into(mProfileImageView);
             mNameTextView.setText(mTweetsItem.name);
             mScreenNameTextView.setText("@"+ mTweetsItem.screenName);
             mTweetTextView.setText(mTweetsItem.text);

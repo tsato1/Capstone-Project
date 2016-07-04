@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imv_thumbnail_success"
             android:layout_width="@dimen/thumbnail_image_view_success_width"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/thumbnail_image_view_success_height"
             android:layout_margin="@dimen/thumbnail_image_view_success_margin"
             android:layout_alignParentTop="true" />
         <TextView
@@ -32,6 +32,7 @@
             android:id="@+id/txv_description_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/thumbnail_image_view_success_margin"
             android:layout_below="@id/txv_title_success"
             android:layout_toEndOf="@id/imv_thumbnail_success"/>
     </RelativeLayout>

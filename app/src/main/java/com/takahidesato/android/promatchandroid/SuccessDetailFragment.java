@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 import com.takahidesato.android.promatchandroid.adapter.ObservableScrollView;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItemSaveAsync;
 import com.takahidesato.android.promatchandroid.adapter.SuccessItem;
@@ -178,8 +178,12 @@ public class SuccessDetailFragment extends Fragment {
         if (mSuccessItem == null) {
             mObservableScrollView.setVisibility(View.GONE);
         } else {
-            String url = mSuccessItem.thumbnailMediumUrl;
-            Glide.with(getActivity().getApplicationContext()).load(url).into(mSuccessImageView);
+            String url = mSuccessItem.thumbnailHighUrl;
+            Picasso.with(getActivity().getApplicationContext())
+                    .load(url)
+                    .fit()
+                    .centerCrop()
+                    .into(mSuccessImageView);
 
             mSuccessTitleTextView.setText(mSuccessItem.title);
 
