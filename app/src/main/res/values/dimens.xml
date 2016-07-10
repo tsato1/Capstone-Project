@@ -20,24 +20,30 @@
     <dimen name="profile_image_tweets_padding">6dp</dimen>
     <dimen name="profile_image_tweets_corner_radius">12dp</dimen>
 
-    <dimen name="text_size_success_title">40sp</dimen>
+    <!-- Detail Success -->
+    <dimen name="text_size_success_title">28sp</dimen>
+    <dimen name="text_size_smallest">16sp</dimen>
+    <dimen name="text_size_success_date">16sp</dimen>
 
     <dimen name="detail_success_card_width">-1px</dimen>
     <dimen name="detail_tweets_card_width">-1px</dimen>
-    <dimen name="detail_success_thumbnail_height">250dp</dimen>
+    <dimen name="detail_success_thumbnail_height">230dp</dimen>
     <dimen name="detail_success_thumbnail_min_height">100dp</dimen>
-    <dimen name="detail_memo_text_size">28sp</dimen>
-    <dimen name="detail_status_bar_vertical_padding">20dp</dimen>
+    <dimen name="detail_status_bar_vertical_padding">12dp</dimen>
     <dimen name="detail_status_bar_elements_padding">4dp</dimen>
     <dimen name="detail_memo_padding_horizontal">48dp</dimen>
+    <dimen name="detail_memo_padding_vertical">4dp</dimen>
 
+    <!-- Detail Tweets -->
     <dimen name="detail_tweets_margin_right_of_name">6dp</dimen>
 
+    <!-- About Screen -->
     <dimen name="settings_map_margin">8dp</dimen>
     <dimen name="annotation_text_size">18sp</dimen>
-    <dimen name="explanation_text_size">12sp</dimen>
+    <dimen name="explanation_text_size">14sp</dimen>
     <dimen name="map_size">400dp</dimen>
 
+    <!-- Widget -->
     <dimen name="widget_padding">2dp</dimen>
     <dimen name="widget_min_width">294dp</dimen>
     <dimen name="widget_min_height">72dp</dimen>

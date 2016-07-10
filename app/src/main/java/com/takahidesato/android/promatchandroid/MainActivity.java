@@ -130,11 +130,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_tweets:
                 fragmentClass = TweetsViewPagerFragment.class;
                 break;
-            case R.id.nav_linkedin:
-                fragmentClass = SuccessViewPagerFragment.class;
-                break;
-            case R.id.nav_settings:
-                return;
             case R.id.nav_about:
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);

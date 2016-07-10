@@ -32,8 +32,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/detail_success_thumbnail_min_height"
-                    android:background="@color/colorGrey"/>
+                    android:minHeight="@dimen/detail_success_thumbnail_min_height"/>
             </FrameLayout>
             <RelativeLayout
                 android:id="@+id/rll_status_bar"
@@ -51,7 +50,9 @@
                     android:layout_centerHorizontal="true"
                     android:paddingBottom="@dimen/detail_status_bar_elements_padding"
                     android:textSize="@dimen/text_size_success_title"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:typeface="serif"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/txv_date_success"
                     android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
                     android:layout_below="@id/txv_title_success"
                     android:layout_centerHorizontal="true"
                     android:paddingBottom="@dimen/detail_status_bar_elements_padding"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_size_success_date" />
                 <LinearLayout
                     android:id="@+id/rll_icon_bar"
                     android:orientation="horizontal"
@@ -95,9 +97,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rll_status_bar"
+                android:paddingTop="@dimen/detail_memo_padding_vertical"
                 android:paddingLeft="@dimen/detail_memo_padding_horizontal"
                 android:paddingRight="@dimen/detail_memo_padding_horizontal"
-                android:textSize="@dimen/detail_memo_text_size"
+                android:paddingBottom="@dimen/detail_memo_padding_vertical"
+                android:textSize="@dimen/text_size_smallest"
+                android:textColor="@color/colorBlack"
                 android:visibility="gone"/>
             <LinearLayout
                 android:id="@+id/lnl_editor"

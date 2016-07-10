@@ -98,7 +98,7 @@
                 android:layout_below="@id/rll_icon_bar"
                 android:paddingLeft="@dimen/detail_memo_padding_horizontal"
                 android:paddingRight="@dimen/detail_memo_padding_horizontal"
-                android:textSize="@dimen/detail_memo_text_size"
+                android:textSize="@dimen/text_size_smallest"
                 android:visibility="gone"/>
             <LinearLayout
                 android:id="@+id/lnl_editor"
