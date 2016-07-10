@@ -80,7 +80,12 @@ public class SuccessListFavoriteFragment extends Fragment
     public void onActivityCreated(Bundle savedInstatnceState) {
         super.onActivityCreated(savedInstatnceState);
 
-        getLoaderManager().initLoader(0, null, this);
+        Loader loader = getLoaderManager().getLoader(0);
+        if ( loader != null && loader.isReset() ) {
+            getLoaderManager().restartLoader(0, getArguments(), this);
+        } else {
+            getLoaderManager().initLoader(0, getArguments(), this);
+        }
 
         /***** determining column count for staggered grid view *****/
         int columnCount = 1;
@@ -111,13 +116,24 @@ public class SuccessListFavoriteFragment extends Fragment
     }
 
     @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        reloadData();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelable("item", mSuccessItem);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     public void reloadData() {
-        getLoaderManager().restartLoader(0, null, this);
+        Loader loader = getLoaderManager().getLoader(0);
+        if ( loader != null && loader.isReset() ) {
+            getLoaderManager().restartLoader(0, getArguments(), this);
+        } else {
+            getLoaderManager().initLoader(0, getArguments(), this);
+        }
     }
 
     @Override
