@@ -14,18 +14,7 @@ The following is the app functionality:
 * [ ] App displays YouTube videos (Success Stories) posted by ProMatch.
 * [ ] App displays tweets posted by ProMatch.
 * [ ] App validates all input from servers and users. If data does not exist or is in the wrong format, the app logs this fact and does not crash.
-* [ ] App includes support for accessibility. That includes content descriptions, navigation using a D-pad, and, if applicable, non-audio versions of audio cues.
-* [ ] App keeps all strings in a strings.xml file and enables RTL layout switching on all layouts.
 * [ ] App provides a widget to provide relevant information to the user on the home screen.
-* [ ] App integrates Google Analytics and Map services.
-* [ ] App theme extends AppCompat.
-* [ ] App uses an app bar and associated toolbars.
-* [ ] App uses standard and simple transitions between activities.
-* [ ] App builds and deploys using the installRelease Gradle task.
-* [ ] App is equipped with a signing configuration, and the keystore and passwords are included in the repository. Keystore is referred to by a relative path.
-* [ ] All app dependencies are managed by Gradle.
-* [ ] App implements a ContentProvider to access locally stored data.
-* [ ] App uses AsyncTask for on-demand requests
 
 ## Diagram
 
